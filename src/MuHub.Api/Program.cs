@@ -1,8 +1,14 @@
+using MuHub.Api;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+string k = "fhrthrth";
+var a = new Aba();
+a.A();
 
 var app = builder.Build();
 
