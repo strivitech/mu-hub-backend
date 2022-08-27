@@ -49,6 +49,7 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"strivitech_mu-hub-backend" /o:"strivitech" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml
           dotnet restore
           dotnet build --no-restore
+          dotnet tool install coverlet.console
           coverlet .\tests\UnitTests\MuHub.Api.Tests\bin\Debug\net6.0\MuHub.Api.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
