@@ -67,13 +67,16 @@ jobs:
         dotnet-version: 6.0.x
         
     - name: Clean
-      run: dotnet clean ./MuHub/MuHub.sln --configuration Release && dotnet nuget locals all --clear
+      run: dotnet clean MuHub.sln --configuration Release
       
+    - name: Clear nuget locals
+      run: dotnet nuget locals all --clear
+
     - name: Restore dependencies
-      run: dotnet restore ./MuHub/
+      run: dotnet restore
                 
     - name: Build
-      run: dotnet build --configuration Release --no-restore ./MuHub
+      run: dotnet build --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test --no-restore --no-build --configuration Release ./MuHub
+      run: dotnet test --no-restore --no-build --configuration Release
