@@ -51,6 +51,6 @@ public class InfoController3 : ControllerBase
     public IActionResult Index2()
     {
         var s = "String";
-        return Ok();
+        return Ok(s);
     }
 }
