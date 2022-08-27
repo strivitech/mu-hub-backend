@@ -4,6 +4,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AAF5773A-952
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Api", "src\MuHub.Api\MuHub.Api.csproj", "{2477236D-A69D-4DD1-8E3A-961831074713}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ECEED701-2DF9-4D9A-ADF9-BF9EA1D98EBB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{836C800D-ECC6-4A59-86B7-CA5243BBA151}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Api.Tests", "tests\UnitTests\MuHub.Api.Tests\MuHub.Api.Tests.csproj", "{E8D85536-E12C-453F-8FFF-C14F8D9EFC17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -11,11 +19,18 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2477236D-A69D-4DD1-8E3A-961831074713} = {AAF5773A-9525-4189-81C6-4FE4828BCB2C}
+		{7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633} = {ECEED701-2DF9-4D9A-ADF9-BF9EA1D98EBB}
+		{836C800D-ECC6-4A59-86B7-CA5243BBA151} = {ECEED701-2DF9-4D9A-ADF9-BF9EA1D98EBB}
+		{E8D85536-E12C-453F-8FFF-C14F8D9EFC17} = {7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8D85536-E12C-453F-8FFF-C14F8D9EFC17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8D85536-E12C-453F-8FFF-C14F8D9EFC17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8D85536-E12C-453F-8FFF-C14F8D9EFC17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8D85536-E12C-453F-8FFF-C14F8D9EFC17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
