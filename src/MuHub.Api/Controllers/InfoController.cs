@@ -11,4 +11,10 @@ public class InfoController : ControllerBase
     {
         return Ok();
     }
+    
+    [HttpGet]
+    public IActionResult Index2()
+    {
+        return Ok();
+    }
 }
