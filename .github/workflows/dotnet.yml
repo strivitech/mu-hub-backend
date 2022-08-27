@@ -46,11 +46,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"strivitech_mu-hub-backend" /o:"strivitech" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"strivitech_mu-hub-backend" /o:"strivitech" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="/tests/UnitTests/MuHub.Api.Tests/TestResults/*.trx" /d:"sonar.verbose=true" /d:"sonar.cs.opencover.reportsPaths"="/tests/UnitTests/MuHub.Api.Tests/coverage.opencover.xml"
           dotnet restore
           dotnet build --no-restore
-          dotnet tool install coverlet.console
-          coverlet .\tests\UnitTests\MuHub.Api.Tests\bin\Debug\net6.0\MuHub.Api.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
+          dotnet add \tests\UnitTests\MuHub.Api.Tests\MuHub.Api.Tests.csproj package coverlet.msbuild
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l:trx
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   test:
