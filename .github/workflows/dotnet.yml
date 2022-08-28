@@ -46,7 +46,38 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"strivitech_mu-hub-backend" /o:"strivitech" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"strivitech_mu-hub-backend" /o:"strivitech" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="tests/UnitTests/MuHub.Api.Tests/TestResults/*.trx" /d:"sonar.verbose=true" /d:"sonar.cs.opencover.reportsPaths"="tests/UnitTests/MuHub.Api.Tests/coverage.opencover.xml"
           dotnet restore
           dotnet build --no-restore
+          dotnet add tests\UnitTests\MuHub.Api.Tests\MuHub.Api.Tests.csproj package coverlet.msbuild
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l:trx
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy: 
+      matrix: 
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Clean
+      run: dotnet clean MuHub.sln --configuration Release
+      
+    - name: Clear nuget locals
+      run: dotnet nuget locals all --clear
+
+    - name: Restore dependencies
+      run: dotnet restore
+                
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test --no-restore --no-build --configuration Release
