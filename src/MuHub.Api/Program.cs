@@ -1,21 +1,25 @@
+using MuHub.Api;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Configures all services for Application
+builder.ConfigureServices();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Configures the pipeline for Application
+app.Configure();
+
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Add logs
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    // Add logs
+}
+finally
+{
+    // Add logs and flush
+}
