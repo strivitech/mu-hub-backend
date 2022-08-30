@@ -10,6 +10,8 @@ public static class ServicesConfigurator
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        ArgumentNullException.ThrowIfNull(services);
+
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
