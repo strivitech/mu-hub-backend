@@ -3,6 +3,6 @@ using MuHub.Domain.Common.Entities;
 
 namespace MuHub.Domain.Entities;
 
-public class InfoEntity : BaseEntity<int>, IAggregateRoot
+public class Info : BaseEntity<int>, IAggregateRoot
 {
 }

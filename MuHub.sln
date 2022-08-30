@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Api.Tests", "tests\Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Domain", "src\MuHub.Domain\MuHub.Domain.csproj", "{E6A73B47-AA7C-4431-A131-93DD91068134}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Application", "src\MuHub.Application\MuHub.Application.csproj", "{806CEE4A-1EB7-4F99-9D1B-8B44D5DCC8D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,7 @@ Global
 		{836C800D-ECC6-4A59-86B7-CA5243BBA151} = {ECEED701-2DF9-4D9A-ADF9-BF9EA1D98EBB}
 		{E8D85536-E12C-453F-8FFF-C14F8D9EFC17} = {7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633}
 		{E6A73B47-AA7C-4431-A131-93DD91068134} = {AAF5773A-9525-4189-81C6-4FE4828BCB2C}
+		{806CEE4A-1EB7-4F99-9D1B-8B44D5DCC8D9} = {AAF5773A-9525-4189-81C6-4FE4828BCB2C}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -39,5 +42,9 @@ Global
 		{E6A73B47-AA7C-4431-A131-93DD91068134}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6A73B47-AA7C-4431-A131-93DD91068134}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6A73B47-AA7C-4431-A131-93DD91068134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{806CEE4A-1EB7-4F99-9D1B-8B44D5DCC8D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{806CEE4A-1EB7-4F99-9D1B-8B44D5DCC8D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{806CEE4A-1EB7-4F99-9D1B-8B44D5DCC8D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{806CEE4A-1EB7-4F99-9D1B-8B44D5DCC8D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
