@@ -1,10 +1,18 @@
-﻿using MuHub.Application;
+﻿using MuHub.Api.Common.Extensions.Startup;
+using MuHub.Application;
 using MuHub.Infrastructure;
 
 namespace MuHub.Api;
 
+/// <summary>
+/// Contains methods to set up essential dependencies and pipelines.
+/// </summary>
 public static class Startup
 {
+    /// <summary>
+    /// Configures services for the application.
+    /// </summary>
+    /// <param name="builder">Web Application.</param>
     public static void ConfigureServices(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
@@ -17,6 +25,10 @@ public static class Startup
         services.AddApiServices();
     }
 
+    /// <summary>
+    /// Configures the middleware pipeline for the application.
+    /// </summary>
+    /// <param name="app">Web Application.</param>
     public static void Configure(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
@@ -25,6 +37,8 @@ public static class Startup
             // app.UseSwaggerUI();
         }
 
+        app.UseSwaggerWithApiVersioning();
+        
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
