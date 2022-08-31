@@ -24,11 +24,11 @@ public static class SwaggerExtensions
                 // add a custom operation filter which sets default values
                 options.OperationFilter<SwaggerDefaultValues>();
 
-                var fileName = typeof( Program ).Assembly.GetName().Name + ".xml";
-                var filePath = Path.Combine( AppContext.BaseDirectory, fileName );
+                var fileName = typeof(Program).Assembly.GetName().Name + ".xml";
+                var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
 
                 // integrate xml comments
-                options.IncludeXmlComments( filePath );
+                options.IncludeXmlComments(filePath);
             } );
 
         return services;
@@ -48,11 +48,11 @@ public static class SwaggerExtensions
                 var descriptions = app.DescribeApiVersions();
 
                 // build a swagger endpoint for each discovered API version
-                foreach ( var description in descriptions )
+                foreach (var description in descriptions)
                 {
                     var url = $"/swagger/{description.GroupName}/swagger.json";
                     var name = description.GroupName.ToUpperInvariant();
-                    options.SwaggerEndpoint( url, name );
+                    options.SwaggerEndpoint(url, name);
                 }
             } );
 

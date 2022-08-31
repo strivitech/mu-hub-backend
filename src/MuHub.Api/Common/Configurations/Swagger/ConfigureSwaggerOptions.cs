@@ -36,15 +36,16 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
         }
     }
 
+    // TODO: Move some text blocks to the app settings
     private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
     {
-        var text = new StringBuilder("An example application with OpenAPI, Swashbuckle, and API versioning.");
+        var text = new StringBuilder("MuHub with OpenAPI, Swashbuckle, and API versioning.");
         var info = new OpenApiInfo()
         {
-            Title = "Example API",
+            Title = "MuHub API",
             Version = description.ApiVersion.ToString(),
-            Contact = new OpenApiContact() { Name = "Bill Mei", Email = "bill.mei@somewhere.com" },
-            License = new OpenApiLicense() { Name = "MIT", Url = new Uri( "https://opensource.org/licenses/MIT") }
+            Contact = new OpenApiContact() { Name = "MuHub official email", Email = "example@example.example" },
+            License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
         };
 
         if (description.IsDeprecated)
