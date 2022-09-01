@@ -20,6 +20,6 @@ public class InfoControllerTest
         var result = _infoController.Index();
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        Assert.IsType<OkObjectResult>(result);
     }
 }
