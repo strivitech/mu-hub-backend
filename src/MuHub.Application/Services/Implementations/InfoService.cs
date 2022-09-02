@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-
-using MuHub.Application.Contracts.Persistence;
 using MuHub.Application.Models.Data;
 using MuHub.Application.Models.Requests.Info;
 using MuHub.Application.Services.Interfaces;
@@ -10,21 +8,23 @@ namespace MuHub.Application.Services.Implementations;
 
 public class InfoService : IInfoService
 {
-    private readonly IApplicationDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly IModelValidationService _modelValidationService;
 
-    public InfoService(IApplicationDbContext dbContext, IMapper mapper)
+    public InfoService(IMapper mapper, IModelValidationService modelValidationService)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _modelValidationService = modelValidationService?? throw new ArgumentNullException(nameof(modelValidationService));
     }
     
     public async Task<InfoDto> CreateAsync(CreateInfoRequest request)
     {
         // Add fluent validation with null check
-        
+        await _modelValidationService.EnsureValidAsync(request);
+
         var info = _mapper.Map<Info>(request);
-        var createdInfo = await _dbContext.Info.AddAsync(info);
-        return _mapper.Map<InfoDto>(createdInfo.Entity);
+        // var createdInfo = await _dbContext.Info.AddAsync(info);
+        // return _mapper.Map<InfoDto>(createdInfo.Entity);
+        return _mapper.Map<InfoDto>(info);
     }
 }
