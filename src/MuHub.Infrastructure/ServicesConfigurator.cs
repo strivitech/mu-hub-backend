@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using MuHub.Application.Contracts.Infrastructure;
@@ -16,11 +17,12 @@ public static class ServicesConfigurator
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
-        
-        // services.AddDbContext<ApplicationDbContext>(options =>
-        //     options
-        //         .UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-        //         builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options
+                .UseNpgsql(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IFakeEmailSender, FakeEmailSender>();
