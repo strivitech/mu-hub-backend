@@ -4,6 +4,9 @@ using FluentValidation;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using MuHub.Application.Services.Implementations;
+using MuHub.Application.Services.Interfaces;
+
 namespace MuHub.Application;
 
 public static class ServicesConfigurator
@@ -14,7 +17,9 @@ public static class ServicesConfigurator
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        
+        services.AddScoped<IModelValidationService, ModelValidationService>();
+        services.AddScoped<IInfoService, InfoService>();
+
         return services;
     }
 }
