@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using MuHub.Api.Controllers;
+using MuHub.Api.Controllers.V1;
 
 namespace MuHub.Api.Tests.Controllers;
 
@@ -20,6 +20,6 @@ public class InfoControllerTest
         var result = _infoController.Index();
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        Assert.IsType<OkObjectResult>(result);
     }
 }
