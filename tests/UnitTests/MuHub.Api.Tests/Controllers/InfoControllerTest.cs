@@ -10,7 +10,8 @@ public class InfoControllerTest
 
     public InfoControllerTest()
     {
-        _infoController = new InfoController();
+        var infoService = new Mock<IInfoService>();
+        _infoController = new InfoController(infoService.Object);
     }
 
     [Fact]
@@ -23,3 +24,4 @@ public class InfoControllerTest
         Assert.IsType<OkObjectResult>(result);
     }
 }
+
