@@ -16,6 +16,8 @@ public static class ServicesConfigurator
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
         
+        // Test here
+        
         // services.AddDbContext<ApplicationDbContext>(options =>
         //     options
         //         .UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
