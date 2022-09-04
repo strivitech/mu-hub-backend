@@ -2,11 +2,12 @@ version: '3.5'
 
 services:
   mu_hub_main:
-    image: postgres:14.5-alpine
+    image: postgres:14.5
     container_name: mu_hub_main
     restart: always
     environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_USER=admin
+      - POSTGRES_DB=mu_hub_main
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=admin
     ports:
       - 5432:5432

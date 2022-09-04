@@ -9,6 +9,5 @@ public class InfoConfiguration : IEntityTypeConfiguration<Info>
 {
     public void Configure(EntityTypeBuilder<Info> builder)
     {
-        throw new NotImplementedException();
     }
 }

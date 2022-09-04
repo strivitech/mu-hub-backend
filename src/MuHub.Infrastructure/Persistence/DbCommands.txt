@@ -1,0 +1,13 @@
+﻿Commands must be executed from MuHub.Infrastructure directory
+
+// Add new migration with name
+dotnet ef migrations add InitialMigration -c ApplicationDbContext -s ../MuHub.Api -o Persistence/Migrations
+
+// Remove last migration. Note that you must be on old migration before remove the last one
+dotnet ef migrations remove -c ApplicationDbContext -s ../MuHub.Api
+
+// Database update
+dotnet ef database update -c ApplicationDbContext -s ../MuHub.Api
+
+// Database update to specific migration
+dotnet ef database update MigrationSpecificName -c ApplicationDbContext -s ../MuHub.Api
