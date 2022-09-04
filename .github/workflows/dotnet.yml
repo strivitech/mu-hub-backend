@@ -60,12 +60,18 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
+        
+    - name: Clean
+      run: dotnet clean MuHub.sln --configuration Release
+      
+    - name: Clear nuget locals
+      run: dotnet nuget locals all --clear
 
     - name: Restore dependencies
       run: dotnet restore
