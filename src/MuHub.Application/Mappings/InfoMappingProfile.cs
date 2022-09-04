@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 
-using MuHub.Application.Models.Data;
 using MuHub.Application.Models.Requests.Info;
 using MuHub.Domain.Entities;
 
