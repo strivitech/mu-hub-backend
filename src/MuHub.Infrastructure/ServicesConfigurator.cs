@@ -18,6 +18,8 @@ public static class ServicesConfigurator
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
 
+        // #2
+        
         services.AddDbContext<ApplicationDbContext>(options =>
             options
                 .UseNpgsql(
