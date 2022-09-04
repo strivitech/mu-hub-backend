@@ -21,8 +21,8 @@ public static class ServicesConfigurator
         services.AddDbContext<ApplicationDbContext>(options =>
             options
                 .UseNpgsql(
-                    configuration.GetConnectionString("DefaultConnection")));//,
-                    // builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                    configuration.GetConnectionString("DefaultConnection"),
+                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IFakeEmailSender, FakeEmailSender>();
