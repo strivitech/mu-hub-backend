@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using MuHub.Application.Contracts.Infrastructure;
 using MuHub.Application.Contracts.Persistence;
+using MuHub.Infrastructure.Persistence;
 using MuHub.Infrastructure.Services;
 
 namespace MuHub.Infrastructure;
@@ -23,7 +24,7 @@ public static class ServicesConfigurator
                     configuration.GetConnectionString("DefaultConnection"),
                     builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-        // services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IFakeEmailSender, FakeEmailSender>();
         services.AddScoped<IFakeStorage, FakeStorage>();
 
