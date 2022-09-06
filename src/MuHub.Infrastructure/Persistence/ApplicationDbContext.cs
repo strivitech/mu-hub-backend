@@ -1,21 +1,20 @@
 ﻿using System.Reflection;
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using MuHub.Application.Contracts.Persistence;
-using MuHub.Domain.Entities;
+using MuHub.Infrastructure.Identity;
 
 namespace MuHub.Infrastructure.Persistence;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
     
-    public DbSet<Info> Info => Set<Info>();
-
     public DbContext Instance => this;
     
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
