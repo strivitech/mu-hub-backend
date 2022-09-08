@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 using MuHub.Api.Common.Extensions.Startup;
+using MuHub.Api.Services;
 using MuHub.Api.Common.Factories;
 
 namespace MuHub.Api;
@@ -24,6 +25,8 @@ public static class ServicesConfigurator
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();
+        
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
