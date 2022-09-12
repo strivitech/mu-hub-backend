@@ -37,6 +37,8 @@ public static class Startup
             // app.UseSwaggerUI();
         }
 
+        app.UseExceptionHandler("/error");
+        
         app.UseSwaggerWithApiVersioning();
         
         app.UseHttpsRedirection();
