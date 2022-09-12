@@ -28,8 +28,9 @@ public class InfoController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateInfoRequest request)
     {
-        await _infoService.CreateAsync(request);
-
-        return Ok();
+        var result = await _infoService.CreateAsync(request);
+        return result.Match(
+            Ok,
+            errorResult => Problem(statusCode: StatusCodes.Status400BadRequest, title: errorResult.First().Description));
     }
 }
