@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MuHub.Application.Exceptions;
 using MuHub.Application.Services.Interfaces;
 
+using ValidationException = MuHub.Application.Exceptions.ValidationException;
+
 namespace MuHub.Application.Services.Implementations;
 
 // TODO: Add logging
@@ -38,7 +40,7 @@ public sealed class ModelValidationService : IModelValidationService
         
         if (!validationResult.IsValid)
         {
-            throw new ModelValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
     }
     
@@ -50,7 +52,7 @@ public sealed class ModelValidationService : IModelValidationService
         
         if (!validationResult.IsValid)
         {
-            throw new ModelValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
         }
     }
 

@@ -11,7 +11,7 @@ namespace MuHub.Application.Services.Interfaces;
 public interface IModelValidationService
 {
     /// <summary>
-    /// Validates the given model and throws an appropriate exception of type <see cref="ModelValidationException"/> if invalid.
+    /// Validates the given model and throws an appropriate exception of type <see cref="ValidationException"/> if invalid.
     /// </summary>
     /// <param name="model">Model to validate.</param>
     /// <param name="paramName">Parameter name.</param>
@@ -19,7 +19,7 @@ public interface IModelValidationService
     void EnsureValid<T>([NotNull]T model, [CallerArgumentExpression("model")]string? paramName = null);
     
     /// <summary>
-    /// Validates the given model and throws an appropriate exception of type <see cref="ModelValidationException"/> if invalid.
+    /// Validates the given model and throws an appropriate exception of type <see cref="ValidationException"/> if invalid.
     /// </summary>
     /// <param name="model">Model to validate.</param>
     /// <param name="paramName">Parameter name.</param>
