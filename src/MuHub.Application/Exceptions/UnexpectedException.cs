@@ -1,5 +1,8 @@
 ﻿namespace MuHub.Application.Exceptions;
 
+/// <summary>
+/// Exception thrown whenever an unexpected domain situation.
+/// </summary>
 [Serializable]
 public class UnexpectedException : DomainException
 {
