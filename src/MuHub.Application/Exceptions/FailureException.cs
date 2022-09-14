@@ -10,10 +10,6 @@ public class FailureException : DomainException
     {
     }
 
-    public FailureException(Exception ex) : this("Unhandled exception", ex)
-    {
-    }
-
     public FailureException(string? message) 
         : base(message)
     {

@@ -6,10 +6,6 @@
 [Serializable]
 public class UnexpectedException : DomainException
 {
-    public UnexpectedException(Exception ex) : this("Unhandled exception", ex)
-    {
-    }
-
     public UnexpectedException(string? message) 
         : base(message)
     {

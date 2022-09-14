@@ -10,10 +10,6 @@ public class NotFoundException : DomainException
     {
     }
 
-    public NotFoundException(Exception ex) : this("Unhandled exception", ex)
-    {
-    }
-
     public NotFoundException(string? objectName)
     {
         ObjectName = objectName;

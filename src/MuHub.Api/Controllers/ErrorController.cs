@@ -43,8 +43,8 @@ public class ErrorController : ControllerBase
         }
         
         var statusCode = RetrieveStatusCode(exception);
-            
-        return Problem(statusCode: statusCode, detail: exception.Message);
+
+        return Problem(statusCode: statusCode, detail: exception.Details);
     }
     
     private IActionResult ValidationProblem(ModelValidationException modelValidationException)
