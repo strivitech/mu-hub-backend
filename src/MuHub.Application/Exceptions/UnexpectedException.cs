@@ -3,10 +3,6 @@
 [Serializable]
 public class UnexpectedException : DomainException
 {
-    public UnexpectedException()
-    {
-    }
-
     public UnexpectedException(Exception ex) : this("Unhandled exception", ex)
     {
     }
@@ -15,9 +11,19 @@ public class UnexpectedException : DomainException
         : base(message)
     {
     }
+    
+    public UnexpectedException(string? message, Dictionary<string, string[]> additionalContext) 
+        : base(message, additionalContext)
+    {
+    }
 
     public UnexpectedException(string? message, Exception innerException) 
         : base(message, innerException)
+    {
+    }
+    
+    public UnexpectedException(string? message, Dictionary<string, string[]> additionalContext, Exception innerException) 
+        : base(message, additionalContext, innerException)
     {
     }
 
