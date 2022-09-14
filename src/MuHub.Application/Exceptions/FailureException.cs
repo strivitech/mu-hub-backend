@@ -14,21 +14,14 @@ public class FailureException : DomainException
     {
     }
 
-    public FailureException(string? objectName)
-    {
-        ObjectName = objectName;
-    }
-    
-    public FailureException(string? objectName, string? message) 
+    public FailureException(string? message) 
         : base(message)
     {
-        ObjectName = objectName;
     }
     
-    public FailureException(string? objectName, string? message, Dictionary<string, string[]> additionalContext) 
+    public FailureException(string? message, Dictionary<string, string[]> additionalContext) 
         : base(message, additionalContext)
     {
-        ObjectName = objectName;
     }
 
     public FailureException(string? message, Exception innerException) 
@@ -40,20 +33,6 @@ public class FailureException : DomainException
         : base(message, additionalContext, innerException)
     {
     }
-    
-    public FailureException(string? objectName, string? message, Exception innerException) 
-        : base(message, innerException)
-    {
-        ObjectName = objectName;
-    }
-    
-    public FailureException(string? objectName, string? message, Dictionary<string, string[]> additionalContext, Exception innerException) 
-        : base(message, additionalContext, innerException)
-    {
-        ObjectName = objectName;
-    }
 
-    public string? ObjectName { get; } 
-    
     public override ExceptionType ExceptionType => ExceptionType.Failure;
 }
