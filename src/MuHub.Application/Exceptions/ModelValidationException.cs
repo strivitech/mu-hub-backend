@@ -6,22 +6,22 @@ namespace MuHub.Application.Exceptions;
 /// An exception if a model isn't valid.
 /// </summary>
 [Serializable]
-public class ValidationException : DomainException
+public class ModelValidationException : DomainException
 {
     /// <summary>
-    /// Initializes a new instance of <see cref="ValidationException"/>.
+    /// Initializes a new instance of <see cref="ModelValidationException"/>.
     /// </summary>
-    public ValidationException()
+    public ModelValidationException()
         : base("One or more validation failures have occurred.")
     {
         Errors = new Dictionary<string, string[]>();
     }
 
     /// <summary>
-    /// Initializes a new instance of <see cref="ValidationException"/>.
+    /// Initializes a new instance of <see cref="ModelValidationException"/>.
     /// </summary>
     /// <param name="failures">Validation failures.</param>
-    public ValidationException(IEnumerable<ValidationFailure> failures)
+    public ModelValidationException(IEnumerable<ValidationFailure> failures)
         : this()
     {
         Errors = failures
