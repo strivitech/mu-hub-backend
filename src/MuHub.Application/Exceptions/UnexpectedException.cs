@@ -4,7 +4,7 @@
 /// Exception thrown whenever an unexpected domain situation.
 /// </summary>
 [Serializable]
-public class UnexpectedException : DomainException
+public sealed class UnexpectedException : DomainException
 {
     public UnexpectedException(string? message) 
         : base(message)

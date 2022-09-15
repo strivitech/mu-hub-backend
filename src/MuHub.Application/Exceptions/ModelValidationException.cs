@@ -6,7 +6,7 @@ namespace MuHub.Application.Exceptions;
 /// An exception if a model isn't valid.
 /// </summary>
 [Serializable]
-public class ModelValidationException : DomainException
+public sealed class ModelValidationException : DomainException
 {
     /// <summary>
     /// Initializes a new instance of <see cref="ModelValidationException"/>.

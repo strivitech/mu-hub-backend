@@ -64,6 +64,7 @@ public class ErrorController : ControllerBase
         return exception switch
         {
             NotFoundException => StatusCodes.Status404NotFound,
+            ClientFailureException => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status500InternalServerError
         };
     }

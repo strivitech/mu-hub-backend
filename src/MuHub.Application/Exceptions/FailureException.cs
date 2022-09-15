@@ -4,31 +4,29 @@
 /// Exception thrown when a failure occured while processing domain.
 /// </summary>
 [Serializable]
-public class FailureException : DomainException
+public abstract class FailureException : DomainException
 {
-    public FailureException()
+    protected FailureException()
     {
     }
 
-    public FailureException(string? message) 
+    protected FailureException(string? message) 
         : base(message)
     {
     }
-    
-    public FailureException(string? message, Dictionary<string, string[]> additionalContext) 
+
+    protected FailureException(string? message, Dictionary<string, string[]> additionalContext) 
         : base(message, additionalContext)
     {
     }
 
-    public FailureException(string? message, Exception innerException) 
+    protected FailureException(string? message, Exception innerException) 
         : base(message, innerException)
     {
     }
-    
-    public FailureException(string? message, Dictionary<string, string[]> additionalContext, Exception innerException) 
+
+    protected FailureException(string? message, Dictionary<string, string[]> additionalContext, Exception innerException) 
         : base(message, additionalContext, innerException)
     {
     }
-
-    public override ExceptionType ExceptionType => ExceptionType.Failure;
 }

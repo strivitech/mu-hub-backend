@@ -4,7 +4,7 @@
 /// Exception thrown when an object is not found.
 /// </summary>
 [Serializable]
-public class NotFoundException : DomainException
+public sealed class NotFoundException : DomainException
 {
     public NotFoundException()
     {

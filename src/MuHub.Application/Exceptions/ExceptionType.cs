@@ -6,9 +6,10 @@
 [Serializable]
 public enum ExceptionType : byte
 {
-    Failure = 0,
-    Unexpected = 1,
-    Validation = 2,
-    Conflict = 3,
-    NotFound = 4,
+    ClientFailure = 0,
+    LogicFailure = 1,
+    Unexpected = 2,
+    Validation = 3,
+    Conflict = 4,
+    NotFound = 5,
 }
