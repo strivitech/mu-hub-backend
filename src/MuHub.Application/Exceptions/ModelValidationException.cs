@@ -2,11 +2,11 @@
 
 namespace MuHub.Application.Exceptions;
 
-// TODO: think maybe choose another approach
 /// <summary>
 /// An exception if a model isn't valid.
 /// </summary>
-public class ModelValidationException : Exception
+[Serializable]
+public sealed class ModelValidationException : DomainException
 {
     /// <summary>
     /// Initializes a new instance of <see cref="ModelValidationException"/>.
@@ -33,4 +33,6 @@ public class ModelValidationException : Exception
     /// Contains validation errors.
     /// </summary>
     public IDictionary<string, string[]> Errors { get; }
+
+    public override ExceptionType ExceptionType => ExceptionType.Validation;
 }

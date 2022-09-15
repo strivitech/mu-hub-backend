@@ -10,7 +10,7 @@ namespace MuHub.Api.Controllers.V1;
 [ApiController]
 [ApiVersion(1.0)]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class InfoController : ControllerBase
+public class InfoController : MuControllerBase
 {
     private readonly IInfoService _infoService;
 
@@ -28,8 +28,9 @@ public class InfoController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateInfoRequest request)
     {
-        await _infoService.CreateAsync(request);
-
-        return Ok();
+        var result = await _infoService.CreateAsync(request);
+        return result.Match(
+            Ok,
+            errorResult => Problem(statusCode: StatusCodes.Status400BadRequest, title: errorResult.First().Description));
     }
 }
