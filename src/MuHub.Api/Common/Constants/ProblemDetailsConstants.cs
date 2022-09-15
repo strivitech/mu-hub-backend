@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains constants for problem details.
 /// </summary>
-public class ProblemDetailsConstants
+public static class ProblemDetailsConstants
 {
     /// <summary>
     /// AdditionalContext key.
