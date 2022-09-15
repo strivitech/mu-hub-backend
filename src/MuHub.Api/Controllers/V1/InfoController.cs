@@ -10,7 +10,7 @@ namespace MuHub.Api.Controllers.V1;
 [ApiController]
 [ApiVersion(1.0)]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class InfoController : ControllerBase
+public class InfoController : MuControllerBase
 {
     private readonly IInfoService _infoService;
 
