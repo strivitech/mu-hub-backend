@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
+using ErrorOr;
+
 using MuHub.Application.Exceptions;
 
 namespace MuHub.Application.Services.Interfaces;
@@ -28,13 +30,22 @@ public interface IModelValidationService
     /// </returns>
     Task EnsureValidAsync<T>([NotNull]T model, [CallerArgumentExpression("model")]string? paramName = null);
 
+    List<Error>? DetermineIfValid<T>(
+        [NotNull] T model,
+        [CallerArgumentExpression("model")] string? paramName = null);
+
+    Task<List<Error>?> DetermineIfValidAsync<T>(
+        [NotNull] T model,
+        [CallerArgumentExpression("model")] string? paramName = null);
+    
     /// <summary>
     /// Determines whether the model is valid or not.
     /// </summary>
     /// <param name="model">Model to validate.</param>
     /// <typeparam name="T">The type of model.</typeparam>
     /// <returns>The result contains true if valid; otherwise, false.</returns>
-    bool CheckIfValid<T>(T model);
+    
+    bool CheckIfValid<T>([NotNull]T model, [CallerArgumentExpression("model")] string? paramName = null);
     
     /// <summary>
     /// Asynchronously determines whether the model is valid or not.
@@ -44,5 +55,5 @@ public interface IModelValidationService
     /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.
     /// The task result contains true if valid; otherwise, false.
     /// </returns>
-    Task<bool> CheckIfValidAsync<T>(T model);
+    Task<bool> CheckIfValidAsync<T>([NotNull]T model, [CallerArgumentExpression("model")] string? paramName = null);
 }
