@@ -4,7 +4,7 @@ namespace MuHub.Application.Models.Errors;
 
 public static partial class Errors
 {
-    public class User
+    public static class User
     {
         public static Error NotFound => Error.NotFound("User.NotFound", "User was not found");
         public static Error AlreadyExists => Error.Conflict("User.AlreadyExists", "User already exists");
