@@ -30,27 +30,46 @@ public interface IModelValidationService
     /// </returns>
     Task EnsureValidAsync<T>([NotNull]T model, [CallerArgumentExpression("model")]string? paramName = null);
 
+    /// <summary>
+    /// Determines whether the model is valid or not.
+    /// </summary>
+    /// <param name="model">Model to validate.</param>
+    /// <param name="paramName">Parameter name.</param>
+    /// <typeparam name="T">The type of model.</typeparam>
+    /// <returns>The result contains a <see cref="List{T}"/> of <see cref="Error"/> if model is incorrect; otherwise, null.</returns>
     List<Error>? DetermineIfValid<T>(
         [NotNull] T model,
         [CallerArgumentExpression("model")] string? paramName = null);
 
+    
+    /// <summary>
+    /// Asynchronously determines whether the model is valid or not.
+    /// </summary>
+    /// <param name="model">Model to validate.</param>
+    /// <param name="paramName">Parameter name.</param>
+    /// <typeparam name="T">The type of model.</typeparam>
+    /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.
+    /// The task result contains a <see cref="List{T}"/> of <see cref="Error"/> if model is incorrect; otherwise, null.
+    /// </returns>
     Task<List<Error>?> DetermineIfValidAsync<T>(
         [NotNull] T model,
         [CallerArgumentExpression("model")] string? paramName = null);
     
     /// <summary>
-    /// Determines whether the model is valid or not.
+    /// Checks whether the model is valid or not.
     /// </summary>
     /// <param name="model">Model to validate.</param>
+    /// <param name="paramName">Parameter name.</param>
     /// <typeparam name="T">The type of model.</typeparam>
     /// <returns>The result contains true if valid; otherwise, false.</returns>
     
     bool CheckIfValid<T>([NotNull]T model, [CallerArgumentExpression("model")] string? paramName = null);
     
     /// <summary>
-    /// Asynchronously determines whether the model is valid or not.
+    /// Asynchronously checks whether the model is valid or not.
     /// </summary>
     /// <param name="model">Model to validate.</param>
+    /// <param name="paramName">Parameter name.</param>
     /// <typeparam name="T">The type of model.</typeparam>
     /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.
     /// The task result contains true if valid; otherwise, false.
