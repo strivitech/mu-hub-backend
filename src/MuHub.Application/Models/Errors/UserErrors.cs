@@ -6,11 +6,12 @@ public static partial class Errors
 {
     public class User
     {
-        public static Error NotFound => Error.NotFound("User.NotFound", "User not found");
+        public static Error NotFound => Error.NotFound("User.NotFound", "User was not found");
         public static Error AlreadyExists => Error.Conflict("User.AlreadyExists", "User already exists");
         public static Error NotActive => Error.Failure("User.NotActive", "User is not active");
-        public static Error CreationFailed => Error.Failure("User.CreationFailed", "User was not created because of errors");
-        public static Error AddToRoleFailed => Error.Failure("User.AddToRoleFailed", "User was not created because of errors");
+        public static Error CreationFailed => Error.Failure("User.CreationFailed", "User was not created");
+        public static Error AddToRoleFailed => Error.Failure("User.AddToRoleFailed", "User was not added to role");
+        public static Error DeletionFailed => Error.Failure("User.DeletionFailed", "User was not deleted");
         public static Error NotConfirmed => Error.Failure("User.NotConfirmed", "User is not confirmed");
         public static Error IsLockedOut => Error.Failure("User.IsLockedOut", "User is locked out");
         public static Error IsDeleted => Error.Failure("User.IsDeleted", "User is deleted");
