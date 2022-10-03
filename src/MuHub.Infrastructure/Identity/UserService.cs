@@ -15,39 +15,33 @@ namespace MuHub.Infrastructure.Identity;
 
 public class UserService : IUserService
 {
-    private readonly IModelValidationService _modelValidationService;
     private readonly UserManager<User> _userManager;
     private readonly IApplicationDbContext _applicationDbContext;
 
     public UserService(
-        IModelValidationService modelValidationService,
         UserManager<User> userManager,
         IApplicationDbContext applicationDbContext)
     {
-        _modelValidationService = modelValidationService;
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         _applicationDbContext = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
     }
 
-    public async Task<ErrorOr<UserDto>> CreateUserAsync(CreateUserRequest request)
+    public async Task<ErrorOr<UserDto>> CreateAsync(CreateUserRequest request)
     {
-        var result = await _modelValidationService.DetermineIfValidAsync(request);
-        if (result is not null)
-        {
-            return result;
-        }
-        // await _modelValidationService.EnsureValidAsync(request);
-
+        ArgumentNullException.ThrowIfNull(request);
+        
         var user = MapCreateUserRequestToUser(request);
         try
         {
             await using var transaction = await _applicationDbContext.Instance.Database.BeginTransactionAsync();
+            
             var createResult = await _userManager.CreateAsync(user, request.Password);
             if (!createResult.Succeeded)
             {
                 await transaction.RollbackAsync();
                 return Errors.User.CreationFailed;
             }
+            
             var addToRoleResult = await _userManager.AddToRoleAsync(user, request.RoleName);
             if (!addToRoleResult.Succeeded)
             {
@@ -66,7 +60,26 @@ public class UserService : IUserService
         }
     }
 
-    private User MapCreateUserRequestToUser(CreateUserRequest request)
+    public async Task<ErrorOr<string>> DeleteAsync(string userId)
+    {
+        ArgumentNullException.ThrowIfNull(userId);
+        
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user is null)
+        {
+            return Errors.User.NotFound;
+        }
+        
+        var deletionResult = await _userManager.DeleteAsync(user);
+        if (!deletionResult.Succeeded)
+        {
+            return Errors.User.DeletionFailed;
+        }
+        
+        return userId;
+    }
+    
+    private static User MapCreateUserRequestToUser(CreateUserRequest request)
     {
         return new User()
         {
@@ -79,7 +92,7 @@ public class UserService : IUserService
         };
     }
 
-    private UserDto MapUserToUserDto(User request)
+    private static UserDto MapUserToUserDto(User request)
     {
         return new UserDto
         {

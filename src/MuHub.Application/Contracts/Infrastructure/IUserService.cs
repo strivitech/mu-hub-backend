@@ -7,5 +7,6 @@ namespace MuHub.Application.Contracts.Infrastructure;
 
 public interface IUserService
 {
-    Task<ErrorOr<UserDto>> CreateUserAsync(CreateUserRequest request);
+    Task<ErrorOr<UserDto>> CreateAsync(CreateUserRequest request);
+    Task<ErrorOr<string>> DeleteAsync(string userId);
 }
