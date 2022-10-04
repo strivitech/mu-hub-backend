@@ -26,7 +26,7 @@ public static class ServicesConfigurator
         services.AddHttpContextAccessor();
         
         // Uncomment if want to suppress the model validation filter immediate responses.
-        // Should check validation flow.
+        // Should check validation flow for primitive types.
         // services.Configure<ApiBehaviorOptions>(options =>
         // {
         //     options.SuppressModelStateInvalidFilter = true;
