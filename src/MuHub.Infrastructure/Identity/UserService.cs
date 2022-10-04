@@ -29,6 +29,11 @@ public class UserService : IUserService
     public async Task<ErrorOr<UserDto>> CreateAsync(CreateUserRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
+
+        if (await UserAlreadyExist(request.Login))
+        {
+            return Errors.User.AlreadyExists;
+        }
         
         var user = MapCreateUserRequestToUser(request);
         try
@@ -78,7 +83,13 @@ public class UserService : IUserService
         
         return userId;
     }
-    
+
+    private async Task<bool> UserAlreadyExist(string login)
+    {
+        var user = await _userManager.FindByEmailAsync(login);
+        return user is not null;
+    }
+
     private static User MapCreateUserRequestToUser(CreateUserRequest request)
     {
         return new User()
