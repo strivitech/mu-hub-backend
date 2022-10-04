@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+﻿using System.Reflection;
 
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+
+using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Extensions.Startup;
 using MuHub.Api.Common.Factories;
+using MuHub.Api.Common.Filters;
+using MuHub.Application.Models.Requests.Info;
 
 namespace MuHub.Api;
 
@@ -18,8 +24,22 @@ public static class ServicesConfigurator
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
+        
+        // Uncomment if want to suppress the model validation filter immediate responses.
+        // Should check validation flow.
+        // services.Configure<ApiBehaviorOptions>(options =>
+        // {
+        //     options.SuppressModelStateInvalidFilter = true;
+        // });
 
-        services.AddControllers();
+        services.AddControllers(options =>
+        {
+            options.Filters.Add<ApiModelValidationFilter>();
+        })
+            .RegisterValidatorsInAssemblyList(new List<Assembly>
+            {
+                typeof(CreateInfoRequest).Assembly
+            });
 
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
         services.AddApiControllersVersioning();
