@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using MuHub.Application.Contracts.Infrastructure;
 using MuHub.Application.Contracts.Persistence;
+using MuHub.Infrastructure.Identity;
 using MuHub.Infrastructure.Persistence;
 using MuHub.Infrastructure.Services;
 
@@ -24,9 +26,14 @@ public static class ServicesConfigurator
                     configuration.GetConnectionString("DefaultConnection"),
                     builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
+        services.AddIdentityCore<User>()
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+        
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IFakeEmailSender, FakeEmailSender>();
         services.AddScoped<IFakeStorage, FakeStorage>();
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }

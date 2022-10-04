@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
+using ErrorOr;
+
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -18,6 +20,7 @@ namespace MuHub.Application.Services.Implementations;
 /// </summary>
 public sealed class ModelValidationService : IModelValidationService
 {
+    private const string ValidationPrefix = "General.ModelValidation";
     private readonly IServiceProvider _serviceProvider;
 
     /// <summary>
@@ -53,25 +56,41 @@ public sealed class ModelValidationService : IModelValidationService
             throw new ModelValidationException(validationResult.Errors);
         }
     }
-
-    public bool CheckIfValid<T>(T model)
+    
+    public List<Error>? DetermineIfValid<T>([NotNull]T model, [CallerArgumentExpression("model")] string? paramName = null)
     {
-        if (model is null)
-        {
-            return false;
-        }
+        ArgumentNullException.ThrowIfNull(model, paramName);
+
+        var validationResult = Validate(model);
+        
+        return !validationResult.IsValid 
+            ? validationResult.Errors.Select(x => Error.Validation($"{ValidationPrefix}.{x.ErrorCode}", x.ErrorMessage)).ToList()
+            : null;
+    }
+    
+    public async Task<List<Error>?> DetermineIfValidAsync<T>([NotNull]T model, [CallerArgumentExpression("model")] string? paramName = null)
+    {
+        ArgumentNullException.ThrowIfNull(model, paramName);
+
+        var validationResult = await ValidateAsync(model);
+        
+        return !validationResult.IsValid 
+            ? validationResult.Errors.Select(x => Error.Validation(x.PropertyName, x.ErrorMessage)).ToList()
+            : null;
+    }
+
+    public bool CheckIfValid<T>([NotNull]T model, [CallerArgumentExpression("model")] string? paramName = null)
+    {
+        ArgumentNullException.ThrowIfNull(model, paramName);
 
         var validationResult = Validate(model);
         
         return validationResult.IsValid;
     }
     
-    public async Task<bool> CheckIfValidAsync<T>(T model)
+    public async Task<bool> CheckIfValidAsync<T>([NotNull]T model, [CallerArgumentExpression("model")] string? paramName = null)
     {
-        if (model is null)
-        {
-            return false;
-        }
+        ArgumentNullException.ThrowIfNull(model, paramName);
 
         var validationResult = await ValidateAsync(model);
         
