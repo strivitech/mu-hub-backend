@@ -5,6 +5,8 @@ using FluentValidation.Results;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Factories;
@@ -17,14 +19,19 @@ namespace MuHub.Api.Common.Filters;
 public class ApiModelValidationFilter : IAsyncActionFilter
 {
     private readonly ICustomModelValidationFactory _validatorFactory;
+    private readonly ProblemDetailsFactory _problemDetailsFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ApiModelValidationFilter"/> class.
     /// </summary>
     /// <param name="validatorFactory">Factory of validator.</param>
-    public ApiModelValidationFilter(ICustomModelValidationFactory validatorFactory)
+    /// <param name="problemDetailsFactory">Problem details factory.</param>
+    public ApiModelValidationFilter(
+        ICustomModelValidationFactory validatorFactory,
+        ProblemDetailsFactory problemDetailsFactory)
     {
         _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
+        _problemDetailsFactory = problemDetailsFactory ?? throw new ArgumentNullException(nameof(problemDetailsFactory));
     }
     
     /// <summary>
@@ -57,7 +64,24 @@ public class ApiModelValidationFilter : IAsyncActionFilter
             return;
         }
 
-        context.Result = new BadRequestObjectResult(validationFailures.ToProblemDetails());
+        context.Result = CreateBadRequestValidationProblem(context.HttpContext, validationFailures);
+    }
+
+    private BadRequestObjectResult CreateBadRequestValidationProblem(
+        HttpContext httpContext,
+        List<ValidationFailure> validationFailures)
+    {
+        var modelStateDictionary = new ModelStateDictionary();
+                
+        foreach (var validationFailure in validationFailures)
+        {
+            modelStateDictionary.AddModelError(validationFailure.PropertyName, validationFailure.ErrorMessage);
+        }
+        
+        var problemDetails = _problemDetailsFactory.
+            CreateValidationProblemDetails(httpContext, modelStateDictionary, statusCode: StatusCodes.Status400BadRequest);
+
+        return new BadRequestObjectResult(problemDetails);
     }
     
     private async Task<IEnumerable<ValidationFailure>> GetValidationErrorsAsync(object? value)
