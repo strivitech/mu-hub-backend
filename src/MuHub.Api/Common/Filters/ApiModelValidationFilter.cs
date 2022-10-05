@@ -19,19 +19,22 @@ public class ApiModelValidationFilter : IAsyncActionFilter
     private readonly ICustomModelValidationFactory _validatorFactory;
 
     /// <summary>
-    /// 
+    /// Initializes a new instance of the <see cref="ApiModelValidationFilter"/> class.
     /// </summary>
-    /// <param name="validatorFactory"></param>
+    /// <param name="validatorFactory">Factory of validator.</param>
     public ApiModelValidationFilter(ICustomModelValidationFactory validatorFactory)
     {
         _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
     }
     
     /// <summary>
-    /// 
+    /// Called asynchronously before the action, after model binding is complete.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="next"></param>
+    /// <param name="context">The <see cref="ActionExecutingContext"/>.</param>
+    /// <param name="next">
+    /// The <see cref="ActionExecutionDelegate"/>. Invoked to execute the next action filter or the action itself.
+    /// </param>
+    /// <returns>A <see cref="Task"/> that on completion indicates the filter has executed.</returns>
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         if (!context.ActionArguments.Any())
