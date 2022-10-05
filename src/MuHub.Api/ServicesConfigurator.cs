@@ -31,8 +31,6 @@ public static class ServicesConfigurator
         })
             .RegisterValidatorsInAssemblyList(new List<Assembly>
             {
-                typeof(Application.ServicesConfigurator).Assembly,
-                typeof(Infrastructure.ServicesConfigurator).Assembly,
                 typeof(ServicesConfigurator).Assembly,
             });
 
