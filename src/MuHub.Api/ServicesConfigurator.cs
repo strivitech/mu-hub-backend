@@ -31,7 +31,9 @@ public static class ServicesConfigurator
         })
             .RegisterValidatorsInAssemblyList(new List<Assembly>
             {
-                typeof(CreateInfoRequest).Assembly
+                typeof(Application.ServicesConfigurator).Assembly,
+                typeof(Infrastructure.ServicesConfigurator).Assembly,
+                typeof(ServicesConfigurator).Assembly,
             });
 
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
