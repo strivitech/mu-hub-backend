@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+﻿using System.Reflection;
 
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+
+using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Extensions.Startup;
 using MuHub.Api.Common.Factories;
+using MuHub.Api.Common.Filters;
+using MuHub.Application.Models.Requests.Info;
 
 namespace MuHub.Api;
 
@@ -19,7 +25,14 @@ public static class ServicesConfigurator
     {
         services.AddHttpContextAccessor();
 
-        services.AddControllers();
+        services.AddControllers(options =>
+        {
+            options.Filters.Add<ApiModelValidationFilter>();
+        })
+            .RegisterValidatorsInAssemblyList(new List<Assembly>
+            {
+                typeof(ServicesConfigurator).Assembly,
+            });
 
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
         services.AddApiControllersVersioning();
