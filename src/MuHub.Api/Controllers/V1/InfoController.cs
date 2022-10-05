@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-using Asp.Versioning;
+﻿using Asp.Versioning;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,18 +25,12 @@ public class InfoController : MuControllerBase
         return Ok("V1");
     }
     
-    // [HttpPost]
-    // public async Task<IActionResult> Create(CreateInfoRequest request)
-    // {
-    //     var result = await _infoService.CreateAsync(request);
-    //     return result.Match(
-    //         Ok,
-    //         errorResult => Problem(statusCode: StatusCodes.Status400BadRequest, title: errorResult.First().Description));
-    // }
-    
     [HttpPost]
-    public async Task<IActionResult> Create(string request, string id)
+    public async Task<IActionResult> Create(CreateInfoRequest request)
     {
-        return Ok(request);
+        var result = await _infoService.CreateAsync(request);
+        return result.Match(
+            Ok,
+            errorResult => Problem(statusCode: StatusCodes.Status400BadRequest, title: errorResult.First().Description));
     }
 }
