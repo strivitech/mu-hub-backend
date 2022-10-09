@@ -7,6 +7,8 @@ using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Extensions.Startup;
 using MuHub.Api.Common.Factories;
 using MuHub.Api.Common.Filters;
+using MuHub.Api.Services;
+using MuHub.Application.Contracts.Infrastructure;
 using MuHub.Application.Models.Requests.Info;
 
 namespace MuHub.Api;
@@ -35,6 +37,11 @@ public static class ServicesConfigurator
             });
 
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
+        
+        services.AddScoped<IUserSessionData, CurrentUserSessionData>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<IAuthService, AuthService>();
+
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();
 
