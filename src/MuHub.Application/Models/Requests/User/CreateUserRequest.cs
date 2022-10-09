@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-using MuHub.Application.Common.Constants;
-
-namespace MuHub.Application.Models.Requests.User;
+﻿namespace MuHub.Application.Models.Requests.User;
 
 public class CreateUserRequest
 {
