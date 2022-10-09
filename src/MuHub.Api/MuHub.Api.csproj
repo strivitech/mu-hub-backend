@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MuHub.Infrastructure\MuHub.Infrastructure.csproj" />
+      <ProjectReference Include="..\MuHub.Shared\MuHub.Shared.csproj" />
     </ItemGroup>
 
 </Project>
