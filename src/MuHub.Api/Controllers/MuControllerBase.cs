@@ -57,6 +57,17 @@ public abstract class MuControllerBase : ControllerBase
         return Problem(statusCode: statusCode, detail: firstError.Description);
     }
     
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="error"></param>
+    /// <param name="statusCode"></param>
+    /// <returns></returns>
+    protected IActionResult Problem(Error error, int statusCode)
+    {
+        return Problem(statusCode: statusCode, detail: error.Description);
+    }
+    
     private IActionResult Problem(DomainException exception)
     {
         if (exception.AdditionalContext is not null)
