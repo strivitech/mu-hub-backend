@@ -1,6 +1,6 @@
 ﻿namespace MuHub.Shared.Constants.Api;
 
-public static class ErrorCodes
+public static class ErrorTypeCodes
 {
     /// <summary>
     /// HTTP status code 100.
