@@ -1,6 +1,8 @@
-﻿namespace MuHub.Application.Models.Data;
+﻿using MuHub.Domain.Common.Entities;
 
-public class UserDto
+namespace MuHub.Domain.Entities;
+
+public class User : IEntity
 {
     /// <summary>
     /// Gets or sets the primary key for this user.
