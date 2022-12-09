@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using MuHub.Application.Contracts.Persistence;
-using MuHub.Infrastructure.Identity;
 
 namespace MuHub.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
