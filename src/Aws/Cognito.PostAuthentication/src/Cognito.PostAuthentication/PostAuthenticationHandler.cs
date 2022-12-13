@@ -15,6 +15,7 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
     public const string Uri = "https://api.strivitech.me";
     private const string AppLinkingName = "MuHub";
     private const string UserAttributesSubName = "sub";
+    private const string ApplicationUserIdName = "applicationUserId";
     private const uint PooledConnectionLifetimeValue = 1;
     
     // HttpClient only resolves DNS entries when a connection is created
@@ -43,6 +44,12 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
                             $"TriggerEvent {JsonSerializer.Serialize(TriggerEvent)}");
             throw new CognitoPostAuthenticationException("Identity user id is null or empty");
         }
+
+        if (AppUserIdLinked())
+        {
+            Logger.LogInformation($"User Identity Id {identityUserId} has been already linked to app {AppLinkingName}");
+            return await base.HandleTriggerEventAsync();
+        }
         
         Logger.LogDebug("Started handling post authentication trigger event for user with identity user id: " +
                         $"{identityUserId}. Trying to link user to app with name: {AppLinkingName}");
@@ -54,6 +61,10 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
             if (string.IsNullOrEmpty(userLinkRegistrationData?.ApplicationUserId))
             {
                 Logger.LogError("Linking was not successful. Application user id is null or empty");
+
+                throw new CognitoPostAuthenticationException(
+                    $"Linking to identityUserId {identityUserId} was not successful." +
+                    "Application user id is null or empty");
             }
             
             Logger.LogInformation("Successfully linked user with identity user id: " +
@@ -96,5 +107,21 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
                         $"Response {JsonSerializer.Serialize(userLinkRegistrationData)}");
 
         return userLinkRegistrationData;
+    }
+
+    private bool AppUserIdLinked()
+    {
+        string? applicationUserIdValue = null;
+        var containsApplicationUserId = TriggerEvent.Request?.UserAttributes?
+            .TryGetValue(ApplicationUserIdName, out applicationUserIdValue);
+
+        if (containsApplicationUserId is null || !containsApplicationUserId.Value)
+        {
+            throw new InvalidOperationException(
+                $"Field {nameof(containsApplicationUserId)} is not accessible in user attributes." +
+                "Check if UserAttributes exists in request.");
+        }
+
+        return !string.IsNullOrEmpty(applicationUserIdValue);
     }
 }
