@@ -1,6 +1,8 @@
 ﻿using Amazon.CognitoIdentityProvider;
 using Amazon.CognitoIdentityProvider.Model;
 
+using Cognito.Common;
+
 using Microsoft.Extensions.Options;
 
 using MuHub.Api.Common.Configurations.Identity;
@@ -50,32 +52,35 @@ public class IdentityProvider : IIdentityProvider
 
         if (response is null)
         {
-            throw new InvalidOperationException($"Failed to fetch user data for user with userName {userName}");
+            throw new InvalidOperationException($"Failed to fetch user data for UserName {userName}");
         }
 
         return GenerateGetIdentityProviderUserResponse(response);
     }
 
-    private static GetIdentityProviderUserResponse GenerateGetIdentityProviderUserResponse(AdminGetUserResponse response)
+    private static GetIdentityProviderUserResponse GenerateGetIdentityProviderUserResponse(
+        AdminGetUserResponse response)
     {
         var userAttributes = response.UserAttributes;
-     
-        // TODO: move to constants
+        
         return new GetIdentityProviderUserResponse
         {
-            IdentityProviderId = FindRequiredValueFromUserAttributes(userAttributes, "sub"),
+            IdentityProviderId = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.Sub),
             UserName = response.Username,
-            Email = FindRequiredValueFromUserAttributes(userAttributes, "email"),
-            EmailConfirmed = Boolean.Parse(FindRequiredValueFromUserAttributes(userAttributes, "emailConfirmed")),
-            PhoneNumber = FindRequiredValueFromUserAttributes(userAttributes, "phoneNumber"),
+            Email = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.Email),
+            EmailConfirmed =
+                Boolean.Parse(FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.EmailConfirmed)),
+            PhoneNumber = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.PhoneNumber),
             PhoneNumberConfirmed =
-                Boolean.Parse(FindRequiredValueFromUserAttributes(userAttributes, "phoneNumberConfirmed")),
-            RoleName = FindRequiredValueFromUserAttributes(userAttributes, "group"),
-            CreatedAt = DateTimeOffset.Parse(FindRequiredValueFromUserAttributes(userAttributes, "createdAt"))
+                Boolean.Parse(FindRequiredValueFromUserAttributes(userAttributes,
+                    UserAttributesNames.PhoneNumberConfirmed)),
+            RoleName = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.Group),
+            CreatedAt = DateTimeOffset.Parse(
+                FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.CreatedAt))
         };
     }
-    
+
     private static string FindRequiredValueFromUserAttributes(List<AttributeType> userAttributes, string propName)
-        => userAttributes.Find(x => x.Name == propName)?.Value 
+        => userAttributes.Find(x => x.Name == propName)?.Value
            ?? throw new InvalidOperationException($"Value for name {propName} is null");
 }

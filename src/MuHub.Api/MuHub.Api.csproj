@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Aws\Cognito.Common\Cognito.Common.csproj" />
       <ProjectReference Include="..\MuHub.Infrastructure\MuHub.Infrastructure.csproj" />
     </ItemGroup>
 

@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognito.Events.Shared", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognito.PostAuthentication", "src\Aws\Cognito.PostAuthentication\src\Cognito.PostAuthentication\Cognito.PostAuthentication.csproj", "{96FAAD6D-BAE2-4B30-B9B5-DBFA4D0ED5B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognito.Common", "src\Aws\Cognito.Common\Cognito.Common.csproj", "{7D66D01F-5746-4B22-8F7D-604A0D55041B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,7 @@ Global
 		{76947BF8-DEDF-44DD-919D-9CA0488AEEC9} = {AAF5773A-9525-4189-81C6-4FE4828BCB2C}
 		{B80FD4DA-5A7A-4AB9-98D4-19CB6007D542} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
 		{96FAAD6D-BAE2-4B30-B9B5-DBFA4D0ED5B4} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
+		{7D66D01F-5746-4B22-8F7D-604A0D55041B} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -77,5 +80,9 @@ Global
 		{96FAAD6D-BAE2-4B30-B9B5-DBFA4D0ED5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96FAAD6D-BAE2-4B30-B9B5-DBFA4D0ED5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96FAAD6D-BAE2-4B30-B9B5-DBFA4D0ED5B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D66D01F-5746-4B22-8F7D-604A0D55041B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D66D01F-5746-4B22-8F7D-604A0D55041B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D66D01F-5746-4B22-8F7D-604A0D55041B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D66D01F-5746-4B22-8F7D-604A0D55041B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
