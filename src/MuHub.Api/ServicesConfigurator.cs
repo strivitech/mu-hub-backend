@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using Amazon.CognitoIdentityProvider;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
@@ -7,6 +9,8 @@ using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Extensions.Startup;
 using MuHub.Api.Common.Factories;
 using MuHub.Api.Common.Filters;
+using MuHub.Api.Services;
+using MuHub.Application.Contracts.Infrastructure;
 using MuHub.Application.Models.Requests.Info;
 
 namespace MuHub.Api;
@@ -35,6 +39,11 @@ public static class ServicesConfigurator
             });
 
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
+        services.AddScoped<IAmazonCognitoIdentityProvider, AmazonCognitoIdentityProviderClient>();
+        services.AddScoped<IIdentityProvider, IdentityProvider>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<IUserSessionData, CurrentUserSessionData>();
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();
 
