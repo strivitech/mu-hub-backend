@@ -19,7 +19,7 @@ public class AuthService : IAuthService
     private readonly IApplicationDbContext _dbContext;
     private readonly IIdentityProvider _identityProvider;
     private readonly IMapper _mapper;
-    private readonly ILogger _logger;
+    private readonly ILogger<AuthService> _logger;
     private readonly IModelValidationService _modelValidationService;
 
     /// <summary>
@@ -32,7 +32,7 @@ public class AuthService : IAuthService
     /// <param name="modelValidationService"></param>
     /// <exception cref="ArgumentNullException"></exception>
     public AuthService(IApplicationDbContext dbContext, IIdentityProvider identityProvider, IMapper mapper,
-        ILogger logger, IModelValidationService modelValidationService)
+        ILogger<AuthService> logger, IModelValidationService modelValidationService)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _identityProvider = identityProvider ?? throw new ArgumentNullException(nameof(identityProvider));

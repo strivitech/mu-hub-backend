@@ -26,10 +26,6 @@ public static class ServicesConfigurator
                     configuration.GetConnectionString("DefaultConnection"),
                     builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-        services.AddIdentityCore<User>()
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-        
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IFakeEmailSender, FakeEmailSender>();
         services.AddScoped<IFakeStorage, FakeStorage>();
