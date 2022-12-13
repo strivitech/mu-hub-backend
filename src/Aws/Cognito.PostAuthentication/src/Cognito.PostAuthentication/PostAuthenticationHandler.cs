@@ -15,7 +15,7 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
     public const string TriggerSourceName = "PostAuthentication_Authentication";
     public const string Uri = "https://api.strivitech.me";
     private const string AppLinkingName = "MuHub";
-    private const string UserAttributesSubName = "sub";
+    private const string UserAttributesUserName = "userName";
     private const string ApplicationUserIdName = "applicationUserId";
     private const uint PooledConnectionLifetimeMinutes = 1;
     
@@ -37,66 +37,60 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
 
     public override async Task<JsonElement> HandleTriggerEventAsync()
     {
-        var identityUserId = TriggerEvent.Request?.UserAttributes?[UserAttributesSubName];
-
-        if (string.IsNullOrEmpty(identityUserId))
-        {
-            Logger.LogError("Identity user id is null or empty." +
-                            $"TriggerEvent {JsonSerializer.Serialize(TriggerEvent)}");
-            throw new CognitoPostAuthenticationException("Identity user id is null or empty");
-        }
+        var identityUserName = TriggerEvent.Request?.UserAttributes?[UserAttributesUserName];
+        ValidateIdentityUserName(identityUserName);
 
         if (AppUserIdLinked())
         {
-            Logger.LogInformation($"User Identity Id {identityUserId} has been already linked to app {AppLinkingName}");
+            Logger.LogInformation($"UserName {identityUserName} has been already linked to app {AppLinkingName}");
             return await base.HandleTriggerEventAsync();
         }
         
-        Logger.LogDebug("Started handling post authentication trigger event for user with identity user id: " +
-                        $"{identityUserId}. Trying to link user to app with name: {AppLinkingName}");
+        Logger.LogDebug("Started handling a post authentication trigger event for user with UserName: " +
+                        $"{identityUserName}. Trying to link a user to app {AppLinkingName}");
 
         try
         {
-            var userLinkRegistrationData = await PostRelateUserRegistrationFlow(identityUserId);
+            var userLinkRegistrationData = await PostRelateUserRegistrationFlow(identityUserName);
 
             if (string.IsNullOrEmpty(userLinkRegistrationData?.ApplicationUserId))
             {
-                Logger.LogError("Linking was not successful. Application user id is null or empty");
+                Logger.LogError("Linking was not successful. ApplicationUserId is null or empty");
 
                 throw new CognitoPostAuthenticationException(
-                    $"Linking to identityUserId {identityUserId} was not successful." +
+                    $"Linking to UserName {identityUserName} was not successful." +
                     "Application user id is null or empty");
             }
             
-            Logger.LogInformation("Successfully linked user with identity user id: " +
-                            $"{identityUserId} to app with name: {AppLinkingName}");
+            Logger.LogInformation("Successfully linked the user with UserName: " +
+                            $"{identityUserName} to app {AppLinkingName}");
             
             return await base.HandleTriggerEventAsync();
         }
         catch (Exception ex)
         {
-            Logger.LogError("Failed to relate user registration flow." +
+            Logger.LogError("Failed to relate a user registration flow." +
                             $"Exception: {JsonSerializer.Serialize(ex)}");
-            throw new CognitoPostAuthenticationException("Failed to relate user registration flow", ex);
+            throw new CognitoPostAuthenticationException("Failed to relate a user registration flow", ex);
         }
     }
 
-    private async Task<UserLinkRegistrationDataResponse?> PostRelateUserRegistrationFlow(string identityUserId)
+    private async Task<UserLinkRegistrationDataResponse?> PostRelateUserRegistrationFlow(string? identityUserName)
     {
         var response = await HttpClient.PostAsync(
             requestUri: "Auth/RelateUserRegistrationFlow",
             content: new StringContent(
-                content: JsonSerializer.Serialize(identityUserId),
+                content: JsonSerializer.Serialize(identityUserName),
                 encoding: Encoding.UTF8,
                 mediaType: "application/json"
             ));
         
-        Logger.LogDebug("Response http code from linking user with identity user id: " +
-                        $"{identityUserId} to app with name: {AppLinkingName} is: {response.StatusCode}");
+        Logger.LogDebug("Response http code from linking the user with UserName: " +
+                        $"{identityUserName} to app {AppLinkingName} is: {response.StatusCode}");
         
         if (!response.IsSuccessStatusCode)
         {
-            Logger.LogError("Failed to relate user registration flow." +
+            Logger.LogError("Failed to relate a user registration flow." +
                             $"Response {JsonSerializer.Serialize(response)}");
             throw new CognitoPostAuthenticationException("Failed to relate user registration flow");
         }
@@ -119,10 +113,20 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
         if (containsApplicationUserId is null || !containsApplicationUserId.Value)
         {
             throw new InvalidOperationException(
-                $"Field {nameof(containsApplicationUserId)} is not accessible in user attributes." +
-                "Check if UserAttributes exists in request.");
+                $"Field {nameof(containsApplicationUserId)} is not accessible in the user attributes." +
+                "Check if UserAttributes exists in the request.");
         }
 
         return !string.IsNullOrEmpty(applicationUserIdValue);
+    }
+    
+    private void ValidateIdentityUserName(string? identityUserName)
+    {
+        if (string.IsNullOrEmpty(identityUserName))
+        {
+            Logger.LogError("Identity UserName is null or empty." +
+                            $"TriggerEvent {JsonSerializer.Serialize(TriggerEvent)}");
+            throw new CognitoPostAuthenticationException("Identity UserName is null or empty");
+        }
     }
 }
