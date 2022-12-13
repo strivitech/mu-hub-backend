@@ -12,13 +12,13 @@ public class PostAuthenticationFunction
     /// <summary>
     /// A simple function that takes a string and does a ToUpper
     /// </summary>
-    /// <param name="input"></param>
+    /// <param name="cognitoEvent"></param>
     /// <param name="context"></param>
     /// <returns></returns>
     [LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.CamelCaseLambdaJsonSerializer))]
     public async Task<JsonElement> HandleAsync(JsonElement cognitoEvent, ILambdaContext context)
     {
-        context.Logger.LogTrace("");
+        context.Logger.LogTrace("Start handling PostAuthenticationFunction");
         
         return await new PostAuthenticationHandler(cognitoEvent, context.Logger).HandleTriggerEventAsync();
     }
