@@ -6,5 +6,7 @@ namespace MuHub.Application.Contracts.Persistence;
 
 public interface IApplicationDbContext : IApplicationDbContextInstanceResolver
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    
+    DbSet<User> Users { get; }
 }
