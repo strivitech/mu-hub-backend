@@ -13,7 +13,9 @@ public class UserConstants
     /// <summary>
     /// 
     /// </summary>
-    public const string UserRole = "User";
+    public const string OrdinaryUserRole = "User";
+
+    public static readonly string[] UserRoles = { OrdinaryUserRole, AdminRole };
 
     /// <summary>
     /// Regex for the phone. Contains 6-14 numbers from 0-9 range, doesn't include + sign.
@@ -23,5 +25,5 @@ public class UserConstants
     /// <summary>
     /// Default user role.
     /// </summary>
-    public const string DefaultRoleName = UserRole;
+    public const string DefaultRoleName = OrdinaryUserRole;
 }
