@@ -9,6 +9,7 @@ using Cognito.Events.Shared.Exceptions;
 
 namespace Cognito.PostAuthentication;
 
+// TODO: Add retries
 public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticationEvent>
 {
     public const string TriggerSourceName = "PostAuthentication_Authentication";
@@ -16,12 +17,12 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
     private const string AppLinkingName = "MuHub";
     private const string UserAttributesSubName = "sub";
     private const string ApplicationUserIdName = "applicationUserId";
-    private const uint PooledConnectionLifetimeValue = 1;
+    private const uint PooledConnectionLifetimeMinutes = 1;
     
     // HttpClient only resolves DNS entries when a connection is created
     private static readonly HttpClient HttpClient = new(new SocketsHttpHandler
     {
-        PooledConnectionLifetime = TimeSpan.FromMinutes(PooledConnectionLifetimeValue)
+        PooledConnectionLifetime = TimeSpan.FromMinutes(PooledConnectionLifetimeMinutes)
     })
     {
         BaseAddress = new Uri(Uri)
