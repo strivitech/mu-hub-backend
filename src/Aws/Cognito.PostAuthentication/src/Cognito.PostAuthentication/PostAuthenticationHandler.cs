@@ -13,7 +13,8 @@ namespace Cognito.PostAuthentication;
 public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticationEvent>
 {
     public const string TriggerSourceName = "PostAuthentication_Authentication";
-    public const string Uri = "https://api.strivitech.me";
+    public const string Uri = "https://api.strivitech.me/";
+    public const string RelateUserRegistrationFlowUrl = "Auth/RelateUserRegistrationFlow";
     private const string AppLinkingName = "MuHub";
     private const string UserAttributesUserName = "userName";
     private const string ApplicationUserIdName = "applicationUserId";
@@ -78,7 +79,7 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
     private async Task<UserLinkRegistrationDataResponse?> PostRelateUserRegistrationFlow(string? identityUserName)
     {
         var response = await HttpClient.PostAsync(
-            requestUri: "Auth/RelateUserRegistrationFlow",
+            requestUri: RelateUserRegistrationFlowUrl,
             content: new StringContent(
                 content: JsonSerializer.Serialize(identityUserName),
                 encoding: Encoding.UTF8,
