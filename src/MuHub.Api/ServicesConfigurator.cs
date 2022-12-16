@@ -1,9 +1,12 @@
 ﻿using System.Reflection;
+using System.Text;
 
 using Amazon.CognitoIdentityProvider;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.IdentityModel.Tokens;
 
 using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Extensions.Startup;
@@ -24,11 +27,14 @@ public static class ServicesConfigurator
     /// Adds services for API layer.
     /// </summary>
     /// <param name="services">Service collection.</param>
+    /// <param name="configuration">Configuration.</param>
     /// <returns>Service collection.</returns>
-    public static IServiceCollection AddApiServices(this IServiceCollection services)
+    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHttpContextAccessor();
 
+        services.AddCognitoAuthentication(configuration);
+        
         services.AddControllers(options =>
         {
             options.Filters.Add<ApiModelValidationFilter>();

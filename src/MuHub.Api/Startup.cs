@@ -22,7 +22,7 @@ public static class Startup
 
         services.AddApplicationServices();
         services.AddInfrastructureServices(builder.Configuration);
-        services.AddApiServices();
+        services.AddApiServices(builder.Configuration);
     }
 
     /// <summary>
@@ -43,6 +43,7 @@ public static class Startup
         
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();

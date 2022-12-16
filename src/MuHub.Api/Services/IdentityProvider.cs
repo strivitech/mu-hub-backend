@@ -18,7 +18,7 @@ namespace MuHub.Api.Services;
 public class IdentityProvider : IIdentityProvider
 {
     private readonly IAmazonCognitoIdentityProvider _cognitoIdentityProvider;
-    private readonly AwsCognitoOptions _cognitoOptions;
+    private readonly AwsCognitoUserPoolOptions _cognitoUserPoolOptions;
 
     /// <summary>
     /// 
@@ -28,11 +28,11 @@ public class IdentityProvider : IIdentityProvider
     /// <exception cref="ArgumentNullException"></exception>
     public IdentityProvider(
         IAmazonCognitoIdentityProvider cognitoIdentityProvider,
-        IOptions<AwsCognitoOptions> awsCognitoOptions)
+        IOptions<AwsCognitoUserPoolOptions> awsCognitoOptions)
     {
         _cognitoIdentityProvider =
             cognitoIdentityProvider ?? throw new ArgumentNullException(nameof(cognitoIdentityProvider));
-        _cognitoOptions = awsCognitoOptions.Value ?? throw new ArgumentNullException(nameof(awsCognitoOptions));
+        _cognitoUserPoolOptions = awsCognitoOptions.Value ?? throw new ArgumentNullException(nameof(awsCognitoOptions));
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class IdentityProvider : IIdentityProvider
             throw new ArgumentException($"{nameof(userName)} should not be null or empty");
         }
 
-        var request = new AdminGetUserRequest { Username = userName, UserPoolId = _cognitoOptions.UserPoolId };
+        var request = new AdminGetUserRequest { Username = userName, UserPoolId = _cognitoUserPoolOptions.UserPoolId };
         var response = await _cognitoIdentityProvider.AdminGetUserAsync(request);
 
         if (response is null)
