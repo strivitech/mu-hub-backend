@@ -1,10 +1,14 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.Serialization;
+using System.Text.Json;
 
 using Amazon.Lambda.Core;
 
+using Cognito.Events.Shared.Extensions;
+
 namespace Cognito.Events.Shared.Core;
 
-public abstract class CognitoTriggerHandler<T> : ICognitoTriggerHandler where T : ICognitoTriggerEvent
+public abstract class CognitoTriggerHandler<T> : ICognitoTriggerHandler
+    where T : ICognitoTriggerEvent
 {
     protected T TriggerEvent { get; }
 
@@ -14,7 +18,7 @@ public abstract class CognitoTriggerHandler<T> : ICognitoTriggerHandler where T 
 
     protected CognitoTriggerHandler(JsonElement cognitoEvent, ILambdaLogger logger)
     {
-        TriggerEvent = cognitoEvent.Deserialize<T>() ?? throw new ArgumentNullException(nameof(cognitoEvent));
+        TriggerEvent = RetrieveRequiredEvent(cognitoEvent);
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -30,5 +34,16 @@ public abstract class CognitoTriggerHandler<T> : ICognitoTriggerHandler where T 
     public virtual async Task<JsonElement> HandleTriggerEventAsync()
     {
         return await Task.FromResult(HandleTriggerEvent());
+    }
+
+    private static T RetrieveRequiredEvent(JsonElement cognitoEvent)
+    {
+        var deserializedEvent = cognitoEvent.Deserialize<T>();
+        if (deserializedEvent is null)
+        {
+            throw new SerializationException("Unable to deserialize Cognito event");
+        }
+        deserializedEvent.IsCognitoTriggerEventValid();
+        return deserializedEvent;
     }
 }

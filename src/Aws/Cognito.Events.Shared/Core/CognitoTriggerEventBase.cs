@@ -5,20 +5,20 @@ namespace Cognito.Events.Shared.Core;
 public class CognitoTriggerEventBase : ICognitoTriggerEvent 
 {
     [JsonPropertyName("version")]
-    public string? Version { get; set; }
+    public string Version { get; set; } = null!;
 
     [JsonPropertyName("triggerSource")]
-    public string? TriggerSource { get; set; }
+    public string TriggerSource { get; set; } = null!;
 
     [JsonPropertyName("region")]
-    public string? Region { get; set; }
+    public string Region { get; set; } = null!;
 
     [JsonPropertyName("userPoolId")]
-    public string? UserPoolId { get; set; }
+    public string UserPoolId { get; set; } = null!;
     
     [JsonPropertyName("userName")]
-    public string? UserName { get; set; }
+    public string UserName { get; set; } = null!;
 
     [JsonPropertyName("callerContext")]
-    public CallerContext? CallerContext { get; set; }
+    public CallerContext CallerContext { get; set; } = null!;
 }
