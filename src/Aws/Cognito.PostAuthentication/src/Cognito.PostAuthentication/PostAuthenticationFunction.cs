@@ -1,5 +1,6 @@
 using System.Text.Json;
 
+using Amazon.CognitoIdentityProvider;
 using Amazon.Lambda.Core;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
@@ -19,7 +20,7 @@ public class PostAuthenticationFunction
     public async Task<JsonElement> HandleAsync(JsonElement cognitoEvent, ILambdaContext context)
     {
         context.Logger.LogTrace("Start handling PostAuthenticationFunction");
-        
-        return await new PostAuthenticationHandler(cognitoEvent, context.Logger).HandleTriggerEventAsync();
+        using var client = new AmazonCognitoIdentityProviderClient();
+        return await new PostAuthenticationHandler(cognitoEvent, context.Logger, client).HandleTriggerEventAsync();
     }
 }

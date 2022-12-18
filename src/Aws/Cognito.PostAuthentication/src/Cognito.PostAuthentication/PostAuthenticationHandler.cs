@@ -1,6 +1,9 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 using System.Text.Json;
 
+using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
 using Amazon.Lambda.Core;
 
 using Cognito.Events.Shared.Core;
@@ -18,8 +21,11 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
     private const string AppLinkingName = "MuHub";
     private const string UserAttributesUserName = "userName";
     private const string ApplicationUserIdName = "applicationUserId";
+    private const string ApplicationUserIdAttributeName = "custom:ApplicationUserId";
     private const uint PooledConnectionLifetimeMinutes = 1;
     
+    private readonly IAmazonCognitoIdentityProvider _cognitoProvider;
+
     // HttpClient only resolves DNS entries when a connection is created
     private static readonly HttpClient HttpClient = new(new SocketsHttpHandler
     {
@@ -31,9 +37,13 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
     
     public override string TriggerSource => TriggerSourceName;
 
-    public PostAuthenticationHandler(JsonElement cognitoEvent, ILambdaLogger logger)
+    public PostAuthenticationHandler(
+        JsonElement cognitoEvent,
+        ILambdaLogger logger,
+        IAmazonCognitoIdentityProvider cognitoProvider)
         : base(cognitoEvent, logger)
     {
+        _cognitoProvider = cognitoProvider ?? throw new ArgumentNullException(nameof(cognitoProvider));
     }
 
     public override async Task<JsonElement> HandleTriggerEventAsync()
@@ -62,6 +72,8 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
                     $"Linking to UserName {identityUserName} was not successful." +
                     "Application user id is null or empty");
             }
+
+            await AttachApplicationUserIdToIdentityUser(identityUserName, userLinkRegistrationData.ApplicationUserId);
             
             Logger.LogInformation("Successfully linked the user with UserName: " +
                             $"{identityUserName} to app {AppLinkingName}");
@@ -103,6 +115,31 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
                         $"Response {JsonSerializer.Serialize(userLinkRegistrationData)}");
 
         return userLinkRegistrationData;
+    }
+
+    private async Task AttachApplicationUserIdToIdentityUser(string? identityUserName, string? applicationUserId)
+    {
+        var attribute = new AttributeType
+        {
+            Name = ApplicationUserIdAttributeName,
+            Value = applicationUserId
+        };
+
+        var request = new AdminUpdateUserAttributesRequest
+        {
+            UserPoolId = TriggerEvent.UserPoolId,
+            Username = identityUserName,
+            UserAttributes = new List<AttributeType> { attribute }
+        };
+
+        var response = await _cognitoProvider.AdminUpdateUserAttributesAsync(request);
+
+        if (response.HttpStatusCode != HttpStatusCode.OK)
+        {
+            Logger.LogError("Failed to bind an application user id to UserAttributes: " +
+                            $"Identity UserName: {identityUserName}. Response {JsonSerializer.Serialize(response)}");
+            throw new CognitoPostAuthenticationException("Failed to attach an application user id to a user");
+        }
     }
 
     private bool AppUserIdLinked()
