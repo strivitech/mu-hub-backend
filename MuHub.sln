@@ -28,6 +28,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognito.PostAuthentication"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognito.Common", "src\Aws\Cognito.Common\Cognito.Common.csproj", "{7D66D01F-5746-4B22-8F7D-604A0D55041B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognito.PostConfirmation", "src\Aws\Cognito.PostConfirmation\src\Cognito.PostConfirmation\Cognito.PostConfirmation.csproj", "{E332E4AA-40A2-4D49-9702-F49645C7EE19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cognito.PostConfirmationSignUp.Sqs.Consumer", "src\Aws\Cognito.PostConfirmationSignUp.Sqs.Consumer\src\Cognito.PostConfirmationSignUp.Sqs.Consumer\Cognito.PostConfirmationSignUp.Sqs.Consumer.csproj", "{9C7D43A5-0155-4EDD-8550-AE1D637DD264}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sqs.Shared", "src\Aws\Sqs.Shared\Sqs.Shared.csproj", "{E949D832-E5EB-4834-A62D-EFC37129BFF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +52,9 @@ Global
 		{B80FD4DA-5A7A-4AB9-98D4-19CB6007D542} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
 		{96FAAD6D-BAE2-4B30-B9B5-DBFA4D0ED5B4} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
 		{7D66D01F-5746-4B22-8F7D-604A0D55041B} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
+		{E332E4AA-40A2-4D49-9702-F49645C7EE19} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
+		{9C7D43A5-0155-4EDD-8550-AE1D637DD264} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
+		{E949D832-E5EB-4834-A62D-EFC37129BFF1} = {76947BF8-DEDF-44DD-919D-9CA0488AEEC9}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -84,5 +93,17 @@ Global
 		{7D66D01F-5746-4B22-8F7D-604A0D55041B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D66D01F-5746-4B22-8F7D-604A0D55041B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D66D01F-5746-4B22-8F7D-604A0D55041B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E332E4AA-40A2-4D49-9702-F49645C7EE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E332E4AA-40A2-4D49-9702-F49645C7EE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E332E4AA-40A2-4D49-9702-F49645C7EE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E332E4AA-40A2-4D49-9702-F49645C7EE19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7D43A5-0155-4EDD-8550-AE1D637DD264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7D43A5-0155-4EDD-8550-AE1D637DD264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7D43A5-0155-4EDD-8550-AE1D637DD264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7D43A5-0155-4EDD-8550-AE1D637DD264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E949D832-E5EB-4834-A62D-EFC37129BFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E949D832-E5EB-4834-A62D-EFC37129BFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E949D832-E5EB-4834-A62D-EFC37129BFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E949D832-E5EB-4834-A62D-EFC37129BFF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
