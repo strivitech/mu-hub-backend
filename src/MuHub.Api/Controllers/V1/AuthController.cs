@@ -35,6 +35,8 @@ public class AuthController : MuControllerBase
     public async Task<IActionResult> RelateUserRegistrationFlow(UserLinkRegistrationDataRequest request)
     {
         var userLinkResponse = await _authService.RelateUserRegistrationFlowAsync(request);
-        return Ok(userLinkResponse);
+        return userLinkResponse is not null
+            ? Ok(userLinkResponse)
+            : Problem(statusCode: StatusCodes.Status500InternalServerError, title: "User link registration flow failed");
     }
 }

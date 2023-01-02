@@ -1,4 +1,5 @@
 ﻿using Amazon.CognitoIdentityProvider;
+using Amazon.Runtime.Internal.Util;
 
 using AutoMapper;
 
@@ -38,7 +39,8 @@ public class AuthService : IAuthService
         _identityProvider = identityProvider ?? throw new ArgumentNullException(nameof(identityProvider));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _modelValidationService = modelValidationService ?? throw new ArgumentNullException(nameof(modelValidationService));
+        _modelValidationService =
+            modelValidationService ?? throw new ArgumentNullException(nameof(modelValidationService));
     }
 
     /// <summary>
@@ -49,6 +51,9 @@ public class AuthService : IAuthService
     public async Task<UserLinkRegistrationDataResponse?> RelateUserRegistrationFlowAsync(
         UserLinkRegistrationDataRequest request)
     {
+        ArgumentNullException.ThrowIfNull(request);
+
+        _logger.LogDebug("Started a relating flow of the user registration");
         var user = _dbContext.Users
             .FirstOrDefault(x => x.UserName == request.UserName);
         if (user is not null)
@@ -63,8 +68,14 @@ public class AuthService : IAuthService
             return null;
         }
 
-        var newUserEntry = await _dbContext.Users.AddAsync(_mapper.Map<User>(identityUser));
+        var userEntity = _mapper.Map<User>(identityUser);
+        userEntity.Id = identityUser.IdentityProviderId;
+        var newUserEntry = await _dbContext.Users.AddAsync(userEntity);
         await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation(
+            "User with identity userName {RequestUserName} was successfully linked with the application." +
+            "Application userId: {EntityId}", request.UserName, newUserEntry.Entity.Id);
         return new UserLinkRegistrationDataResponse { ApplicationUserId = newUserEntry.Entity.Id };
     }
 }
