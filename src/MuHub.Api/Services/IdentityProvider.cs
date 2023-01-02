@@ -73,10 +73,7 @@ public class IdentityProvider : IIdentityProvider
             PhoneNumber = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.PhoneNumber),
             PhoneNumberConfirmed =
                 Boolean.Parse(FindRequiredValueFromUserAttributes(userAttributes,
-                    UserAttributesNames.PhoneNumberConfirmed)),
-            RoleName = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.Group),
-            CreatedAt = DateTimeOffset.Parse(
-                FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.CreatedAt))
+                    UserAttributesNames.PhoneNumberConfirmed))
         };
     }
 

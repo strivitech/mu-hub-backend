@@ -21,8 +21,8 @@ public class GetIdentityProviderUserResponseValidator : AbstractValidator<GetIde
         RuleFor(x => x.UserName)
             .NotEmpty();
         
-        RuleFor(x => x.RoleName)
-            .Must(roleName => UserConstants.UserRoles.Contains(roleName));
+        // RuleFor(x => x.RoleName)
+        //     .Must(roleName => UserConstants.UserRoles.Contains(roleName));
         
         RuleFor(x => x.PhoneNumber)
             .Matches(UserConstants.PhoneNumberRegex);
@@ -30,8 +30,8 @@ public class GetIdentityProviderUserResponseValidator : AbstractValidator<GetIde
         RuleFor(x => x.IdentityProviderId)
             .NotEmpty();
         
-        RuleFor(x => x.CreatedAt)
-            .NotNull();
+        // RuleFor(x => x.CreatedAt)
+        //     .NotNull();
         
         RuleFor(x => x.EmailConfirmed)
             .Equal(true);

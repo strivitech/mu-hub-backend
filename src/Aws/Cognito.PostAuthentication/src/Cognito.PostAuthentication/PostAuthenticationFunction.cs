@@ -21,6 +21,6 @@ public class PostAuthenticationFunction
     {
         context.Logger.LogTrace("Start handling PostAuthenticationFunction");
         using var client = new AmazonCognitoIdentityProviderClient();
-        return await new PostAuthenticationHandler(cognitoEvent, context.Logger, client).HandleTriggerEventAsync();
+        return await new PostAuthenticationHandler(cognitoEvent, context.Logger).HandleTriggerEventAsync();
     }
 }

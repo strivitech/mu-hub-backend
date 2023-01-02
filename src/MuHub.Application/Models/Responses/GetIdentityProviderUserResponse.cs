@@ -8,17 +8,17 @@ public class GetIdentityProviderUserResponse
     /// <summary>
     /// 
     /// </summary>
-    public string? IdentityProviderId { get; set; }  
-        
+    public string IdentityProviderId { get; set; } = null!;
+
     /// <summary>
     /// Gets or sets the user name for this user.
     /// </summary>
-    public string? UserName { get; set; }
+    public string UserName { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the email address for this user.
     /// </summary>
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets a flag indicating if a user has confirmed their email address.
@@ -29,7 +29,7 @@ public class GetIdentityProviderUserResponse
     /// <summary>
     /// Gets or sets a telephone number for the user.
     /// </summary>
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets a flag indicating if a user has confirmed their telephone address.
@@ -37,13 +37,13 @@ public class GetIdentityProviderUserResponse
     /// <value>True if the telephone number has been confirmed, otherwise false.</value>
     public bool PhoneNumberConfirmed { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public string? RoleName { get; set; }
+    // /// <summary>
+    // /// 
+    // /// </summary>
+    // public string RoleName { get; set; } = null!;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public DateTimeOffset CreatedAt { get; set; }
+    // /// <summary>
+    // /// 
+    // /// </summary>
+    // public DateTimeOffset CreatedAt { get; set; }
 }

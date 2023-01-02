@@ -5,9 +5,9 @@ public class UserAttributesNames
     public const string Sub = "sub";
     public const string UserName = "userName";
     public const string Email = "email";
-    public const string EmailConfirmed = "emailConfirmed";
-    public const string PhoneNumber = "phoneNumber";
-    public const string PhoneNumberConfirmed = "phoneNumberConfirmed";
-    public const string Group = "group";
-    public const string CreatedAt = "createdAt";
+    public const string EmailConfirmed = "email_verified";
+    public const string PhoneNumber = "phone_number";
+    public const string PhoneNumberConfirmed = "phone_number_verified";
+    public const string Groups = "cognito:groups";
+    public const string ApplicationUserId = "custom:ApplicationUserId";
 }

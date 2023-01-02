@@ -8,7 +8,6 @@ public class User : IEntity
     /// Gets or sets the primary key for this user.
     /// </summary>
     public string Id { get; set; } = null!;
-    
 
     public string IdentityProviderId { get; set; } = null!;    
         

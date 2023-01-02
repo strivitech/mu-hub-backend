@@ -16,6 +16,7 @@
         <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.101.39" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Cognito.Common\Cognito.Common.csproj" />
       <ProjectReference Include="..\..\..\Cognito.Events.Shared\Cognito.Events.Shared.csproj" />
     </ItemGroup>
 </Project>
