@@ -43,7 +43,12 @@ public abstract class CognitoTriggerHandler<T> : ICognitoTriggerHandler
         {
             throw new SerializationException("Unable to deserialize Cognito event");
         }
-        deserializedEvent.IsCognitoTriggerEventValid();
+        var isEventValid = deserializedEvent.IsCognitoTriggerEventValid();
+        
+        if (!isEventValid)
+        {
+            throw new InvalidOperationException("Deserialized Cognito event is not valid");
+        }
         return deserializedEvent;
     }
 }

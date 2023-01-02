@@ -20,8 +20,8 @@ public class PostConfirmationFunction
     public async Task<JsonElement> HandleSignUpAsync(JsonElement cognitoEvent, ILambdaContext context)
     {
         context.Logger.LogTrace("Start handling PostConfirmationSignUpFunction");
-        using var client = new AmazonCognitoIdentityProviderClient();
-        return await new PostConfirmationConfirmSignUpHandler(cognitoEvent, context.Logger, client)
+        return await new PostConfirmationConfirmSignUpHandler(cognitoEvent, context.Logger,
+                new UserRegistrationSqsSenderService(AwsAccessor.AmazonSqs, context.Logger))
             .HandleTriggerEventAsync();
     }
 }

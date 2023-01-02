@@ -14,9 +14,11 @@
         <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0" />
         <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.0" />
         <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.101.39" />
+        <PackageReference Include="AWSSDK.SQS" Version="3.7.100.46" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\..\Cognito.Common\Cognito.Common.csproj" />
       <ProjectReference Include="..\..\..\Cognito.Events.Shared\Cognito.Events.Shared.csproj" />
+      <ProjectReference Include="..\..\..\Sqs.Shared\Sqs.Shared.csproj" />
     </ItemGroup>
 </Project>
