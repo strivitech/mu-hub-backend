@@ -40,20 +40,21 @@ public class Function
     {
         ArgumentNullException.ThrowIfNull(sqsEvent);
         ArgumentNullException.ThrowIfNull(context);
-        
+
+        GetQueueUrlResponse queueUrl = await AwsAccessors.AmazonSqs.GetQueueUrlAsync(Config.QueueName);
+
         foreach (var message in sqsEvent.Records)
         {
-            await ProcessMessageAsync(message, context);
+            await ProcessMessageAsync(message, queueUrl, context);
         }
     }
 
-    private static async Task ProcessMessageAsync(SQSEvent.SQSMessage message, ILambdaContext context)
+    private static async Task ProcessMessageAsync(SQSEvent.SQSMessage message, GetQueueUrlResponse queueUrl, ILambdaContext context)
     {
         ArgumentNullException.ThrowIfNull(message);
         
         context.Logger.LogDebug($"Started processing message with id {message.MessageId}");
-        var queueUrl = await AwsAccessors.AmazonSqs.GetQueueUrlAsync(Config.QueueName);
-        
+
         using var client = new AmazonCognitoIdentityProviderClient();
         var messageHandler =
             new UserRegistrationMessageHandler(new LinkUserRegistrationService(client, context.Logger), context.Logger);
