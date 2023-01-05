@@ -11,6 +11,6 @@
   "function-runtime": "dotnet6",
   "function-memory-size": 256,
   "function-timeout": 30,
-  "function-handler": "Cognito.PostAuthentication::Cognito.PostAuthentication.PostAuthenticationFunction::HandleSignUpAsync",
+  "function-handler": "Cognito.PostConfirmation::Cognito.PostConfirmation.PostConfirmationFunction::HandleSignUpAsync",
   "function-name": "MuHubCognitoPostConfirmationLambda"
 }
