@@ -8,5 +8,10 @@ public class AwsCognitoUserPoolOptions
     /// <summary>
     /// 
     /// </summary>
+    public const string SectionName = "Authentication:Cognito";
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public string UserPoolId { get; set; } = null!;
 }

@@ -21,8 +21,8 @@ public static class Startup
         var configuration = builder.Configuration;
 
         services.AddApplicationServices();
-        services.AddInfrastructureServices(builder.Configuration);
-        services.AddApiServices(builder.Configuration);
+        services.AddInfrastructureServices(configuration);
+        services.AddApiServices(configuration);
     }
 
     /// <summary>

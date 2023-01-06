@@ -14,15 +14,13 @@ public static class AwsCognitoExtensions
     /// 
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="configuration"></param>
+    /// <param name="cognitoConfig"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCognitoAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddCognitoAuthentication(this IServiceCollection services,
+        AwsCognitoAuthenticationConfiguration cognitoConfig)
     {
         ArgumentNullException.ThrowIfNull(services);
-        ArgumentNullException.ThrowIfNull(configuration);
-        
-        var cognitoConfig = configuration.GetSection(AwsCognitoAuthenticationConfiguration.SectionName)
-            .Get<AwsCognitoAuthenticationConfiguration>();
+        ArgumentNullException.ThrowIfNull(cognitoConfig);
 
         services.AddAuthentication(options =>
             {
