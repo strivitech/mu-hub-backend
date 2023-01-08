@@ -22,7 +22,7 @@ public class LinkUserRegistrationService : ILinkUserRegistrationService
     private static readonly HttpClient HttpClient = new(new SocketsHttpHandler
     {
         PooledConnectionLifetime = TimeSpan.FromMinutes(Config.PooledConnectionLifetimeMinutes)
-    }) { BaseAddress = new Uri(Config.Uri) };
+    }) { BaseAddress = new Uri(Configuration.Host) };
 
     public LinkUserRegistrationService(IAmazonCognitoIdentityProvider cognitoProvider, ILambdaLogger logger)
     {
@@ -30,17 +30,14 @@ public class LinkUserRegistrationService : ILinkUserRegistrationService
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<string> LinkAsync(string identityUserName, string cognitoPoolId)
+    public async Task<string> LinkAsync(string identityUserName, DateTimeOffset createdAt)
     {
-        ValidateIdentityUserName(identityUserName);
-        ValidateCognitoPoolId(cognitoPoolId);
-
         _logger.LogDebug("Started handling a post authentication trigger event for user with UserName: " +
-                         $"{identityUserName}. Trying to link a user to app {Config.AppLinkingName}");
+                         $"{identityUserName}. Trying to link a user to app {Configuration.AppName}");
 
         try
         {
-            var userLinkRegistrationData = await PostRelateUserRegistrationFlow(identityUserName);
+            var userLinkRegistrationData = await PostRelateUserRegistrationFlow(identityUserName, createdAt);
 
             if (string.IsNullOrEmpty(userLinkRegistrationData?.ApplicationUserId))
             {
@@ -51,34 +48,34 @@ public class LinkUserRegistrationService : ILinkUserRegistrationService
                     "Application user id is null or empty");
             }
 
-            await AttachApplicationUserIdToIdentityUser(identityUserName, userLinkRegistrationData.ApplicationUserId,
-                cognitoPoolId);
+            await AttachApplicationLinkedValueToIdentityUser(identityUserName);
 
             _logger.LogInformation("Successfully linked the user with UserName: " +
-                                   $"{identityUserName} to app {Config.AppLinkingName}");
+                                   $"{identityUserName} to app {Configuration.AppName}");
 
             return userLinkRegistrationData.ApplicationUserId;
         }
         catch (Exception ex)
         {
             _logger.LogError("Failed to relate a user registration flow." +
-                             $"Exception: {JsonSerializer.Serialize(ex)}");
+                             $"Exception message: {JsonSerializer.Serialize(ex.Message)}");
             throw new CognitoPostConfirmationSignUpException("Failed to relate a user registration flow", ex);
         }
     }
 
-    private async Task<UserLinkRegistrationDataResponse?> PostRelateUserRegistrationFlow(string? identityUserName)
+    private async Task<UserLinkRegistrationDataResponse?> PostRelateUserRegistrationFlow(string? identityUserName,
+        DateTimeOffset createdAt)
     {
         var response = await HttpClient.PostAsync(
-            requestUri: Config.RelateUserRegistrationFlowUrl,
+            requestUri: Config.RelateUserRegistrationFlowUri,
             content: new StringContent(
-                content: JsonSerializer.Serialize(identityUserName),
+                content: JsonSerializer.Serialize(new{identityUserName, createdAt}),
                 encoding: Encoding.UTF8,
                 mediaType: "application/json"
             ));
 
         _logger.LogDebug("Response http code from linking the user with UserName: " +
-                         $"{identityUserName} to app {Config.AppLinkingName} is: {response.StatusCode}");
+                         $"{identityUserName} to app {Configuration.AppName} is: {response.StatusCode}");
 
         if (!response.IsSuccessStatusCode)
         {
@@ -96,16 +93,13 @@ public class LinkUserRegistrationService : ILinkUserRegistrationService
         return userLinkRegistrationData;
     }
 
-    private async Task AttachApplicationUserIdToIdentityUser(
-        string? identityUserName,
-        string? applicationUserId,
-        string? cognitoPoolId)
+    private async Task AttachApplicationLinkedValueToIdentityUser(string? identityUserName)
     {
-        var attribute = new AttributeType { Name = UserAttributesNames.ApplicationUserId, Value = applicationUserId };
+        var attribute = new AttributeType { Name = UserAttributesNames.ApplicationLinked, Value = true.ToString() };
 
         var request = new AdminUpdateUserAttributesRequest
         {
-            UserPoolId = cognitoPoolId,
+            UserPoolId = Configuration.UserPoolId,
             Username = identityUserName,
             UserAttributes = new List<AttributeType> { attribute }
         };
@@ -117,24 +111,6 @@ public class LinkUserRegistrationService : ILinkUserRegistrationService
             _logger.LogError("Failed to bind an application user id to UserAttributes: " +
                              $"Identity UserName: {identityUserName}. Response {JsonSerializer.Serialize(response)}");
             throw new CognitoPostConfirmationSignUpException("Failed to attach an application user id to a user");
-        }
-    }
-
-    private void ValidateIdentityUserName(string? identityUserName)
-    {
-        if (string.IsNullOrEmpty(identityUserName))
-        {
-            _logger.LogError("Identity UserName is null or empty");
-            throw new ArgumentException("Identity UserName is null or empty");
-        }
-    }
-    
-    private void ValidateCognitoPoolId(string? cognitoPoolId)
-    {
-        if (string.IsNullOrEmpty(cognitoPoolId))
-        {
-            _logger.LogError("CognitoPoolId is null or empty");
-            throw new ArgumentException("Identity UserName is null or empty");
         }
     }
 }

@@ -36,7 +36,7 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
     private bool AppUserIdLinked()
     {
         var containsApplicationUserId =
-            TryRetrieveUserAttribute(UserAttributesNames.ApplicationUserId, out string? applicationUserIdValue);
+            TryRetrieveUserAttribute(UserAttributesNames.ApplicationLinked, out string? applicationLinked);
 
         if (!containsApplicationUserId)
         {
@@ -44,7 +44,7 @@ public class PostAuthenticationHandler : CognitoTriggerHandler<PostAuthenticatio
                 $"Field {nameof(containsApplicationUserId)} is not accessible in the user attributes");
         }
 
-        return !string.IsNullOrEmpty(applicationUserIdValue);
+        return applicationLinked.IsCognitoApplicationLinked();
     }
 
     private bool TryRetrieveUserAttribute(string key, out string? value)

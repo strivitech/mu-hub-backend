@@ -48,7 +48,7 @@ public class AuthService : IAuthService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    public async Task<UserLinkRegistrationDataResponse?> RelateUserRegistrationFlowAsync(
+    public async Task<UserLinkRegistrationDataResponse?>  RelateUserRegistrationFlowAsync(
         UserLinkRegistrationDataRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -69,7 +69,6 @@ public class AuthService : IAuthService
         }
 
         var userEntity = _mapper.Map<User>(identityUser);
-        userEntity.Id = identityUser.IdentityProviderId;
         var newUserEntry = await _dbContext.Users.AddAsync(userEntity);
         await _dbContext.SaveChangesAsync();
 

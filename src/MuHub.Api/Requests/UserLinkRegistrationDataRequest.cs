@@ -9,4 +9,9 @@ public class UserLinkRegistrationDataRequest
     /// 
     /// </summary>
     public string UserName { get; set; } = null!;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTimeOffset? CreatedAt { get; set; } = null!;
 }

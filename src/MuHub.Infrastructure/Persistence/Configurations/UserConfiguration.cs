@@ -18,14 +18,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.UserName)
             .IsRequired();
-            
-        builder.Property(x => x.RoleName)
-            .IsRequired();
 
         builder.Property(x => x.PhoneNumber)
-            .IsRequired();
-        
-        builder.Property(x => x.IdentityProviderId)
             .IsRequired();
 
         builder.Property(x => x.CreatedAt)

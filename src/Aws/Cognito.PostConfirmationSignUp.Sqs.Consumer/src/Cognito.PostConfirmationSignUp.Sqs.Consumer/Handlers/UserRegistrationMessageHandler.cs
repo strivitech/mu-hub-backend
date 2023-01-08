@@ -2,6 +2,7 @@
 using Amazon.SQS;
 using Amazon.SQS.Model;
 
+using Cognito.Common;
 using Cognito.PostConfirmationSignUp.Sqs.Consumer.Messages;
 using Cognito.PostConfirmationSignUp.Sqs.Consumer.Services;
 
@@ -22,17 +23,33 @@ internal class UserRegistrationMessageHandler : IMessageHandler<UserRegistration
 
     public async Task<bool> HandleAsync(UserRegistrationMessage message)
     {
+        ValidateIdentityUserName(message.CognitoUserName);
+        ValidateCreatedAtTime(message.CreatedAt);
+        
         _logger.LogTrace($"Handling message: {message}");
-        if (!IsMessageValid(message))
-        {
-            _logger.LogError($"Invalid message: {message}");
-            return false;
-        }
-
-        var appUserId = await _linkService.LinkAsync(message.CognitoUserName, message.CognitoUserPoolId);
+        var appUserId = await _linkService.LinkAsync(message.CognitoUserName, message.CreatedAt);
         return !string.IsNullOrEmpty(appUserId);
     }
+    
+    private void ValidateIdentityUserName(string? identityUserName)
+    {
+        if (string.IsNullOrEmpty(identityUserName))
+        {
+            _logger.LogError("Identity UserName is null or empty");
+            throw new ArgumentException("Identity UserName is null or empty");
+        }
+    }
+    
+    private void ValidateCreatedAtTime(DateTimeOffset createdAt)
+    {
+        var utcNow = DateTimeOffset.UtcNow;
+        var minSignUpTime = utcNow.AddMinutes(-UserRegistration.MaxRegistrationDelayDays);
+        if (createdAt >= minSignUpTime && createdAt <= utcNow)
+        {
+            return;
+        }
 
-    private static bool IsMessageValid(UserRegistrationMessage message) 
-        => !string.IsNullOrEmpty(message.CognitoUserName) && !string.IsNullOrEmpty(message.CognitoUserPoolId);
+        _logger.LogError("CognitoPoolId is null or empty");
+        throw new ArgumentException("Identity UserName is null or empty");
+    }
 }

@@ -8,10 +8,10 @@ public class UserRegistrationMessage : IMessage
 {
     [JsonPropertyName("cognitoUserId")]
     public string CognitoUserName { get; set; } = null!;
-    
-    [JsonPropertyName("cognitoUserPoolId")]
-    public string CognitoUserPoolId { get; set; } = null!;
 
+    [JsonPropertyName("createdAt")]
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    
     [JsonIgnore]
     public string MessageTypeName => nameof(UserRegistrationMessage);
 }

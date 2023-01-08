@@ -9,8 +9,6 @@ public class User : IEntity
     /// </summary>
     public string Id { get; set; } = null!;
 
-    public string IdentityProviderId { get; set; } = null!;    
-        
     /// <summary>
     /// Gets or sets the user name for this user.
     /// </summary>
@@ -38,11 +36,7 @@ public class User : IEntity
     /// <value>True if the telephone number has been confirmed, otherwise false.</value>
     public bool PhoneNumberConfirmed { get; set; }
 
-    public bool IsBlocked { get; set; }
-
-    public string RoleName { get; set; } = null!;
-
-    public DateTimeOffset? CreatedAt { get; set; }
+    public bool IsBlocked { get; set; } = false;
     
-    public DateTimeOffset? LastLoginAt { get; set; } 
+    public DateTimeOffset? CreatedAt { get; set; }
 }

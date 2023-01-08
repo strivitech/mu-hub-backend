@@ -5,6 +5,7 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.SQSEvents;
 using Amazon.SQS.Model;
 
+using Cognito.Common;
 using Cognito.Events.Shared.Exceptions;
 using Cognito.PostConfirmationSignUp.Sqs.Consumer.Accessors;
 using Cognito.PostConfirmationSignUp.Sqs.Consumer.Handlers;
@@ -41,7 +42,7 @@ public class Function
         ArgumentNullException.ThrowIfNull(sqsEvent);
         ArgumentNullException.ThrowIfNull(context);
 
-        GetQueueUrlResponse queueUrl = await AwsAccessors.AmazonSqs.GetQueueUrlAsync(Config.QueueName);
+        GetQueueUrlResponse queueUrl = await AwsAccessors.AmazonSqs.GetQueueUrlAsync(Configuration.QueueName);
 
         foreach (var message in sqsEvent.Records)
         {

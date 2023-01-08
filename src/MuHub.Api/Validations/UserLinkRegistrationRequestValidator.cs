@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Cognito.Common;
+
+using FluentValidation;
 
 using MuHub.Api.Requests;
 using MuHub.SharedData.Domain;
@@ -17,5 +19,10 @@ public class UserLinkRegistrationRequestValidator : AbstractValidator<UserLinkRe
     {
         RuleFor(x => x.UserName)
             .NotEmpty();
+
+        RuleFor(x => x.CreatedAt)
+            .NotNull()
+            .LessThanOrEqualTo(DateTimeOffset.UtcNow)
+            .GreaterThanOrEqualTo(DateTimeOffset.UtcNow.AddMinutes(-UserRegistration.MaxRegistrationDelayDays));
     }
 }

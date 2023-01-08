@@ -14,7 +14,7 @@
         <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0" />
         <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.0" />
         <PackageReference Include="Amazon.Lambda.SQSEvents" Version="2.1.0" />
-        <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.101.46" />
+        <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.101.49" />
         <PackageReference Include="AWSSDK.SQS" Version="3.7.100.46" />
     </ItemGroup>
     <ItemGroup>

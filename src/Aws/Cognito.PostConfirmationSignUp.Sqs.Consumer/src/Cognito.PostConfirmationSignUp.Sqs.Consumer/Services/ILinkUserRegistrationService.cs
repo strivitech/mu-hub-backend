@@ -2,5 +2,5 @@
 
 public interface ILinkUserRegistrationService
 {
-    Task<string> LinkAsync(string identityUserName, string cognitoPoolId);
+    Task<string> LinkAsync(string identityUserName, DateTimeOffset createdAt);
 }

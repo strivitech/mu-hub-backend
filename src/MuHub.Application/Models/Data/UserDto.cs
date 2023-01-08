@@ -6,10 +6,7 @@ public class UserDto
     /// Gets or sets the primary key for this user.
     /// </summary>
     public string Id { get; set; } = null!;
-    
 
-    public string IdentityProviderId { get; set; } = null!;    
-        
     /// <summary>
     /// Gets or sets the user name for this user.
     /// </summary>
@@ -37,11 +34,7 @@ public class UserDto
     /// <value>True if the telephone number has been confirmed, otherwise false.</value>
     public bool PhoneNumberConfirmed { get; set; }
 
-    public bool IsBlocked { get; set; }
-
-    public string RoleName { get; set; } = null!;
+    public bool IsBlocked { get; set; } = false;
 
     public DateTimeOffset? CreatedAt { get; set; }
-    
-    public DateTimeOffset? LastLoginAt { get; set; } 
 }

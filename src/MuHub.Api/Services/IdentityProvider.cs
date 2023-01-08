@@ -65,7 +65,6 @@ public class IdentityProvider : IIdentityProvider
         
         return new GetIdentityProviderUserResponse
         {
-            IdentityProviderId = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.Sub),
             UserName = response.Username,
             Email = FindRequiredValueFromUserAttributes(userAttributes, UserAttributesNames.Email),
             EmailConfirmed =

@@ -39,13 +39,13 @@ internal class PostConfirmationConfirmSignUpHandler : CognitoTriggerHandler<Post
         
         var message = new UserRegistrationMessage
         {
-            CognitoUserName = TriggerEvent.UserName, CognitoUserPoolId = TriggerEvent.UserPoolId
+            CognitoUserName = TriggerEvent.UserName, CreatedAt = DateTimeOffset.Now
         };
 
         var response = await _userRegistrationSqsSenderService.SendMessageAsync(message);
         if (response.HttpStatusCode != HttpStatusCode.OK)
         {
-            Logger.LogError($"Failed to send message to SQS queue {Config.QueueName} with message {message}");
+            Logger.LogError($"Failed to send message to SQS queue {Configuration.QueueName} with message {message}");
             throw new SqsMessageSendException("Failed to send message to SQS queue");
         }
 

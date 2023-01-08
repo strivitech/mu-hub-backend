@@ -5,6 +5,8 @@ using Amazon;
 using Amazon.CognitoIdentityProvider;
 using Amazon.Runtime;
 
+using FluentValidation;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -44,6 +46,15 @@ public static class ServicesConfigurator
             x.UserPoolId = cognitoConfig.UserPoolId);
 
         services.AddCognitoAuthentication(cognitoConfig);
+
+        Assembly[] assembliesToScan = 
+        {
+            typeof(ServicesConfigurator).Assembly,
+            typeof(Application.ServicesConfigurator).Assembly,
+            typeof(Infrastructure.ServicesConfigurator).Assembly
+        };
+        services.AddAutoMapper(assembliesToScan);
+        services.AddValidatorsFromAssemblies(assembliesToScan);
 
         services.AddControllers(options =>
             {

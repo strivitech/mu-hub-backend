@@ -5,6 +5,8 @@ using Amazon.Runtime.Internal.Util;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 
+using Cognito.Common;
+
 using Sqs.Shared.Data;
 using Sqs.Shared.Services;
 
@@ -26,7 +28,7 @@ public class UserRegistrationSqsSenderService : ISqsSenderService<UserRegistrati
         ArgumentNullException.ThrowIfNull(message);
         
         _logger.LogDebug("Start sending message to SQS queue");
-        var queueUrl = await _sqsClient.GetQueueUrlAsync(Config.QueueName);
+        var queueUrl = await _sqsClient.GetQueueUrlAsync(Configuration.QueueName);
         var messageBody = JsonSerializer.Serialize(message);
 
         var sendRequest = new SendMessageRequest

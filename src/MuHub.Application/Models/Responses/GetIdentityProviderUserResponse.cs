@@ -3,13 +3,8 @@
 /// <summary>
 /// 
 /// </summary>
-public class GetIdentityProviderUserResponse
+public class  GetIdentityProviderUserResponse
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public string IdentityProviderId { get; set; } = null!;
-
     /// <summary>
     /// Gets or sets the user name for this user.
     /// </summary>
@@ -37,13 +32,8 @@ public class GetIdentityProviderUserResponse
     /// <value>True if the telephone number has been confirmed, otherwise false.</value>
     public bool PhoneNumberConfirmed { get; set; }
 
-    // /// <summary>
-    // /// 
-    // /// </summary>
-    // public string RoleName { get; set; } = null!;
-
-    // /// <summary>
-    // /// 
-    // /// </summary>
-    // public DateTimeOffset CreatedAt { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTimeOffset? CreatedAt { get; set; }
 }
