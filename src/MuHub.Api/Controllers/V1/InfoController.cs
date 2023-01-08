@@ -22,7 +22,7 @@ public class InfoController : MuControllerBase
     [HttpGet]
     public IActionResult Index()
     {
-        return Ok("V1");
+        return Ok("V111");
     }
     
     [HttpPost]

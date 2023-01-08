@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using MuHub.Application.Contracts.Persistence;
-using MuHub.Infrastructure.Identity;
+using MuHub.Domain.Entities;
 
 namespace MuHub.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -16,7 +16,9 @@ public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbConte
     }
     
     public DbContext Instance => this;
-    
+
+    public DbSet<User> Users => Set<User>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         // Here custom logic
