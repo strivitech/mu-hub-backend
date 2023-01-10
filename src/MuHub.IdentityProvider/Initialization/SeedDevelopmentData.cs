@@ -1,24 +1,16 @@
-﻿using System.Security.Claims;
+﻿#if DEBUG
 
-using Duende.IdentityServer.EntityFramework.DbContexts;
-using Duende.IdentityServer.EntityFramework.Interfaces;
-using Duende.IdentityServer.EntityFramework.Mappers;
-using Duende.IdentityServer.Models;
-
+using System.Security.Claims;
 using IdentityModel;
+
+using Microsoft.AspNetCore.Identity;
 
 using MuHub.IdentityProvider.Data;
 using MuHub.IdentityProvider.Models;
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
-using MuHub.IdentityProvider.Configurations.Clients;
-
 using Serilog;
-using Serilog.Core;
 
-namespace MuHub.IdentityProvider;
+namespace MuHub.IdentityProvider.Initialization;
 
 /// <summary>
 /// Seed development data.
@@ -115,3 +107,5 @@ public static class SeedDevelopmentData
         }
     }
 }
+
+#endif
