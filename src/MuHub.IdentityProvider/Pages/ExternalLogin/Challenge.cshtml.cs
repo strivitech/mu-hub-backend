@@ -20,13 +20,16 @@ public class Challenge : PageModel
 
     public IActionResult OnGet(string scheme, string returnUrl)
     {
-        if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
+        if (string.IsNullOrEmpty(returnUrl))
+        {
+            returnUrl = "~/";
+        }
 
-        // validate returnUrl - either it is a valid OIDC URL or back to a local page
-        if (Url.IsLocalUrl(returnUrl) == false && _interactionService.IsValidReturnUrl(returnUrl) == false)
+        // validate returnUrl - either it is a valid OIDC URL
+        if (!_interactionService.IsValidReturnUrl(returnUrl))
         {
             // user might have clicked on a malicious link - should be logged
-            throw new Exception("invalid return URL");
+            throw new InvalidOperationException("invalid return URL");
         }
 
         // start challenge and roundtrip the return URL and scheme 

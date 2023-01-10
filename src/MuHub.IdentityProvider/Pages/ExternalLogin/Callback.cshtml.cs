@@ -46,7 +46,7 @@ public class Callback : PageModel
         var result = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
         if (result?.Succeeded != true)
         {
-            throw new Exception("External authentication error");
+            throw new InvalidOperationException("External authentication error");
         }
 
         var externalUser = result.Principal;
@@ -113,24 +113,26 @@ public class Callback : PageModel
     }
 
     private async Task<ApplicationUser> AutoProvisionUserAsync(string provider, string providerUserId,
-        IEnumerable<Claim> claims)
+        IEnumerable<Claim> claimsEnumerable)
     {
         var sub = Guid.NewGuid().ToString();
 
         var user = new ApplicationUser
         {
             Id = sub,
-            UserName = sub, // don't need a username, since the user will be using an external provider to login
         };
 
         // email
+        Claim[] claims = claimsEnumerable.ToArray();
         var email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ??
                     claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
-        if (email != null)
+        if (string.IsNullOrEmpty(email))
         {
-            user.Email = email;
+            throw new InvalidOperationException("User's email must be non-empty");
         }
-
+        user.Email = email;
+        user.UserName = email;
+        
         // create a list of claims that we want to transfer into our store
         var filtered = new List<Claim>();
 
@@ -162,16 +164,25 @@ public class Callback : PageModel
         }
 
         var identityResult = await _userManager.CreateAsync(user);
-        if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
+        if (!identityResult.Succeeded)
+        {
+            throw new InvalidOperationException(identityResult.Errors.First().Description);
+        }
 
         if (filtered.Any())
         {
             identityResult = await _userManager.AddClaimsAsync(user, filtered);
-            if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
+            if (!identityResult.Succeeded)
+            {
+                throw new InvalidOperationException(identityResult.Errors.First().Description);
+            }
         }
 
         identityResult = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
-        if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
+        if (!identityResult.Succeeded)
+        {
+            throw new InvalidOperationException(identityResult.Errors.First().Description);
+        }
 
         return user;
     }
@@ -182,11 +193,11 @@ public class Callback : PageModel
         AuthenticationProperties localSignInProps)
     {
         // capture the idp used to login, so the session knows where the user came from
-        localClaims.Add(new Claim(JwtClaimTypes.IdentityProvider, externalResult.Properties.Items["scheme"]));
+        localClaims.Add(new Claim(JwtClaimTypes.IdentityProvider, externalResult.Properties!.Items["scheme"]));
 
         // if the external system sent a session id claim, copy it over
         // so we can use it for single sign-out
-        var sid = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
+        var sid = externalResult.Principal!.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
         if (sid != null)
         {
             localClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));

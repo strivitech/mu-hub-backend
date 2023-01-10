@@ -123,6 +123,7 @@ public class Index : PageModel
 
                 // user might have clicked on a malicious link - should be logged
                 _logger.LogWarning("Invalid return URL, probably malicious link");
+                throw new InvalidOperationException("Invalid return URL");
             }
 
             await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
