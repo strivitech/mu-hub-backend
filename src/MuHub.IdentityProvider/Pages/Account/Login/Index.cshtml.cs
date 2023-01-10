@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using MuHub.IdentityProvider.Models;
 
+using Serilog.Core;
+
 namespace MuHub.IdentityProvider.Pages.Account.Login;
 
 [SecurityHeaders]
@@ -19,6 +21,7 @@ public class Index : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly ILogger<Index> _logger;
     private readonly IIdentityServerInteractionService _interaction;
     private readonly IEventService _events;
     private readonly IAuthenticationSchemeProvider _schemeProvider;
@@ -34,10 +37,12 @@ public class Index : PageModel
         IIdentityProviderStore identityProviderStore,
         IEventService events,
         UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager)
+        SignInManager<ApplicationUser> signInManager,
+        ILogger<Index> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _logger = logger;
         _interaction = interaction;
         _schemeProvider = schemeProvider;
         _identityProviderStore = identityProviderStore;
@@ -61,7 +66,7 @@ public class Index : PageModel
     {
         // check if we are in the context of an authorization request
         var context = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
-
+        
         // the user clicked the "cancel" button
         if (Input.Button != "login")
         {
@@ -82,11 +87,9 @@ public class Index : PageModel
 
                 return Redirect(Input.ReturnUrl);
             }
-            else
-            {
-                // since we don't have a valid context, then we just go back to the home page
-                return Redirect("~/");
-            }
+
+            // since we don't have a valid context, then we just go back to the home page
+            return Redirect("~/Home/Error/Index");
         }
 
         if (ModelState.IsValid)
@@ -111,21 +114,14 @@ public class Index : PageModel
                     // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                     return Redirect(Input.ReturnUrl);
                 }
-
-                // request for a local page
-                if (Url.IsLocalUrl(Input.ReturnUrl))
+                
+                if (!string.IsNullOrEmpty(Input.ReturnUrl))
                 {
                     return Redirect(Input.ReturnUrl);
                 }
-                else if (string.IsNullOrEmpty(Input.ReturnUrl))
-                {
-                    return Redirect("~/");
-                }
-                else
-                {
-                    // user might have clicked on a malicious link - should be logged
-                    throw new Exception("invalid return URL");
-                }
+
+                // user might have clicked on a malicious link - should be logged
+                _logger.LogWarning("Invalid return URL, probably malicious link");
             }
 
             await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
@@ -177,7 +173,6 @@ public class Index : PageModel
                 AuthenticationScheme = x.Scheme, DisplayName = x.DisplayName
             });
         providers.AddRange(dynamicSchemes);
-
 
         var allowLocal = true;
         var client = context?.Client;
