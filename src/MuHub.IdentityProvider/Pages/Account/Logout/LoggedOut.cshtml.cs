@@ -3,7 +3,7 @@ using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MuHub.IdentityProvider.Pages.Logout;
+namespace MuHub.IdentityProvider.Pages.Account.Logout;
 
 [SecurityHeaders]
 [AllowAnonymous]

@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-namespace MuHub.IdentityProvider.Pages.Logout;
+namespace MuHub.IdentityProvider.Pages.Account.Logout;
 
 public class LoggedOutViewModel
 {

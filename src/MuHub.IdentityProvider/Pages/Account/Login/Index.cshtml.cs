@@ -3,15 +3,15 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 
-using MuHub.IdentityProvider.Models;
-
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MuHub.IdentityProvider.Pages.Login;
+using MuHub.IdentityProvider.Models;
+
+namespace MuHub.IdentityProvider.Pages.Account.Login;
 
 [SecurityHeaders]
 [AllowAnonymous]
@@ -170,13 +170,13 @@ public class Index : PageModel
                 DisplayName = x.DisplayName ?? x.Name, AuthenticationScheme = x.Name
             }).ToList();
 
-        var dyanmicSchemes = (await _identityProviderStore.GetAllSchemeNamesAsync())
+        var dynamicSchemes = (await _identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
             .Select(x => new ViewModel.ExternalProvider
             {
                 AuthenticationScheme = x.Scheme, DisplayName = x.DisplayName
             });
-        providers.AddRange(dyanmicSchemes);
+        providers.AddRange(dynamicSchemes);
 
 
         var allowLocal = true;

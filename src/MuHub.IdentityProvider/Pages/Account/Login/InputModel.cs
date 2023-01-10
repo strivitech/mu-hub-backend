@@ -4,7 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace MuHub.IdentityProvider.Pages.Login;
+namespace MuHub.IdentityProvider.Pages.Account.Login;
 
 public class InputModel
 {

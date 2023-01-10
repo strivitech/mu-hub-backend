@@ -4,15 +4,15 @@ using Duende.IdentityServer.Services;
 
 using IdentityModel;
 
-using MuHub.IdentityProvider.Models;
-
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MuHub.IdentityProvider.Pages.Logout;
+using MuHub.IdentityProvider.Models;
+
+namespace MuHub.IdentityProvider.Pages.Account.Logout;
 
 [SecurityHeaders]
 [AllowAnonymous]
@@ -38,7 +38,7 @@ public class Index : PageModel
 
         var showLogoutPrompt = LogoutOptions.ShowLogoutPrompt;
 
-        if (User?.Identity.IsAuthenticated != true)
+        if (User?.Identity != null && User?.Identity.IsAuthenticated != true)
         {
             // if the user is not authenticated, then just show logged out page
             showLogoutPrompt = false;
