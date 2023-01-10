@@ -24,7 +24,10 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
     
+    #if DEBUG
     app.TrySeedDevelopmentItems();
+    #endif
+
     app.InitializeConfigurationDatabase(builder.Configuration);
     
     app.Run();
