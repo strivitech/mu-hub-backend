@@ -52,7 +52,14 @@ public static class SeedDevelopmentData
         var alice = userMgr.FindByNameAsync("alice").Result;
         if (alice is null)
         {
-            alice = new ApplicationUser { UserName = "alice", Email = "AliceSmith@email.com", EmailConfirmed = true, };
+            alice = new ApplicationUser
+            {
+                UserName = "alice",
+                Email = "AliceSmith@email.com",
+                EmailConfirmed = true,
+                IsBlocked = false,
+                CreatedAt = DateTimeOffset.UtcNow
+            };
             var result = userMgr.CreateAsync(alice, "Pass123$").Result;
             if (!result.Succeeded)
             {
@@ -80,7 +87,14 @@ public static class SeedDevelopmentData
         var bob = userMgr.FindByNameAsync("bob").Result;
         if (bob is null)
         {
-            bob = new ApplicationUser { UserName = "bob", Email = "BobSmith@email.com", EmailConfirmed = true };
+            bob = new ApplicationUser
+            {
+                UserName = "bob",
+                Email = "BobSmith@email.com",
+                EmailConfirmed = true,
+                IsBlocked = false,
+                CreatedAt = DateTimeOffset.UtcNow
+            };
             var result = userMgr.CreateAsync(bob, "Pass123$").Result;
             if (!result.Succeeded)
             {
