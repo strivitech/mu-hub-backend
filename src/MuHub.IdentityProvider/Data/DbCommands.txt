@@ -1,0 +1,8 @@
+dotnet ef migrations add InitialMigration -c PersistedGrantDbContext -o Data/Migrations/PersistedGrant
+dotnet ef database update -c PersistedGrantDbContext
+
+dotnet ef migrations add InitialMigration -c ConfigurationDbContext -o Data/Migrations/Configuration
+dotnet ef database update -c ConfigurationDbContext
+
+dotnet ef migrations add InitialMigration -c ApplicationDbContext -o Data/Migrations/Application
+dotnet ef database update -c ApplicationDbContext
