@@ -1,4 +1,5 @@
 version: '3.5'
+name: MuHub
 
 services:
   mu_hub_main:
@@ -11,3 +12,14 @@ services:
       - POSTGRES_PASSWORD=admin
     ports:
       - 5432:5432
+
+  mu_hub_identity_provider:
+    image: postgres:14.5
+    container_name: mu_hub_identity_provider
+    restart: always
+    environment:
+      - POSTGRES_DB=mu_hub_identity_provider
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - 5433:5432
