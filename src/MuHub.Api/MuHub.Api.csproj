@@ -30,8 +30,4 @@
       <ProjectReference Include="..\MuHub.Infrastructure\MuHub.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Common\Authentication" />
-    </ItemGroup>
-
 </Project>

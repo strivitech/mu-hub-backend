@@ -18,13 +18,6 @@ app.Configure();
 try
 {
     // Add logs
-    // TODO: move this code
-    using var scope = app.Services.CreateScope();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    if (!roleManager.Roles.Any())
-    {
-        roleManager.CreateAsync(new IdentityRole("user")).Wait();
-    }
     app.Run();
 }
 catch (Exception ex)
