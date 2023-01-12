@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MuHub.IdentityProvider.Data.Migrations.Application
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230111134221_InitialMigration")]
+    [Migration("20230112015520_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
