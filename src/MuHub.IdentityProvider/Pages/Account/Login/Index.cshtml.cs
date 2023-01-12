@@ -15,6 +15,9 @@ using Serilog.Core;
 
 namespace MuHub.IdentityProvider.Pages.Account.Login;
 
+/// <summary>
+/// Login Index Page.
+/// </summary>
 [SecurityHeaders]
 [AllowAnonymous]
 public class Index : PageModel
@@ -50,6 +53,11 @@ public class Index : PageModel
         _events = events;
     }
 
+    /// <summary>
+    /// Gets Login Page.
+    /// </summary>
+    /// <param name="returnUrl">Url to return after the login flow.</param>
+    /// <returns>Login page.</returns>
     public async Task<IActionResult> OnGet(string returnUrl)
     {
         await BuildModelAsync(returnUrl);
@@ -63,6 +71,11 @@ public class Index : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// Executes the login flow.
+    /// </summary>
+    /// <returns><see cref="RedirectResult"/> if login operation succeeded or Login page with errors if not.</returns>
+    /// <exception cref="InvalidOperationException">If ReturnUrl is invalid.</exception>
     public async Task<IActionResult> OnPost()
     {
         // check if we are in the context of an authorization request

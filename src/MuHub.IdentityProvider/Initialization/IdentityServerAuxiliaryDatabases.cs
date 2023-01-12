@@ -8,8 +8,16 @@ using Serilog;
 
 namespace MuHub.IdentityProvider.Initialization;
 
+/// <summary>
+/// Initializes auxiliary databases for IdentityServer.
+/// </summary>
 public static class IdentityServerAuxiliaryDatabases
 {
+    /// <summary>
+    /// Initializes the configuration database.
+    /// </summary>
+    /// <param name="app">Application builder.</param>
+    /// <param name="configuration">Configuration.</param>
     public static void InitializeConfigurationDatabase(this IApplicationBuilder app, IConfiguration configuration)
     {
         using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();

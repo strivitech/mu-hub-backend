@@ -7,6 +7,9 @@ using MuHub.IdentityProvider.Models;
 
 namespace MuHub.IdentityProvider.Data;
 
+/// <summary>
+/// Main database context for the application.
+/// </summary>
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

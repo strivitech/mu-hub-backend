@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MuHub.IdentityProvider.Pages.Home.Error;
 
+/// <summary>
+/// Error Index page.
+/// </summary>
 [AllowAnonymous]
 [SecurityHeaders]
 public class Index : PageModel
@@ -20,6 +23,10 @@ public class Index : PageModel
         _environment = environment;
     }
 
+    /// <summary>
+    /// Gets the page with error details.
+    /// </summary>
+    /// <param name="errorId">Error identifier.</param>
     public async Task OnGet(string errorId)
     {
         View = new ViewModel();

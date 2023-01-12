@@ -1,5 +1,8 @@
 namespace MuHub.IdentityProvider.Pages.Account.Login;
 
+/// <summary>
+/// Describes options for the login flow.
+/// </summary>
 public static class LoginOptions
 {
     public const bool AllowLocalLogin = true;

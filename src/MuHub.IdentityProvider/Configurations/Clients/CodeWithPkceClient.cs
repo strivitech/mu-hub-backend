@@ -1,6 +1,9 @@
 ﻿namespace MuHub.IdentityProvider.Configurations.Clients;
 
-public class CodeWithPkceClients
+/// <summary>
+/// Code with PKCE client configuration.
+/// </summary>
+public class CodeWithPkceClient
 {
     public string ClientId { get; set; }
     public string[] RedirectUris { get; set; }

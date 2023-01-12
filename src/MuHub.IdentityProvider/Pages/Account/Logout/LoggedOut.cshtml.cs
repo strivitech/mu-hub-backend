@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MuHub.IdentityProvider.Pages.Account.Logout;
 
+/// <summary>
+/// Logged out page.
+/// </summary>
 [SecurityHeaders]
 [AllowAnonymous]
 public class LoggedOut : PageModel
@@ -18,6 +21,10 @@ public class LoggedOut : PageModel
         _interactionService = interactionService;
     }
 
+    /// <summary>
+    /// Gets the logged out page.
+    /// </summary>
+    /// <param name="logoutId">Logout identifier.</param>
     public async Task OnGet(string logoutId)
     {
         // get context information (client name, post logout redirect URI and iframe for federated signout)

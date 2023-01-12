@@ -4,6 +4,9 @@
 
 namespace MuHub.IdentityProvider.Pages.Account.Logout;
 
+/// <summary>
+/// Logged out view model.
+/// </summary>
 public class LoggedOutViewModel
 {
     public string PostLogoutRedirectUri { get; set; }

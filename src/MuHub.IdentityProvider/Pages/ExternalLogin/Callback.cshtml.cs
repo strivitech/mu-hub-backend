@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MuHub.IdentityProvider.Pages.ExternalLogin;
 
+/// <summary>
+/// Callback page.
+/// </summary>
 [AllowAnonymous]
 [SecurityHeaders]
 public class Callback : PageModel
@@ -40,6 +43,9 @@ public class Callback : PageModel
         _events = events;
     }
 
+    /// <summary>
+    /// Provides a callback step for the external authentication.
+    /// </summary>
     public async Task<IActionResult> OnGet()
     {
         // read external identity from the temporary cookie

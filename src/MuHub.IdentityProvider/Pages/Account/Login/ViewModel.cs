@@ -3,6 +3,9 @@
 
 namespace MuHub.IdentityProvider.Pages.Account.Login;
 
+/// <summary>
+/// ViewModel for the login page.
+/// </summary>
 public class ViewModel
 {
     public bool AllowRememberLogin { get; set; } = true;

@@ -42,7 +42,7 @@ public static class Config
 
 
     // interactive client using code flow + pkce
-    public static IEnumerable<Client> CodeWithPkceClients(IEnumerable<CodeWithPkceClients> clients) =>
+    public static IEnumerable<Client> CodeWithPkceClients(IEnumerable<CodeWithPkceClient> clients) =>
         clients.Select(newClient => new Client
         {
             ClientId = newClient.ClientId,

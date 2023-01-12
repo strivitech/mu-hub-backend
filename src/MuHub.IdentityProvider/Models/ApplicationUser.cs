@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MuHub.IdentityProvider.Models;
 
-// Add profile data for application users by adding properties to the ApplicationUser class
+/// <summary>
+/// Application user.
+/// </summary>
 public class ApplicationUser : IdentityUser
 {
     public bool IsBlocked { get; set; }

@@ -5,6 +5,9 @@ using Duende.IdentityServer.Models;
 
 namespace MuHub.IdentityProvider.Pages.Home.Error;
 
+/// <summary>
+/// View model for the error page.
+/// </summary>
 public class ViewModel
 {
     public ViewModel()

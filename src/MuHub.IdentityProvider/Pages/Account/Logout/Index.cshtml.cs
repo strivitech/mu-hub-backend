@@ -14,6 +14,9 @@ using MuHub.IdentityProvider.Models;
 
 namespace MuHub.IdentityProvider.Pages.Account.Logout;
 
+/// <summary>
+/// Logout Index page.
+/// </summary>
 [SecurityHeaders]
 [AllowAnonymous]
 public class Index : PageModel
@@ -33,6 +36,11 @@ public class Index : PageModel
         _events = events;
     }
 
+    /// <summary>
+    /// Gets the logout page.
+    /// </summary>
+    /// <param name="logoutId">Logout identifier.</param>
+    /// <returns><see cref="RedirectToPageResult"/> or Logout prompt if necessary.</returns>
     public async Task<IActionResult> OnGet(string logoutId)
     {
         LogoutId = logoutId;
@@ -64,6 +72,10 @@ public class Index : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// Executes the logout.
+    /// </summary>
+    /// <returns><see cref="RedirectToPageResult"/>.</returns>
     public async Task<IActionResult> OnPost()
     {
         if (User?.Identity is { IsAuthenticated: true })

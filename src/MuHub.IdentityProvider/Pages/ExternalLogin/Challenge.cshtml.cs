@@ -18,6 +18,11 @@ public class Challenge : PageModel
         _interactionService = interactionService;
     }
 
+    /// <summary>
+    /// Provides a challenge step for the external authentication.
+    /// </summary>
+    /// <param name="scheme">Authentication scheme.</param>
+    /// <param name="returnUrl">Url to return after authentication.</param>
     public IActionResult OnGet(string scheme, string returnUrl)
     {
         if (string.IsNullOrEmpty(returnUrl))
