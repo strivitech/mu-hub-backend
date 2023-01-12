@@ -8,6 +8,11 @@ using MuHub.IdentityProvider.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using MuHub.IdentityProvider.Configurations;
+using MuHub.IdentityProvider.Configurations.ApplicationUser;
+using MuHub.IdentityProvider.Configurations.Auth;
+using MuHub.IdentityProvider.Configurations.Store;
+
 using Serilog;
 
 namespace MuHub.IdentityProvider;
@@ -16,32 +21,34 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddRazorPages();
-
         var migrationAssembly = typeof(HostingExtensions).Assembly.FullName;
 
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                optionsBuilder => optionsBuilder.MigrationsAssembly(migrationAssembly)));
+        void DbOptionsBuilder(DbContextOptionsBuilder options) => options.UseNpgsql(
+            builder.Configuration.GetConnectionString("DefaultConnection"),
+            optionsBuilder => optionsBuilder.MigrationsAssembly(migrationAssembly));
+
+        builder.Services.AddRazorPages();
+
+        builder.Services.AddDbContext<ApplicationDbContext>(DbOptionsBuilder);
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {// Add Identity options here
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 8;
+            {
+                options.Password.RequireDigit = PasswordConfiguration.RequireDigit;
+                options.Password.RequireLowercase = PasswordConfiguration.RequireLowercase;
+                options.Password.RequireNonAlphanumeric = PasswordConfiguration.RequireNonAlphanumeric;
+                options.Password.RequireUppercase = PasswordConfiguration.RequireUppercase;
+                options.Password.RequiredLength = PasswordConfiguration.RequiredLength;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
         builder.Services.ConfigureApplicationCookie(c =>
         {
-            c.Cookie.Name = "MuHub.IdentityProvider";
+            c.Cookie.Name = CookieAuthenticationConfiguration.CookieName;
             c.Cookie.HttpOnly = true;
             c.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            c.LoginPath = "/Account/Login";
-            c.LogoutPath = "/Account/Logout";
+            c.LoginPath = CookieAuthenticationConfiguration.LoginPath;
+            c.LogoutPath = CookieAuthenticationConfiguration.LogoutPath;
         });
         
         builder.Services
@@ -51,37 +58,29 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
-
-                // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-                options.EmitStaticAudienceClaim = true;
-                options.IssuerUri = "https://localhost:5001";
+                options.EmitStaticAudienceClaim = IdentityServerOptionsConfiguration.EmitStaticAudienceClaim;
+                options.IssuerUri = IdentityServerOptionsConfiguration.IssuerUri;
             })
             .AddConfigurationStore(options =>
             {
-                options.ConfigureDbContext = dbContextOptionsBuilder =>
-                    dbContextOptionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                        optionsBuilder => optionsBuilder.MigrationsAssembly(migrationAssembly));
+                options.ConfigureDbContext = DbOptionsBuilder;
             })
             .AddOperationalStore(options =>
             {
-                options.ConfigureDbContext = dbContextOptionsBuilder =>
-                    dbContextOptionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                        optionsBuilder => optionsBuilder.MigrationsAssembly(migrationAssembly));
-                options.EnableTokenCleanup = true;
-                options.TokenCleanupInterval = 3600;
+                options.ConfigureDbContext = DbOptionsBuilder;
+                options.EnableTokenCleanup = OperationalStoreConfiguration.EnableTokenCleanup;
+                options.TokenCleanupInterval = OperationalStoreConfiguration.TokenCleanupInterval;
             })
             .AddAspNetIdentity<ApplicationUser>();
 
+        GoogleConfiguration googleConfiguration = builder.Configuration.GetSection(GoogleConfiguration.SectionName)
+            .Get<GoogleConfiguration>();
         builder.Services.AddAuthentication()
             .AddGoogle(options =>
             {
                 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                // register your IdentityServer with Google at https://console.developers.google.com
-                // enable the Google+ API
-                // set the redirect URI to https://localhost:5001/signin-google
-                options.ClientId = "copy client ID from Google here";
-                options.ClientSecret = "copy client secret from Google here";
+                options.ClientId = googleConfiguration.ClientId;
+                options.ClientSecret = googleConfiguration.ClientSecret;
             });
 
         return builder.Build();
