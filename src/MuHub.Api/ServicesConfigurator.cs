@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 using MuHub.Api.Common.Extensions;
@@ -21,9 +21,13 @@ public static class ServicesConfigurator
     /// </summary>
     /// <param name="services">Service collection.</param>
     /// <param name="configuration"></param>
+    /// <param name="environment"></param>
     /// <returns>Service collection.</returns>
-    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration,
+        IWebHostEnvironment environment)
     {
+        bool isDevelopment = environment.IsDevelopment();
+        
         services.AddHttpContextAccessor();
 
         services.AddControllers(options =>
@@ -39,7 +43,7 @@ public static class ServicesConfigurator
                 options.Authority = authority;
                 options.Audience = "muhubapi";
 
-                options.RequireHttpsMetadata = false;
+                options.RequireHttpsMetadata = !isDevelopment;
                 options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
             });
 

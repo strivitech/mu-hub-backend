@@ -22,7 +22,7 @@ public static class Startup
 
         services.AddApplicationServices();
         services.AddInfrastructureServices(builder.Configuration);
-        services.AddApiServices(builder.Configuration);
+        services.AddApiServices(builder.Configuration, builder.Environment);
     }
 
     /// <summary>
