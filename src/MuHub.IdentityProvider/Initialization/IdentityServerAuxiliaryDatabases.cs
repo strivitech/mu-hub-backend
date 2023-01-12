@@ -24,6 +24,7 @@ public static class IdentityServerAuxiliaryDatabases
 
                 // Add CodeWithPkceClients
                 AddClients(context, Config.CodeWithPkceClients(clients.CodeWithPkce));
+                AddClients(context, Config.M2MClients);
             }
 
             if (!context.IdentityResources.Any())
@@ -36,6 +37,11 @@ public static class IdentityServerAuxiliaryDatabases
                 AddApiScopes(context);
             }
 
+            if (!context.ApiResources.Any())
+            {
+                AddApiResources(context);
+            }
+            
             transaction.Commit();
         }
         catch (Exception)
@@ -72,6 +78,16 @@ public static class IdentityServerAuxiliaryDatabases
         foreach (var resource in Config.ApiScopes)
         {
             context.ApiScopes.Add(resource.ToEntity());
+        }
+
+        context.SaveChanges();
+    }
+    
+    private static void AddApiResources(ConfigurationDbContext context)
+    {
+        foreach (var resource in Config.ApiResources)
+        {
+            context.ApiResources.Add(resource.ToEntity());
         }
 
         context.SaveChanges();
