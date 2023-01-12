@@ -15,8 +15,6 @@ public static class ServicesConfigurator
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddScoped<IModelValidationService, ModelValidationService>();
         services.AddScoped<IInfoService, InfoService>();
 

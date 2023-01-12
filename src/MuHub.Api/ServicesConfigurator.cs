@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using FluentValidation;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
@@ -7,6 +9,8 @@ using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Extensions.Startup;
 using MuHub.Api.Common.Factories;
 using MuHub.Api.Common.Filters;
+using MuHub.Api.Services;
+using MuHub.Application.Contracts.Infrastructure;
 
 
 namespace MuHub.Api;
@@ -30,6 +34,16 @@ public static class ServicesConfigurator
         
         services.AddHttpContextAccessor();
 
+        Assembly[] assembliesToScan = 
+        {
+            typeof(ServicesConfigurator).Assembly,
+            typeof(Application.ServicesConfigurator).Assembly,
+            typeof(Infrastructure.ServicesConfigurator).Assembly,
+        };
+
+        services.AddAutoMapper(assembliesToScan);
+        services.AddValidatorsFromAssemblies(assembliesToScan);
+        
         services.AddControllers(options =>
             {
                 options.Filters.Add<ApiModelValidationFilter>();
@@ -56,6 +70,10 @@ public static class ServicesConfigurator
                     .AllowCredentials()));
 
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
+        
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<IUserSessionData, CurrentUserSessionData>();
+        
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();
 
