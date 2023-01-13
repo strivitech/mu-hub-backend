@@ -24,4 +24,9 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MuHub.IdentityProvider.Shared\MuHub.IdentityProvider.Shared.csproj" />
+      <ProjectReference Include="..\MuHub.Permissions\MuHub.Permissions.csproj" />
+    </ItemGroup>
 </Project>
