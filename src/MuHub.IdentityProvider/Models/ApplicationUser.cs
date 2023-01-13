@@ -11,6 +11,8 @@ namespace MuHub.IdentityProvider.Models;
 /// </summary>
 public class ApplicationUser : IdentityUser
 {
+    public string RoleName { get; set; }
+    
     public bool IsBlocked { get; set; }
 
     public DateTimeOffset? CreatedAt { get; set; }
