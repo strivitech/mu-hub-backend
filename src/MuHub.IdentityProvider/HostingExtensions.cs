@@ -12,6 +12,7 @@ using MuHub.IdentityProvider.Configurations;
 using MuHub.IdentityProvider.Configurations.ApplicationUser;
 using MuHub.IdentityProvider.Configurations.Auth;
 using MuHub.IdentityProvider.Configurations.Store;
+using MuHub.IdentityProvider.Services;
 
 using Serilog;
 
@@ -71,6 +72,7 @@ internal static class HostingExtensions
                 options.EnableTokenCleanup = OperationalStoreConfiguration.EnableTokenCleanup;
                 options.TokenCleanupInterval = OperationalStoreConfiguration.TokenCleanupInterval;
             })
+            .AddProfileService<ProfileService>()
             .AddAspNetIdentity<ApplicationUser>();
 
         GoogleConfiguration googleConfiguration = builder.Configuration.GetSection(GoogleConfiguration.SectionName)

@@ -3,6 +3,7 @@
 using FluentValidation;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 using MuHub.Api.Common.Extensions;
@@ -11,6 +12,7 @@ using MuHub.Api.Common.Factories;
 using MuHub.Api.Common.Filters;
 using MuHub.Api.Services;
 using MuHub.Application.Contracts.Infrastructure;
+using MuHub.Permissions.Policy;
 
 
 namespace MuHub.Api;
@@ -70,6 +72,9 @@ public static class ServicesConfigurator
                     .AllowCredentials()));
 
         services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
+        
+        services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+        services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
         
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IUserSessionData, CurrentUserSessionData>();
