@@ -1,9 +1,13 @@
 using MuHub.Api;
+using MuHub.Api.Common.Extensions.Startup;
+
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configures all services for Application
 builder.ConfigureServices();
+builder.ConfigureLogging();
 
 var app = builder.Build();
 
@@ -12,14 +16,14 @@ app.Configure();
 
 try
 {
-    // Add logs
+    Log.Information("Run app");
     app.Run();
 }
 catch (Exception ex)
 {
-    // Add logs
+    Log.Fatal(ex, "Host failure");
 }
 finally
 {
-    // Add logs and flush
+    Log.CloseAndFlush();
 }
