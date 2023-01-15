@@ -1,3 +1,8 @@
+using System.Diagnostics;
+using System.Text.Json;
+
+using Microsoft.AspNetCore.Identity;
+
 using MuHub.Api;
 using MuHub.Api.Common.Extensions.Startup;
 
@@ -22,6 +27,7 @@ try
 catch (Exception ex)
 {
     Log.Fatal(ex, "Host failure");
+    Debug.WriteLine(JsonSerializer.Serialize(ex));
 }
 finally
 {
