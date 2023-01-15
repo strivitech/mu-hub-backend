@@ -51,7 +51,7 @@ internal static class HostingExtensions
             c.LoginPath = CookieAuthenticationConfiguration.LoginPath;
             c.LogoutPath = CookieAuthenticationConfiguration.LogoutPath;
         });
-        
+
         builder.Services
             .AddIdentityServer(options =>
             {
@@ -72,8 +72,8 @@ internal static class HostingExtensions
                 options.EnableTokenCleanup = OperationalStoreConfiguration.EnableTokenCleanup;
                 options.TokenCleanupInterval = OperationalStoreConfiguration.TokenCleanupInterval;
             })
-            .AddProfileService<ProfileService>()
-            .AddAspNetIdentity<ApplicationUser>();
+            .AddAspNetIdentity<ApplicationUser>()
+            .AddProfileService<ProfileService>();
 
         GoogleConfiguration googleConfiguration = builder.Configuration.GetSection(GoogleConfiguration.SectionName)
             .Get<GoogleConfiguration>();
