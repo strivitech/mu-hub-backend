@@ -16,6 +16,9 @@ using Serilog;
 
 namespace MuHub.IdentityProvider.Services;
 
+/// <summary>
+/// This class allows IdentityServer to connect to your user and profile store.
+/// </summary>
 public class ProfileService : IProfileService
 {
     private readonly UserManager<ApplicationUser> _userManager;

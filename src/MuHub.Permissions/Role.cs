@@ -1,5 +1,8 @@
 ﻿namespace MuHub.Permissions;
 
+/// <summary>
+/// Application user roles.
+/// </summary>
 public enum Role
 {
     Admin = 1, 

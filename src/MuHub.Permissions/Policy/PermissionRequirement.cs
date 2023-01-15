@@ -2,6 +2,9 @@
 
 namespace MuHub.Permissions.Policy;
 
+/// <summary>
+/// Custom authorization requirement.
+/// </summary>
 public class PermissionRequirement : IAuthorizationRequirement
 {
     public PermissionRequirement(string permissionName)
@@ -9,5 +12,8 @@ public class PermissionRequirement : IAuthorizationRequirement
         PermissionName = permissionName;
     }
 
+    /// <summary>
+    /// Name of permission.
+    /// </summary>
     public string PermissionName { get; }
 }

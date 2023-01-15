@@ -9,7 +9,10 @@ using Serilog;
 
 namespace MuHub.IdentityProvider.Initialization.RolesPermissions;
 
-public class RolesPermissionsSeeder
+/// <summary>
+/// Seeds roles and permissions.
+/// </summary>
+public static class RolesPermissionsSeeder
 {
     private class InsideStepwiseSeeder :
         IRoleSeeder,
@@ -88,5 +91,9 @@ public class RolesPermissionsSeeder
         }
     }
 
+    /// <summary>
+    /// Creates a new instance of <see cref="RolesPermissionsSeeder"/>.
+    /// </summary>
+    /// <returns>An instance of <see cref="IRoleSeeder"/>.</returns>
     public static IRoleSeeder Create() => new InsideStepwiseSeeder();
 }

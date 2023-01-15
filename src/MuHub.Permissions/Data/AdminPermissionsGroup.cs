@@ -1,5 +1,8 @@
 ﻿namespace MuHub.Permissions.Data;
 
+/// <summary>
+/// Admin permissions group.
+/// </summary>
 public class AdminPermissionsGroup : IRolePermissionsGroup
 {
     private static readonly IReadOnlyCollection<Permission> PermissionsCollection = new List<Permission>

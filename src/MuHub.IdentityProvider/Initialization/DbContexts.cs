@@ -8,8 +8,15 @@ using Serilog;
 
 namespace MuHub.IdentityProvider.Initialization;
 
+/// <summary>
+/// Contains methods to manage databases that are called before app runs.
+/// </summary>
 public static class DbContexts
 {
+    /// <summary>
+    /// Migrates all databases to last versions.
+    /// </summary>
+    /// <param name="app"></param>
     public static void Migrate(IApplicationBuilder app)
     {
         using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();

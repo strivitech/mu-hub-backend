@@ -2,7 +2,10 @@
 
 namespace MuHub.IdentityProvider.Shared.Claims;
 
-public class IdentityProviderClaimTypes
+/// <summary>
+/// Contains the names of the claims used by the identity provider.
+/// </summary>
+public static class IdentityProviderClaimTypes
 {
     /// <summary>
     /// Contains the 'sub' name.

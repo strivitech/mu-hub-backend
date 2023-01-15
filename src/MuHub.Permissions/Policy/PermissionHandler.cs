@@ -5,6 +5,9 @@ using MuHub.Permissions.Management;
 
 namespace MuHub.Permissions.Policy;
 
+/// <summary>
+/// Custom authorization handler that operates with permissions.
+/// </summary>
 public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
 {
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
