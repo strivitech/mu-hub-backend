@@ -2,6 +2,7 @@
 using Duende.IdentityServer.Models;
 
 using MuHub.IdentityProvider.Configurations.Clients;
+using MuHub.IdentityProvider.Shared.Claims;
 
 namespace MuHub.IdentityProvider;
 
@@ -10,8 +11,17 @@ public static class Config
     public static IEnumerable<IdentityResource> IdentityResources =>
         new IdentityResource[]
         {
-            new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.OpenId(), new IdentityResources.Profile(),
+            new()
+            {
+                Name = IdentityProviderClaimTypes.Role,
+                UserClaims = new List<string> { IdentityProviderClaimTypes.Role },
+            },
+            new()
+            {
+                Name = IdentityProviderClaimTypes.Permissions,
+                UserClaims = new List<string> { IdentityProviderClaimTypes.Permissions },
+            },
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -32,6 +42,11 @@ public static class Config
                     Configurations.Clients.ApiScopes.MuHubApiRead,
                     Configurations.Clients.ApiScopes.MuHubApiWrite,
                     Configurations.Clients.ApiScopes.MuHubApiDelete
+                },
+                UserClaims =
+                {
+                    IdentityProviderClaimTypes.Role,
+                    IdentityProviderClaimTypes.Permissions
                 }
             },
         };

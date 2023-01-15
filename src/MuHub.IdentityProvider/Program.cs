@@ -1,5 +1,6 @@
 ﻿using MuHub.IdentityProvider;
 using MuHub.IdentityProvider.Initialization;
+using MuHub.IdentityProvider.Initialization.RolesPermissions;
 
 using Serilog;
 
@@ -24,11 +25,15 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
     
-    #if DEBUG
-    app.TrySeedDevelopmentItems();
-    #endif
+    DbContexts.Migrate(app);
 
     app.InitializeConfigurationDatabase(builder.Configuration);
+    var rolesPermissionsSeeder = RolesPermissionsSeeder.Create();
+    rolesPermissionsSeeder.AddRoles(app).AddPermissions(app);
+    
+#if DEBUG
+    app.TrySeedDevelopmentItems();
+#endif
     
     app.Run();
 }

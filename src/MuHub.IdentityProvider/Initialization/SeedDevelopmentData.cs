@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 using MuHub.IdentityProvider.Data;
 using MuHub.IdentityProvider.Models;
+using MuHub.Permissions;
 
 using Serilog;
 
@@ -56,11 +57,17 @@ public static class SeedDevelopmentData
             {
                 UserName = "alice",
                 Email = "AliceSmith@email.com",
+                RoleName = Role.Admin.ToString(),
                 EmailConfirmed = true,
                 IsBlocked = false,
                 CreatedAt = DateTimeOffset.UtcNow
             };
             var result = userMgr.CreateAsync(alice, "Pass123$").Result;
+            if (!result.Succeeded)
+            {
+                throw new InvalidOperationException(result.Errors.First().Description);
+            }
+            result = userMgr.AddToRoleAsync(alice, alice.RoleName).Result;
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException(result.Errors.First().Description);
@@ -91,11 +98,17 @@ public static class SeedDevelopmentData
             {
                 UserName = "bob",
                 Email = "BobSmith@email.com",
+                RoleName = Role.OrdinaryUser.ToString(),
                 EmailConfirmed = true,
                 IsBlocked = false,
                 CreatedAt = DateTimeOffset.UtcNow
             };
             var result = userMgr.CreateAsync(bob, "Pass123$").Result;
+            if (!result.Succeeded)
+            {
+                throw new InvalidOperationException(result.Errors.First().Description);
+            }
+            result = userMgr.AddToRoleAsync(bob, bob.RoleName).Result;
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException(result.Errors.First().Description);
@@ -106,7 +119,6 @@ public static class SeedDevelopmentData
                 {
                     new(JwtClaimTypes.Name, "Bob Smith"), new(JwtClaimTypes.GivenName, "Bob"),
                     new(JwtClaimTypes.FamilyName, "Smith"), new(JwtClaimTypes.WebSite, "http://bob.com"),
-                    new("location", "somewhere")
                 }).Result;
             if (!result.Succeeded)
             {
