@@ -188,7 +188,7 @@ public class IndexPageTest
             .ReturnsAsync(SignInResult.Success);
         _userManagerMock.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
             .ReturnsAsync(new ApplicationUser());
-        _eventServiceMock.Setup(x => x.RaiseAsync(It.IsAny<Event>()))
+        _eventServiceMock.Setup(x => x.RaiseAsync(It.IsAny<UserLoginSuccessEvent>()))
             .Returns(Task.CompletedTask);
 
         // Act
@@ -211,7 +211,7 @@ public class IndexPageTest
         _signInManagerMock.Setup(x => x.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(),
                 It.IsAny<bool>()))
             .ReturnsAsync(SignInResult.Failed);
-        _eventServiceMock.Setup(x => x.RaiseAsync(It.IsAny<Event>()))
+        _eventServiceMock.Setup(x => x.RaiseAsync(It.IsAny<UserLoginFailureEvent>()))
             .Returns(Task.CompletedTask);
 
         // Act
