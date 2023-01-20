@@ -84,7 +84,7 @@ public class IndexPageTest
         var result = await _page.OnGet(ValidReturnUri);
 
         // Assert
-        result.Should().BeOfType<PageResult>().And.NotBeNull();
+        result.Should().BeOfType<PageResult>();
     }
 
     [Fact]
@@ -104,9 +104,7 @@ public class IndexPageTest
         var result = await _page.OnGet(ValidReturnUri);
 
         // Assert
-        result.Should().BeOfType<RedirectToPageResult>().And.NotBeNull();
-        var redirectResult = (RedirectToPageResult)result;
-        redirectResult.PageName.Should().BeEquivalentTo(redirectToPageUrl);
+        result.Should().BeOfType<RedirectToPageResult>().Which.PageName.Should().BeEquivalentTo(redirectToPageUrl);
     }
 
     [Fact]
@@ -126,9 +124,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().And.NotBeNull();
-        var redirectResult = (RedirectResult)result;
-        redirectResult.Url.Should().BeEquivalentTo(_page.Input.ReturnUrl);
+        result.Should().BeOfType<RedirectResult>().Which.Url.Should().BeEquivalentTo(_page.Input.ReturnUrl);
     }
 
     [Fact]
@@ -146,9 +142,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().And.NotBeNull();
-        var redirectResult = (RedirectResult)result;
-        redirectResult.Url.Should().BeEquivalentTo(ErrorRedirectUrl);
+        result.Should().BeOfType<RedirectResult>().Which.Url.Should().BeEquivalentTo(ErrorRedirectUrl);
     }
 
     [Fact]
@@ -174,7 +168,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<PageResult>().And.NotBeNull();
+        result.Should().BeOfType<PageResult>();
         _page.PageModelStateContainsSingleError(modelError);
     }
 
@@ -201,9 +195,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().And.NotBeNull();
-        var redirectResult = (RedirectResult)result;
-        redirectResult.Url.Should().BeEquivalentTo(ValidReturnUri);
+        result.Should().BeOfType<RedirectResult>().Which.Url.Should().BeEquivalentTo(ValidReturnUri);
     }
     
     [Fact]
@@ -226,7 +218,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<PageResult>().And.NotBeNull();
+        result.Should().BeOfType<PageResult>();
         _page.PageModelStateContainsSingleError((string.Empty, LoginOptions.InvalidCredentialsErrorMessage));
     }
 
