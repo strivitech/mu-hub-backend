@@ -19,12 +19,13 @@ public static class PageInstantiation
     /// Initializes a given page with default values for correct work.
     /// </summary>
     /// <param name="page">Page.</param>
+    /// <param name="httpCtx">Http context.</param>
     /// <typeparam name="TModel">Page type.</typeparam>
     /// <returns>Given Page of type TModel.</returns>
-    public static TModel WithDefaultValues<TModel>(this TModel page)
+    public static TModel WithDefaultValues<TModel>(this TModel page, HttpContext? httpCtx = null)
         where TModel : PageModel
     {
-        var httpContext = new DefaultHttpContext();
+        var httpContext = httpCtx ?? new DefaultHttpContext();
         var modelState = new ModelStateDictionary();
         var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor(), modelState);
         var modelMetadataProvider = new EmptyModelMetadataProvider();
