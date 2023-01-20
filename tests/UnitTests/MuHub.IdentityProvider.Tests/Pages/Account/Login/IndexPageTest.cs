@@ -104,7 +104,7 @@ public class IndexPageTest
         var result = await _page.OnGet(ValidReturnUri);
 
         // Assert
-        result.Should().BeOfType<RedirectToPageResult>().Which.PageName.Should().BeEquivalentTo(redirectToPageUrl);
+        result.Should().BeOfType<RedirectToPageResult>().Which.PageName.Should().Be(redirectToPageUrl);
     }
 
     [Fact]
@@ -124,7 +124,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().Which.Url.Should().BeEquivalentTo(_page.Input.ReturnUrl);
+        result.Should().BeOfType<RedirectResult>().Which.Url.Should().Be(_page.Input.ReturnUrl);
     }
 
     [Fact]
@@ -142,7 +142,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().Which.Url.Should().BeEquivalentTo(ErrorRedirectUrl);
+        result.Should().BeOfType<RedirectResult>().Which.Url.Should().Be(ErrorRedirectUrl);
     }
 
     [Fact]
@@ -195,7 +195,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().Which.Url.Should().BeEquivalentTo(ValidReturnUri);
+        result.Should().BeOfType<RedirectResult>().Which.Url.Should().Be(ValidReturnUri);
     }
     
     [Fact]
