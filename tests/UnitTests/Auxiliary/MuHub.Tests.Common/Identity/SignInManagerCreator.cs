@@ -22,20 +22,14 @@ public static class SignInManagerCreator
         where TUser : class 
     {
         var userManager = UserManagerCreator.CreateMockedUserManager<TUser>();
-        var contextAccessor = new Mock<IHttpContextAccessor>();
-        var claimsFactory = new Mock<IUserClaimsPrincipalFactory<TUser>>();
-        var optionsAccessor = new Mock<IOptions<IdentityOptions>>();
-        var logger = new Mock<ILogger<SignInManager<TUser>>>();
-        var schemes = new Mock<IAuthenticationSchemeProvider>();
-        var confirmation = new Mock<IUserConfirmation<TUser>>();
 
         return new Mock<SignInManager<TUser>>(
             userManager.Object,
-            contextAccessor.Object,
-            claimsFactory.Object,
-            optionsAccessor.Object,
-            logger.Object,
-            schemes.Object,
-            confirmation.Object);
+            Mock.Of<IHttpContextAccessor>(),
+            Mock.Of<IUserClaimsPrincipalFactory<TUser>>(),
+            Mock.Of<IOptions<IdentityOptions>>(),
+            Mock.Of<ILogger<SignInManager<TUser>>>(),
+            Mock.Of<IAuthenticationSchemeProvider>(),
+            Mock.Of<IUserConfirmation<TUser>>());
     }
 }

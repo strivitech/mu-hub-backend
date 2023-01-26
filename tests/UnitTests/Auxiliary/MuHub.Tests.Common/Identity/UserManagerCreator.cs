@@ -24,26 +24,19 @@ public static class UserManagerCreator
     )
         where TUser : class
     {
-        var userStore = new Mock<IUserStore<TUser>>();
-        var identityOptions = new Mock<IOptions<IdentityOptions>>();
-        var passwordHasher = new Mock<IPasswordHasher<TUser>>();
         var userValidators = userValidatorCollection ?? Array.Empty<IUserValidator<TUser>>();
         var passwordValidators = passwordValidatorCollection ?? Array.Empty<IPasswordValidator<TUser>>();
-        var keyNormalizer = new Mock<ILookupNormalizer>();
-        var errors = new Mock<IdentityErrorDescriber>();
-        var services = new Mock<IServiceProvider>();
-        var logger = new Mock<ILogger<UserManager<TUser>>>();
 
         return new Mock<UserManager<TUser>>(
-            userStore.Object,
-            identityOptions.Object,
-            passwordHasher.Object,
+            Mock.Of<IUserStore<TUser>>(),
+            Mock.Of<IOptions<IdentityOptions>>(),
+            Mock.Of<IPasswordHasher<TUser>>(),
             userValidators,
             passwordValidators,
-            keyNormalizer.Object,
-            errors.Object,
-            services.Object,
-            logger.Object
+            Mock.Of<ILookupNormalizer>(),
+            Mock.Of<IdentityErrorDescriber>(),
+            Mock.Of<IServiceProvider>(),
+            Mock.Of<ILogger<UserManager<TUser>>>()
         );
     }
 }
