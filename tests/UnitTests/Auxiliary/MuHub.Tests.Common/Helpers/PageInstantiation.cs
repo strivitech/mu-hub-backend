@@ -42,4 +42,35 @@ public static class PageInstantiation
 
         return page;
     }
+
+    public static Mock<IUrlHelper> CreateMockUrlHelper(ActionContext? context = null)
+    {
+        context ??= GetActionContextForPage("/Page");
+
+        var urlHelper = new Mock<IUrlHelper>();
+        urlHelper.SetupGet(h => h.ActionContext)
+            .Returns(context);
+        return urlHelper;
+    }
+    
+    public static ActionContext GetActionContextForPage(string page)
+    {
+        return new()
+        {
+            ActionDescriptor = new()
+            {
+                RouteValues = new Dictionary<string, string>
+                {
+                    { "page", page },
+                }!
+            },
+            RouteData = new()
+            {
+                Values =
+                {
+                    [ "page" ] = page
+                }
+            }
+        };
+    }
 }

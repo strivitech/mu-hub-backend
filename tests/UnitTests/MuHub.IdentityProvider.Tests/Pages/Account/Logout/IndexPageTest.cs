@@ -11,10 +11,13 @@ using FluentAssertions;
 
 using IdentityModel;
 
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.DependencyInjection;
 
 using Moq;
 
@@ -28,12 +31,8 @@ namespace MuHub.IdentityProvider.Tests.Pages.Account.Logout;
 
 public class IndexPageTest
 {
-    private const string ValidReturnUri = "https://localhost:3000/main";
     private const string ValidLogoutId = "logoutId";
     private const string LoggedOutRedirectUrl = "/Account/Logout/LoggedOut";
-    private const string ErrorRedirectUrl = "~/Home/Error/Index";
-    private const string LoginButton = "login";
-    private const string NotLoginButton = "notLogin";
     private readonly Mock<IIdentityServerInteractionService> _interactionServiceMock;
     private readonly Mock<IEventService> _eventServiceMock;
     private readonly Mock<SignInManager<ApplicationUser>> _signInManagerMock;
@@ -52,14 +51,14 @@ public class IndexPageTest
             _interactionServiceMock.Object,
             _eventServiceMock.Object
         ).WithDefaultValues();
-        
+
         _identityMock = new Mock<ClaimsIdentity>();
         _identityMock.Setup(x => x.Name).Returns("IdentityName");
         _claimsPrincipalMock = new Mock<ClaimsPrincipal>();
         _claimsPrincipalMock.Setup(x => x.Identity).Returns(_identityMock.Object);
         _page.HttpContext.User = _claimsPrincipalMock.Object;
     }
-    
+
     [Fact]
     public async Task OnGet_WhenUserIsNotAuthenticated_ReturnsRedirectToPageResult()
     {
@@ -72,7 +71,7 @@ public class IndexPageTest
         // Assert
         result.Should().BeOfType<RedirectToPageResult>().Which.PageName.Should().Be(LoggedOutRedirectUrl);
     }
-    
+
     [Fact]
     public async Task OnGet_WhenUserIsAuthenticatedAndShowSignOutPromptIsTrue_ReturnsPageResult()
     {
@@ -87,7 +86,7 @@ public class IndexPageTest
         // Assert
         result.Should().BeOfType<PageResult>();
     }
-    
+
     [Fact]
     public async Task OnGet_WhenUserIsLocalAuthenticatedAndShowSignOutPromptIsFalse_ReturnsRedirectToPageResult()
     {
@@ -104,17 +103,61 @@ public class IndexPageTest
             .Returns(Task.CompletedTask);
         _eventServiceMock.Setup(x => x.RaiseAsync(It.IsAny<Event>()))
             .Returns(Task.CompletedTask);
-        // _claimsPrincipalMock.Setup(x => x.FindFirst(JwtClaimTypes.IdentityProvider))
-        //     .Returns(localLoginClaim);
+        _claimsPrincipalMock.Setup(x => x.FindFirst(JwtClaimTypes.IdentityProvider))
+            .Returns(localLoginClaim);
         _identityMock.Setup(x => x.FindFirst(JwtClaimTypes.Subject))
             .Returns(subClaim);
-        // _claimsPrincipalMock.Setup(x => x.FindFirst(JwtClaimTypes.Subject))
-        //     .Returns(subClaim);   
-        
+        _claimsPrincipalMock.Setup(x => x.FindFirst(JwtClaimTypes.Subject))
+            .Returns(subClaim);
+
         // Act
         var result = await _page.OnGet(ValidLogoutId);
 
         // Assert
         result.Should().BeOfType<RedirectToPageResult>();
+    }
+
+    [Fact]
+    public async Task
+        OnGet_WhenUserIsExternalAuthenticatedAndShowSignOutPromptIsFalseAndProviderSupportsLogout_ReturnsSignOutResult()
+    {
+        // Arrange
+        var externalLoginClaim = new Claim("external", "external");
+        var subClaim = new Claim("sub", "sub");
+        const string clientId = "clientId";
+        const string generatedUrl = "generatedUrl";
+        _identityMock.SetupGet(x => x.IsAuthenticated).Returns(true);
+        _interactionServiceMock.Setup(x => x.GetLogoutContextAsync(ValidLogoutId))
+            .ReturnsAsync(new LogoutRequest(null, new LogoutMessage()) { ClientId = clientId });
+        _interactionServiceMock.Setup(x => x.CreateLogoutContextAsync())
+            .ReturnsAsync(ValidLogoutId);
+        _signInManagerMock.Setup(x => x.SignOutAsync())
+            .Returns(Task.CompletedTask);
+        _eventServiceMock.Setup(x => x.RaiseAsync(It.IsAny<Event>()))
+            .Returns(Task.CompletedTask);
+        _claimsPrincipalMock.Setup(x => x.FindFirst(JwtClaimTypes.IdentityProvider))
+            .Returns(externalLoginClaim);
+        _identityMock.Setup(x => x.FindFirst(JwtClaimTypes.Subject))
+            .Returns(subClaim);
+        _claimsPrincipalMock.Setup(x => x.FindFirst(JwtClaimTypes.Subject))
+            .Returns(subClaim);
+        var requestServices = new Mock<IServiceProvider>();
+        var authenticationHandlerProvider = new Mock<IAuthenticationHandlerProvider>();
+        authenticationHandlerProvider.Setup(x => x.GetHandlerAsync(It.IsAny<HttpContext>(), It.IsAny<string>()))
+            .ReturnsAsync(Mock.Of<IAuthenticationSignOutHandler>());
+        requestServices.Setup(x => x.GetService(typeof(IAuthenticationHandlerProvider)))
+            .Returns(authenticationHandlerProvider.Object);
+        _page.HttpContext.RequestServices = requestServices.Object;
+        var mockUrlHelper = PageInstantiation.CreateMockUrlHelper();
+        mockUrlHelper.Setup(h => h.RouteUrl(It.IsAny<UrlRouteContext>()))
+            .Returns(generatedUrl);
+        _page.Url = mockUrlHelper.Object;
+        _page.SignOut();
+
+        // Act
+        var result = await _page.OnGet(ValidLogoutId);
+
+        // Assert
+        result.Should().BeOfType<SignOutResult>();
     }
 }
