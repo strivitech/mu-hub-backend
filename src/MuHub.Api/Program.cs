@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
 
-using Microsoft.AspNetCore.Identity;
-
 using MuHub.Api;
 
 var builder = WebApplication.CreateBuilder(args);

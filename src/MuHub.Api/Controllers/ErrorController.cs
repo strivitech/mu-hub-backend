@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-using MuHub.Api.Common.Constants;
-using MuHub.Application.Exceptions;
 
 namespace MuHub.Api.Controllers;
 

@@ -42,8 +42,7 @@ public static class ServicesConfigurator
             typeof(Application.ServicesConfigurator).Assembly,
             typeof(Infrastructure.ServicesConfigurator).Assembly,
         };
-
-        services.AddAutoMapper(assembliesToScan);
+        
         services.AddValidatorsFromAssemblies(assembliesToScan);
         
         services.AddControllers(options =>
