@@ -25,10 +25,6 @@ namespace MuHub.IdentityProvider.Tests.Pages.Home.Error;
 public class IndexPageTest
 {
     private const string ValidErrorId = "validErrorId";
-    private const string ValidReturnUri = "https://localhost:3000/main";
-    private const string ErrorRedirectUrl = "~/Home/Error/Index";
-    private const string LoginButton = "login";
-    private const string NotLoginButton = "notLogin";
     private readonly Mock<IIdentityServerInteractionService> _interactionServiceMock;
     private readonly Mock<IWebHostEnvironment> _webHostEnvironmentMock;
     private readonly Index _page;
