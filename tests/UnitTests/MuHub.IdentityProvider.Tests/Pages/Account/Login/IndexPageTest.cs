@@ -59,11 +59,7 @@ public class IndexPageTest
             _userManagerMock.Object,
             _signInManagerMock.Object,
             _loggerMock.Object
-        )
-        {
-            Input = new InputModel(),
-            View = new ViewModel()
-        }.WithDefaultValues();
+        ) { Input = new InputModel(), View = new ViewModel() }.WithDefaultValues();
     }
 
     [Fact]
@@ -104,7 +100,8 @@ public class IndexPageTest
         var result = await _page.OnGet(ValidReturnUri);
 
         // Assert
-        result.Should().BeOfType<RedirectToPageResult>().Which.PageName.Should().Be(redirectToPageUrl);
+        result.Should().BeOfType<RedirectToPageResult>().And.Subject.As<RedirectToPageResult>().PageName.Should()
+            .Be(redirectToPageUrl);
     }
 
     [Fact]
@@ -124,7 +121,8 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().Which.Url.Should().Be(_page.Input.ReturnUrl);
+        result.Should().BeOfType<RedirectResult>().And.Subject.As<RedirectResult>().Url.Should()
+            .Be(_page.Input.ReturnUrl);
     }
 
     [Fact]
@@ -142,7 +140,7 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().Which.Url.Should().Be(ErrorRedirectUrl);
+        result.Should().BeOfType<RedirectResult>().And.Subject.As<RedirectResult>().Url.Should().Be(ErrorRedirectUrl);
     }
 
     [Fact]
@@ -172,14 +170,14 @@ public class IndexPageTest
         _page.PageModelStateContainsSingleError(modelError);
     }
 
-    [Fact] 
+    [Fact]
     public async Task
         OnPost_WhenModelStateIsValidAndPasswordSignInResultIsSuccess_ReturnsRedirectToPageResult()
     {
         // Arrange
         _page.Input.Button = LoginButton;
         _page.Input.ReturnUrl = ValidReturnUri;
-        AuthorizationRequest context = new() { Client = new Client{ ClientId = "client" } };
+        AuthorizationRequest context = new() { Client = new Client { ClientId = "client" } };
         _interactionServiceMock.Setup(x => x.GetAuthorizationContextAsync(ValidReturnUri))
             .ReturnsAsync(context);
 
@@ -195,9 +193,9 @@ public class IndexPageTest
         var result = await _page.OnPost();
 
         // Assert
-        result.Should().BeOfType<RedirectResult>().Which.Url.Should().Be(ValidReturnUri);
+        result.Should().BeOfType<RedirectResult>().And.Subject.As<RedirectResult>().Url.Should().Be(ValidReturnUri);
     }
-    
+
     [Fact]
     public async Task
         OnPost_WhenModelStateIsValidAndPasswordSignInResultIsFailed_ReturnsPageResultWithErrors()
@@ -205,7 +203,7 @@ public class IndexPageTest
         // Arrange
         _page.Input.Button = LoginButton;
         _page.Input.ReturnUrl = ValidReturnUri;
-        AuthorizationRequest context = new() { Client = new Client{ ClientId = "client" } };
+        AuthorizationRequest context = new() { Client = new Client { ClientId = "client" } };
         _interactionServiceMock.Setup(x => x.GetAuthorizationContextAsync(ValidReturnUri))
             .ReturnsAsync(context);
         _signInManagerMock.Setup(x => x.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(),
@@ -236,9 +234,9 @@ public class IndexPageTest
     {
         return new List<IdentityProviderName>
         {
-            new(){Scheme = "identityProviderScheme1", DisplayName = "identityProviderScheme1", Enabled = true},
-            new(){Scheme = "identityProviderScheme2", DisplayName = "identityProviderScheme2", Enabled = true},
-            new(){Scheme = "identityProviderScheme3", DisplayName = "identityProviderScheme3", Enabled = true},
+            new() { Scheme = "identityProviderScheme1", DisplayName = "identityProviderScheme1", Enabled = true },
+            new() { Scheme = "identityProviderScheme2", DisplayName = "identityProviderScheme2", Enabled = true },
+            new() { Scheme = "identityProviderScheme3", DisplayName = "identityProviderScheme3", Enabled = true },
         };
     }
 }

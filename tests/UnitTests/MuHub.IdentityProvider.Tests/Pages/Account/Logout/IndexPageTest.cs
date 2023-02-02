@@ -69,7 +69,8 @@ public class IndexPageTest
         var result = await _page.OnGet(ValidLogoutId);
 
         // Assert
-        result.Should().BeOfType<RedirectToPageResult>().Which.PageName.Should().Be(LoggedOutRedirectUrl);
+        result.Should().BeOfType<RedirectToPageResult>().And.Subject.As<RedirectToPageResult>().PageName.Should()
+            .Be(LoggedOutRedirectUrl);
     }
 
     [Fact]
