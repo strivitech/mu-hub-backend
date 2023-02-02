@@ -6,10 +6,6 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
-    </PropertyGroup>
-
     <ItemGroup>
       <PackageReference Include="Duende.IdentityServer.Storage" Version="6.2.0" />
       <PackageReference Include="FluentAssertions" Version="6.9.0" />
