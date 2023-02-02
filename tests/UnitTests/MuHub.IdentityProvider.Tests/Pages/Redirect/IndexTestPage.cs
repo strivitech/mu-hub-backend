@@ -25,7 +25,6 @@ public class IndexModelPageTest
     public void ReturnsPageWithSetRedirectUri()
     {
         // Arrange
-
         // Act
         var result = _page.OnGet(ValidRedirectUri);
 
