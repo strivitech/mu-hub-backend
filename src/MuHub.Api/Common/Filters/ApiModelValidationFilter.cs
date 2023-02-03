@@ -1,6 +1,4 @@
-﻿using AutoMapper.Internal;
-
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-using MuHub.Api.Common.Extensions;
 using MuHub.Api.Common.Factories;
 
 namespace MuHub.Api.Common.Filters;
