@@ -1,6 +1,6 @@
 ﻿namespace CoinGecko.Api.Common;
 
-public interface IQueryCompleteBuilder
+internal interface IQueryCompleteBuilder
 {
     Uri Build();
 }

@@ -1,5 +1,9 @@
 ﻿using System.Reflection;
 
+using CoinGecko.Api.Common;
+using CoinGecko.Api.Endpoints;
+using CoinGecko.Api.Features.Coins;
+
 using FluentValidation;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -77,6 +81,8 @@ public static class ServicesConfigurator
         
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IUserSessionData, CurrentUserSessionData>();
+
+        services.AddCoinGeckoApi();
         
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();

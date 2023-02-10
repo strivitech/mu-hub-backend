@@ -1,61 +1,52 @@
-﻿using Polly;
-using Polly.CircuitBreaker;
-using Polly.Extensions.Http;
+﻿using System.Diagnostics;
+
+using Microsoft.Extensions.Logging;
 
 namespace CoinGecko.Api.Common;
 
 public class RequestCoordinator : IRequestCoordinator
 {
     private readonly HttpClient _httpClient;
+    private readonly ILogger<RequestCoordinator> _logger;
 
-    private readonly AsyncCircuitBreakerPolicy<HttpResponseMessage> _circuitBreakerPolicy =
-        Policy<HttpResponseMessage>
-            .Handle<HttpRequestException>()
-            .OrTransientHttpError()
-            .AdvancedCircuitBreakerAsync(0.5, TimeSpan.FromSeconds(10),
-                10, TimeSpan.FromSeconds(15));
-
-    public RequestCoordinator(HttpClient httpClient)
+    public RequestCoordinator(HttpClient httpClient, ILogger<RequestCoordinator> logger)
     {
-        _httpClient = httpClient;
+        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    // TODO: review catch blocks
     public async Task<HttpResponseMessage> GetAsync(Uri resourceUri)
     {
         try
         {
-            return await _circuitBreakerPolicy.ExecuteAsync(() => _httpClient.GetAsync(resourceUri))
-                .ConfigureAwait(false);
+            return await _httpClient.GetAsync(resourceUri).ConfigureAwait(false);
         }
-        catch (HttpRequestException e)
+        catch (HttpRequestException ex)
         {
-            Console.WriteLine(e);
+            _logger.LogError(ex, "Http request exception");
             throw;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            _logger.LogError(ex, "Something went wrong while sending request");
             throw;
         }
     }
 
-    // TODO: review catch blocks
     public async Task<HttpResponseMessage> GetAsync(string resourceUri)
     {
         try
         {
-            return await _circuitBreakerPolicy.ExecuteAsync(() => _httpClient.GetAsync(resourceUri))
-                .ConfigureAwait(false);
+            return await _httpClient.GetAsync(resourceUri).ConfigureAwait(false);
         }
-        catch (HttpRequestException e)
+        catch (HttpRequestException ex)
         {
-            Console.WriteLine(e);
+            _logger.LogError(ex, "Http request exception");
             throw;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            _logger.LogError(ex, "Something went wrong while sending request");
             throw;
         }
     }
