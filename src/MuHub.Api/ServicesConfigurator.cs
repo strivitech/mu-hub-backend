@@ -82,8 +82,6 @@ public static class ServicesConfigurator
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IUserSessionData, CurrentUserSessionData>();
 
-        services.AddCoinGeckoApi();
-        
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();
 
