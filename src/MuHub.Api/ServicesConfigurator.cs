@@ -1,9 +1,5 @@
 ﻿using System.Reflection;
 
-using CoinGecko.Api.Common;
-using CoinGecko.Api.Endpoints;
-using CoinGecko.Api.Features.Coins;
-
 using FluentValidation;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
