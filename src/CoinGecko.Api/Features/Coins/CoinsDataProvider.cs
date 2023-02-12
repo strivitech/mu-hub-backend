@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace CoinGecko.Api.Features.Coins;
 
+/// <summary>
+/// Coins data provider.
+/// </summary>
 public class CoinsDataProvider : DataProvider, ICoinsDataProvider
 {
     private readonly ILogger<CoinsDataProvider> _logger;

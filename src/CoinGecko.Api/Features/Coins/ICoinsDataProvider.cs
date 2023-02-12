@@ -2,12 +2,15 @@
 
 namespace CoinGecko.Api.Features.Coins;
 
+/// <summary>
+/// Coins data provider.
+/// </summary>
 public interface ICoinsDataProvider
 {
     /// <summary>
-    /// List all supported coins id, name and symbol
+    /// Asynchronously gets the coin list.
     /// </summary>
-    /// <param name="includePlatform"></param>
-    /// <returns></returns>
+    /// <param name="includePlatform">Flag determines whether should include platform or not.</param>
+    /// <returns>A <see cref="Result{TValue}"/> of coins.</returns>
     Task<Result<List<Coin>?>> GetCoinListAsync(bool includePlatform = false);
 }

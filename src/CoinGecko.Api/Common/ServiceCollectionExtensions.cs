@@ -9,8 +9,15 @@ using Polly.Contrib.WaitAndRetry;
 
 namespace CoinGecko.Api.Common;
 
+/// <summary>
+/// Service collection extensions.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Adds CoinGecko API.
+    /// </summary>
+    /// <param name="services">Services.</param>
     public static IServiceCollection AddCoinGeckoApi(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
@@ -20,6 +27,10 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    /// <summary>
+    /// Adds http client for request coordinator.
+    /// </summary>
+    /// <param name="services">Services.</param>
     public static IServiceCollection AddHttpClientForRequestCoordinator(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);

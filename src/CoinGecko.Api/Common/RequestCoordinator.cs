@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace CoinGecko.Api.Common;
 
+/// <summary>
+/// Request coordinator.
+/// </summary>
 public class RequestCoordinator : IRequestCoordinator
 {
     private readonly HttpClient _httpClient;
