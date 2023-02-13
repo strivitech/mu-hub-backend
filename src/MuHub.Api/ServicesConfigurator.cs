@@ -77,7 +77,7 @@ public static class ServicesConfigurator
         
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IUserSessionData, CurrentUserSessionData>();
-        
+
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();
 
