@@ -36,6 +36,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinGecko.Api", "src\CoinGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinGecko.Api.Tests", "tests\UnitTests\CoinGecko.Api.Tests\CoinGecko.Api.Tests.csproj", "{8FDFF040-5B3B-4A2F-B559-C0C89B7AA8EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Market.Proxy", "src\MuHub.Market.Proxy\MuHub.Market.Proxy.csproj", "{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Market.Proxy.Tests", "tests\UnitTests\MuHub.Market.Proxy.Tests\MuHub.Market.Proxy.Tests.csproj", "{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +62,8 @@ Global
 		{A58A8B89-247D-49E2-9195-1AAD70A6A62B} = {E98E4404-5879-48A3-9E2C-938AADB70270}
 		{4D1041AF-0D23-4F73-889E-089BA6596C2A} = {AAF5773A-9525-4189-81C6-4FE4828BCB2C}
 		{8FDFF040-5B3B-4A2F-B559-C0C89B7AA8EF} = {7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633}
+		{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C} = {AAF5773A-9525-4189-81C6-4FE4828BCB2C}
+		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF} = {7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -112,5 +118,13 @@ Global
 		{8FDFF040-5B3B-4A2F-B559-C0C89B7AA8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FDFF040-5B3B-4A2F-B559-C0C89B7AA8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FDFF040-5B3B-4A2F-B559-C0C89B7AA8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

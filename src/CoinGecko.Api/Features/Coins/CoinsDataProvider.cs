@@ -23,7 +23,7 @@ public class CoinsDataProvider : DataProvider, ICoinsDataProvider
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<Result<List<Coin>?>> GetCoinListAsync(bool includePlatform = false)
+    public async Task<Result<List<Coin>>> GetCoinListAsync(bool includePlatform = false)
     {
         _logger.LogDebug("Getting coin list started");
         
@@ -41,13 +41,13 @@ public class CoinsDataProvider : DataProvider, ICoinsDataProvider
             var response = await RequestCoordinator.GetAsync(requestUri).ConfigureAwait(false);
 
             return !response.IsSuccessStatusCode
-                ? Result.Fail<List<Coin>?>(response.ReasonPhrase)
+                ? Result.Fail<List<Coin>>(response.ReasonPhrase)
                 : Result.Ok(await response.ReadContentAsAsync<List<Coin>>());
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Something went wrong while getting coin list");
-            return Result.Fail<List<Coin>?>(new ExceptionalError(ex));
+            return Result.Fail<List<Coin>>(new ExceptionalError(ex));
         }
     }
 }

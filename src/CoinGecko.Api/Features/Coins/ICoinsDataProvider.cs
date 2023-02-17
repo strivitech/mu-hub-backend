@@ -12,5 +12,5 @@ public interface ICoinsDataProvider
     /// </summary>
     /// <param name="includePlatform">Flag determines whether should include platform or not.</param>
     /// <returns>A <see cref="Result{TValue}"/> of coins.</returns>
-    Task<Result<List<Coin>?>> GetCoinListAsync(bool includePlatform = false);
+    Task<Result<List<Coin>>> GetCoinListAsync(bool includePlatform = false);
 }
