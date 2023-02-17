@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.Serialization;
+using System.Text.Json;
 
 using CoinGecko.Api.Features.Coins;
 
@@ -15,11 +16,12 @@ internal static class HttpResponseMessageExtensions
     /// <param name="response">Response.</param>
     /// <typeparam name="T">Type to cast.</typeparam>
     /// <returns>An instance of <typeparam name="T"></typeparam> or null.</returns>
-    public static async Task<T?> ReadContentAsAsync<T>(this HttpResponseMessage response)
+    public static async Task<T> ReadContentAsAsync<T>(this HttpResponseMessage response)
     {
         await using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
         stream.ResetStreamPosition();
-        return await JsonSerializer.DeserializeAsync<T>(stream).ConfigureAwait(false);
+        return await JsonSerializer.DeserializeAsync<T>(stream).ConfigureAwait(false)
+               ?? throw new SerializationException("Failed to deserialize the content.");
     }
 
     /// <summary>
@@ -28,11 +30,12 @@ internal static class HttpResponseMessageExtensions
     /// <param name="response">Response.</param>
     /// <typeparam name="T">Type to cast.</typeparam>
     /// <returns>An instance of <typeparam name="T"></typeparam> or null.</returns>
-    public static T? ReadContentAs<T>(this HttpResponseMessage response)
+    public static T ReadContentAs<T>(this HttpResponseMessage response)
     {
         using var stream = response.Content.ReadAsStream();
         stream.ResetStreamPosition();
-        return JsonSerializer.Deserialize<T>(stream);
+        return JsonSerializer.Deserialize<T>(stream) ??
+               throw new SerializationException("Failed to deserialize the content.");
     }
 
     /// <summary>

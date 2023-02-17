@@ -18,12 +18,12 @@ public class CoinsDataService : ICoinsDataService
         _coinsDataProvider = coinsDataProvider;
     }
 
-    public async Task<Result<List<Coin>?>> GetCoinListAsync()
+    public async Task<Result<List<Coin>>> GetCoinListAsync()
     {
         var result = await _coinsDataProvider.GetCoinListAsync();
 
         return result.IsFailed
-            ? Result.Fail<List<Coin>?>(result.Errors)
-            : Result.Ok(result.Value?.ToCoins());
+            ? Result.Fail<List<Coin>>(result.Errors)
+            : Result.Ok(result.Value.ToCoins());
     }
 }

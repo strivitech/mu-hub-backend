@@ -11,5 +11,5 @@ public interface ICoinsDataService
     /// Asynchronously gets the coin list.
     /// </summary>
     /// <returns>A <see cref="Result"/> of <see cref="List{T}"/> of <see cref="Coin"/>.</returns>
-    Task<Result<List<Coin>?>> GetCoinListAsync();
+    Task<Result<List<Coin>>> GetCoinListAsync();
 }
