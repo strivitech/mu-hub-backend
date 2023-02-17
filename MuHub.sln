@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinGecko.Api.Tests", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Market.Proxy", "src\MuHub.Market.Proxy\MuHub.Market.Proxy.csproj", "{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Market.Proxy", "tests\UnitTests\MuHub.Market.Proxy\MuHub.Market.Proxy.csproj", "{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Market.Proxy.Tests", "tests\UnitTests\MuHub.Market.Proxy.Tests\MuHub.Market.Proxy.Tests.csproj", "{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
