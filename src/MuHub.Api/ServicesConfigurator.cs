@@ -12,6 +12,7 @@ using MuHub.Api.Common.Factories;
 using MuHub.Api.Common.Filters;
 using MuHub.Api.Services;
 using MuHub.Application.Contracts.Infrastructure;
+using MuHub.Market.Proxy;
 using MuHub.Permissions.Policy;
 
 
@@ -78,6 +79,8 @@ public static class ServicesConfigurator
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IUserSessionData, CurrentUserSessionData>();
 
+        services.AddMarketProxy();
+        
         services.AddApiControllersVersioning();
         services.AddSwaggerServices();
 
