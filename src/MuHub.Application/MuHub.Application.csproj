@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MuHub.Domain\MuHub.Domain.csproj" />
+      <ProjectReference Include="..\MuHub.Market.Proxy\MuHub.Market.Proxy.csproj" />
       <ProjectReference Include="..\MuHub.SharedData\MuHub.SharedData.csproj" />
     </ItemGroup>
 
