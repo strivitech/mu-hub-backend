@@ -2,6 +2,8 @@
 
 using FluentResults;
 
+using MuHub.Market.Proxy.Features.Coins.Mapping;
+
 namespace MuHub.Market.Proxy.Features.Coins;
 
 /// <summary>

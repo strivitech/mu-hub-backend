@@ -1,4 +1,4 @@
-﻿namespace MuHub.Market.Proxy.Features.Coins;
+﻿namespace MuHub.Market.Proxy.Features.Coins.Mapping;
 
 /// <summary>
 /// Mapping from CoinGecko coin to coin DTO.
