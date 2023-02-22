@@ -8,7 +8,7 @@ public class PagedList<T> : IReadOnlyList<T>
 {
     private readonly IList<T> _items;
 
-    public PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
+    private PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
     {
         PageNumber = pageNumber;
         PageSize = pageSize;
@@ -46,6 +46,9 @@ public class PagedList<T> : IReadOnlyList<T>
 
         return new PagedList<T>(items, count, pageNumber, pageSize);
     }
+
+    public static PagedList<T> FromItems(IEnumerable<T> items, int count, int pageNumber, int pageSize) =>
+        new(items, count, pageNumber, pageSize);
 
     public IEnumerator<T> GetEnumerator() => _items.GetEnumerator();
 
