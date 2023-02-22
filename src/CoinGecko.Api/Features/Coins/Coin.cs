@@ -11,19 +11,19 @@ public class Coin
     /// Id.
     /// </summary>
     [JsonPropertyName("id")]
-    public string Id { get; set; } = null!;
+    public string? Id { get; set; }
 
     /// <summary>
     /// Symbol.
     /// </summary>
     [JsonPropertyName("symbol")]
-    public string Symbol { get; set; } = null!;
+    public string? Symbol { get; set; }
 
     /// <summary>
     /// Name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; }
 
     /// <summary>
     /// Platforms.
