@@ -5,23 +5,20 @@ namespace MuHub.Market.Proxy.Features.Coins;
 /// <summary>
 /// Coin.
 /// </summary>
-public class Coin
+public record CoinDto(string Id, string Symbol, string Name)
 {
     /// <summary>
     /// Id.
     /// </summary>
-    [JsonPropertyName("id")]
-    public string Id { get; set; } = null!;
+    public string Id { get; } = Id;
 
     /// <summary>
     /// Symbol.
     /// </summary>
-    [JsonPropertyName("symbol")]
-    public string Symbol { get; set; } = null!;
+    public string Symbol { get; } = Symbol;
 
     /// <summary>
     /// Name.
     /// </summary>
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = null!;
+    public string Name { get; } = Name;
 }
