@@ -3,6 +3,8 @@
 using Microsoft.EntityFrameworkCore;
 
 using MuHub.Application.Contracts.Persistence;
+using MuHub.Domain.Entities;
+using MuHub.Market.Proxy.Features.Coins;
 
 namespace MuHub.Infrastructure.Persistence;
 
@@ -14,7 +16,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     }
     
     public DbContext Instance => this;
-    
+
+    public DbSet<Coin> Coins => Set<Coin>();
+    public DbSet<MarketCoin> MarketCoins => Set<MarketCoin>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         // Here custom logic

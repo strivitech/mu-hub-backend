@@ -27,6 +27,8 @@ public static class ServicesConfigurator
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IFakeEmailSender, FakeEmailSender>();
         services.AddScoped<IFakeStorage, FakeStorage>();
+        services.AddScoped<ICoinsStorage, CoinsStorage>();
+        services.AddScoped<IMarketCoinStorage, MarketCoinStorage>();
 
         return services;
     }

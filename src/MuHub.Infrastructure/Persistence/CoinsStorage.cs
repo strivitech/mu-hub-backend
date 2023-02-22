@@ -2,6 +2,7 @@
 
 using MuHub.Application.Contracts.Persistence;
 using MuHub.Application.Structures;
+using MuHub.Domain.Entities;
 using MuHub.Market.Proxy.Features.Coins;
 
 namespace MuHub.Infrastructure.Persistence;
@@ -48,5 +49,41 @@ public class CoinsStorage : ICoinsStorage
     {
         await _dbContext.Coins.AddRangeAsync(coins);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task RemoveCoinAsync(Coin coin)
+    {
+        _dbContext.Coins.Remove(coin);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task RemoveCoinsAsync(IEnumerable<Coin> coins)
+    {
+        _dbContext.Coins.RemoveRange(coins);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task RemoveAllCoinsAsync()
+    {
+        // await _dbContext.Instance.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(_dbContext.Coins)}");
+        var coins = await _dbContext.Coins.ToListAsync();
+        _dbContext.Coins.RemoveRange(coins);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task ReplaceAllCoinsAsync(IEnumerable<Coin> coins)
+    {
+        var transaction = await _dbContext.Instance.Database.BeginTransactionAsync();
+        try
+        {
+            await RemoveAllCoinsAsync();
+            await AddCoinsAsync(coins);
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 }
