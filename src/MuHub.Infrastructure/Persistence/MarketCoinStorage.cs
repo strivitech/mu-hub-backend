@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.BulkExtensions;
+
+using Microsoft.EntityFrameworkCore;
 
 using MuHub.Application.Contracts.Persistence;
 using MuHub.Application.Structures;
@@ -64,10 +66,7 @@ public class MarketCoinStorage : IMarketCoinStorage
 
     public async Task RemoveAllMarketCoinsAsync()
     {
-        // await _dbContext.Instance.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {nameof(_dbContext.Coins)}");
-        var coins = await _dbContext.MarketCoins.ToListAsync();
-        _dbContext.MarketCoins.RemoveRange(coins);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Instance.TruncateAsync<MarketCoin>();
     }
 
     public async Task ReplaceAllMarketCoinsAsync(IEnumerable<MarketCoin> coins)
