@@ -2,6 +2,9 @@
 
 using FluentValidation;
 
+using Hangfire;
+using Hangfire.PostgreSql;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -63,6 +66,8 @@ public static class ServicesConfigurator
                 options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
             });
 
+        services.AddSignalR();
+        
         services.AddCors(config =>
             config.AddPolicy(
                 "AllowAll",
@@ -78,7 +83,16 @@ public static class ServicesConfigurator
         
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IUserSessionData, CurrentUserSessionData>();
+        services.AddScoped<IMarketCoinsInteractionService, MarketCoinsInteractionService>();
 
+        services.AddHangfire(cong => cong
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UsePostgreSqlStorage(configuration.GetConnectionString("HangfireConnection")));
+        
+        services.AddHangfireServer();
+        
         services.AddMarketProxy();
         
         services.AddApiControllersVersioning();

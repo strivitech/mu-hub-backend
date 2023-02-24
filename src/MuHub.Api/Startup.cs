@@ -1,4 +1,8 @@
-﻿using MuHub.Api.Common.Extensions.Startup;
+﻿using Hangfire;
+
+using MuHub.Api.Common.Extensions.Startup;
+using MuHub.Api.Hubs;
+using MuHub.Api.Jobs;
 using MuHub.Application;
 using MuHub.Infrastructure;
 
@@ -16,7 +20,7 @@ public static class Startup
     public static void ConfigureServices(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
-        
+
         var services = builder.Services;
         var configuration = builder.Configuration;
 
@@ -38,14 +42,19 @@ public static class Startup
         }
 
         app.UseExceptionHandler("/error");
-        
+
         app.UseSwaggerWithApiVersioning();
-        
+
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseHangfireDashboard();
+        RecurringJob.AddOrUpdate<UpdateCoinsHangfireJob>(x => x.UpdateCoinInformation(), Cron.Minutely);
+
         app.MapControllers();
+        app.MapHangfireDashboard();
+        app.MapHub<CoinsHub>("/CoinsHub");
     }
 }
