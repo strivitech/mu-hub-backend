@@ -12,8 +12,10 @@ public static class CoinValidators
     public static bool ValidateCoin(this MarketCoin coin)
     {
         return ValidateCoinId(coin.Id) && ValidateCoinSymbol(coin.Symbol) && ValidateCoinName(coin.Name) &&
-               ValidateCurrentPrice(coin.CurrentPrice) && ValidateLastUpdated(coin.LastUpdated);
+               ValidateMarketCapRank(coin.MarketCapRank) && ValidateCurrentPrice(coin.CurrentPrice) && ValidateLastUpdated(coin.LastUpdated);
     }
+
+    private static bool ValidateMarketCapRank(this int? capRank) => capRank is > 0;
 
     /// <summary>
     /// Validates coin id.
@@ -36,7 +38,7 @@ public static class CoinValidators
     /// <returns><see cref="bool"/>.</returns>
     private static bool ValidateCoinName(this string? name) => !string.IsNullOrWhiteSpace(name);
 
-    private static bool ValidateCurrentPrice(this decimal? currentPrice) => currentPrice is > 0;
+    private static bool ValidateCurrentPrice(this decimal? currentPrice) => currentPrice is >= 0;
 
     private static bool ValidateLastUpdated(this DateTimeOffset? lastUpdated) => lastUpdated is not null;
 }
