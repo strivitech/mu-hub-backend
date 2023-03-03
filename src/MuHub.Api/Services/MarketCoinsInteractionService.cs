@@ -1,8 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
+
+using EFCore.BulkExtensions;
 
 using FluentResults;
 
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 using MuHub.Api.Common.Constants;
 using MuHub.Api.Hubs;
@@ -20,7 +24,8 @@ namespace MuHub.Api.Services;
 public class MarketCoinsInteractionService : IMarketCoinsInteractionService
 {
     private readonly ICoinsDataService _coinsDataService;
-    private readonly IMarketCoinStorage _marketCoinsStorage;
+    private readonly IMarketCoinsStorage _marketCoinsStorage;
+    private readonly IUpdateMarketCoinTimeStampStorage _updateMarketCoinTimeStampStorage;
     private readonly IHubContext<CoinsHub, ICoinsClient> _hub;
 
     /// <summary>
@@ -28,12 +33,14 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
     /// </summary>
     /// <param name="coinsDataService"></param>
     /// <param name="marketCoinsStorage"></param>
+    /// <param name="updateMarketCoinTimeStampStorage"></param>
     /// <param name="hub"></param>
-    public MarketCoinsInteractionService(ICoinsDataService coinsDataService, IMarketCoinStorage marketCoinsStorage,
-        IHubContext<CoinsHub, ICoinsClient> hub)
+    public MarketCoinsInteractionService(ICoinsDataService coinsDataService, IMarketCoinsStorage marketCoinsStorage,
+        IUpdateMarketCoinTimeStampStorage updateMarketCoinTimeStampStorage, IHubContext<CoinsHub, ICoinsClient> hub)
     {
         _coinsDataService = coinsDataService;
         _marketCoinsStorage = marketCoinsStorage;
+        _updateMarketCoinTimeStampStorage = updateMarketCoinTimeStampStorage;
         _hub = hub;
     }
 
@@ -50,13 +57,27 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
             return;
         }
 
-        if (ids.Count > MarketCoinsInteractionConstants.DesiredIdsCountMaxValue)
+        CheckIfIdsCountIsDesired(ids);
+
+        var lastUpdate = await _updateMarketCoinTimeStampStorage.GetLastUpdateTimeAsync();
+
+        if (lastUpdate?.LastUpdated >
+            DateTime.UtcNow.AddSeconds(-MarketCoinsInteractionConstants.ValidDataPeriodSeconds))
         {
-            // Log warning
+            return;
         }
 
+        var marketCoinDtos = await RetrieveMarketCoinsByIds(ids);
+        
+        await _marketCoinsStorage.ReplaceAllMarketCoinsAsync(marketCoinDtos.ToMarketCoins());
+
+        // TODO: Update code
+        // await _hub.Clients.All.UpdateCoinsInformation(marketCoins);
+    }
+
+    private async Task<List<MarketCoinDto>> RetrieveMarketCoinsByIds(IEnumerable<string> ids)
+    {
         IEnumerable<string[]> chunks = ids.Chunk(MarketCoinsInteractionConstants.PerPage);
-        int pageNumber = 1;
         var marketCoins = new List<MarketCoinDto>();
         foreach (var chunk in chunks)
         {
@@ -64,7 +85,6 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
             {
                 Ids = chunk,
                 PerPage = MarketCoinsInteractionConstants.PerPage,
-                Page = pageNumber++,
                 Order = Order.MarketCapDesc,
                 Currency = Currency.Usd,
             };
@@ -78,12 +98,16 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
             }
 
             marketCoins.AddRange(result.Value);
-
-            pageNumber++;
         }
 
-        await _marketCoinsStorage.ReplaceAllMarketCoinsAsync(marketCoins.ToMarketCoins());
-        // TODO: Update code
-        await _hub.Clients.All.UpdateCoinsInformation(marketCoins);
+        return marketCoins;
+    }
+
+    private static void CheckIfIdsCountIsDesired(IList<string> ids)
+    {
+        if (ids.Count > MarketCoinsInteractionConstants.DesiredIdsCountMaxValue)
+        {
+            // Log warning
+        }
     }
 }
