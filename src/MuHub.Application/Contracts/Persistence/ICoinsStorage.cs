@@ -1,26 +1,21 @@
 ﻿using MuHub.Application.Structures;
 using MuHub.Domain.Entities;
-using MuHub.Market.Proxy.Features.Coins;
 
 namespace MuHub.Application.Contracts.Persistence;
 
 public interface ICoinsStorage
 {
-    Task<List<Coin>> GetAllCoinsAsync();
-    
-    Task<List<Coin>?> GetCoinsBySymbolAsync(string symbol);
-    
-    Task<PagedList<Coin>?> GetCoinsAsync(int page, int pageSize);
-    
-    Task AddCoinAsync(Coin coinDto);
-    
-    Task AddCoinsAsync(IEnumerable<Coin> coins);
-    
-    Task RemoveCoinAsync(Coin coinDto);
-    
-    Task RemoveCoinsAsync(IEnumerable<Coin> coins);
-    
-    Task RemoveAllCoinsAsync();
+    Task<List<Coin>> GetAllAsync();
 
-    Task ReplaceAllCoinsAsync(IEnumerable<Coin> coins);
+    Task<List<Coin>?> GetBySymbolAsync(string symbol);
+
+    Task<PagedList<Coin>?> GetPagedAsync(int page, int pageSize);
+
+    Task AddAsync(Coin coin);
+
+    Task AddAsync(IEnumerable<Coin> coins);
+    
+    Task UpdateAsync(Coin coin);
+    
+    Task UpdateAsync(IEnumerable<Coin> coins);
 }

@@ -9,5 +9,5 @@ public interface IMarketCoinsInteractionService
     /// 
     /// </summary>
     /// <returns></returns>
-    Task UpdateCoinInformation(IEnumerable<string> ids);
+    Task UpdateCoinInformation(IList<string> ids);
 }
