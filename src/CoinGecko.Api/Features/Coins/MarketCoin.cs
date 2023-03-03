@@ -21,6 +21,9 @@ public class MarketCoin
 
     [JsonPropertyName("market_cap")] 
     public decimal? MarketCap { get; set; }
+    
+    [JsonPropertyName("market_cap_rank")]
+    public int? MarketCapRank { get; set; }
 
     [JsonPropertyName("total_volume")] 
     public decimal? TotalVolume { get; set; }
