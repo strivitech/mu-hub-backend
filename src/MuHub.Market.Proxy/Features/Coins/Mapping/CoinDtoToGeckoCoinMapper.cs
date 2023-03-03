@@ -30,7 +30,7 @@ internal static class CoinDtoToGeckoCoinMapper
     /// <param name="coins">Coins.</param>
     /// <returns><see cref="List{T}"/> of <see cref="CoinDto"/>.</returns>
     public static List<CoinDto> ToCoinDtoList(this IEnumerable<CoinGecko.Api.Features.Coins.Coin> coins) =>
-        coins.Select(ToCoinDto).ToList();
+        coins.Where(x => x.ValidateCoin()).Select(ToCoinDto).ToList();
 
     public static List<MarketCoinDto> ToMarketCoinDtoList(this IEnumerable<CoinGecko.Api.Features.Coins.MarketCoin> coins) =>
         coins.Select(ToMarketCoinDto).ToList();
@@ -39,6 +39,6 @@ internal static class CoinDtoToGeckoCoinMapper
         new(coin.Id!, coin.Symbol!, coin.Name!);
 
     private static MarketCoinDto CreateMarketCoinDto(this CoinGecko.Api.Features.Coins.MarketCoin coin) =>
-        new(coin.Id!, coin.Symbol!, coin.Name!, coin.CurrentPrice!.Value, coin.LastUpdated!.Value, coin.Image,
+        new(coin.Id!, coin.Symbol!, coin.Name!, coin.CurrentPrice!.Value, coin.MarketCapRank!.Value, coin.LastUpdated!.Value, coin.Image,
             coin.High24H, coin.Low24H);
 }
