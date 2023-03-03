@@ -25,10 +25,12 @@ public static class ServicesConfigurator
                     builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IApplicationDbContextInstanceResolver>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IFakeEmailSender, FakeEmailSender>();
         services.AddScoped<IFakeStorage, FakeStorage>();
+        services.AddScoped<IMarketCoinsStorage, MarketCoinsWithTimeStampStorage>();
+        services.AddScoped<IUpdateMarketCoinTimeStampStorage, UpdateMarketCoinTimeStampStorage>();
         services.AddScoped<ICoinsStorage, CoinsStorage>();
-        services.AddScoped<IMarketCoinStorage, MarketCoinStorage>();
 
         return services;
     }
