@@ -14,6 +14,8 @@ public class MarketCoin : BaseEntity<int>, IAggregateRoot
     public string? ImageUrl { get; set; }
     
     public decimal CurrentPrice { get; set; } 
+    
+    public int MarketCapRank { get; set; }
 
     public decimal? High24H { get; set; }
 

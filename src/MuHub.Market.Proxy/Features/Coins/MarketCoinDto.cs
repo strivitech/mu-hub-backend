@@ -5,6 +5,7 @@ public record MarketCoinDto(
     string Symbol,
     string Name,
     decimal CurrentPrice,
+    int MarketCapRank,
     DateTimeOffset LastUpdated,
     string? ImageUrl = null,
     decimal? High24H = null,
@@ -19,6 +20,8 @@ public record MarketCoinDto(
     public string? ImageUrl { get; } = ImageUrl;
 
     public decimal CurrentPrice { get; } = CurrentPrice;
+    
+    public int MarketCapRank { get; set; } = MarketCapRank;
 
     public decimal? High24H { get; } = High24H;
 
