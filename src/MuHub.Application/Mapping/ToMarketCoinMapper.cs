@@ -10,13 +10,15 @@ public static class ToMarketCoinMapper
         return new MarketCoin
         {
             SymbolId = dto.Id,
-            Symbol = dto.Symbol,
-            Name = dto.Name,
+            Name = dto.Id,//a
+            Symbol = dto.Id,//a
             ImageUrl = dto.ImageUrl,
             CurrentPrice = dto.CurrentPrice,
+            MarketCapRank = dto.MarketCapRank,
             High24H = dto.High24H,
             Low24H = dto.Low24H,
             LastUpdated = dto.LastUpdated,
+            IsValid = dto.IsValid
         };
     }
 

@@ -13,13 +13,15 @@ public class MarketCoin : BaseEntity<int>
 
     public string? ImageUrl { get; set; }
     
-    public decimal CurrentPrice { get; set; } 
+    public decimal? CurrentPrice { get; set; } 
     
-    public int MarketCapRank { get; set; }
+    public int? MarketCapRank { get; set; }
 
     public decimal? High24H { get; set; }
 
     public decimal? Low24H { get; set; }
     
-    public DateTimeOffset LastUpdated { get; set; }
+    public DateTimeOffset? LastUpdated { get; set; }
+    
+    public bool IsValid { get; set; }
 }
