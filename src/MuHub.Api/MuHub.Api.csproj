@@ -34,10 +34,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Mapping" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Include="Seeders\coin_names.json" />
     </ItemGroup>
 

@@ -10,32 +10,19 @@ namespace MuHub.Api.Jobs;
 /// </summary>
 public class UpdateCoinsHangfireJob
 {
-    private readonly ICoinsStorage _coinsStorage;
     private readonly IMarketCoinsInteractionService _marketCoinsInteractionService;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="marketCoinsInteractionService"></param>
-    /// <param name="coinsStorage"></param>
-    public UpdateCoinsHangfireJob(IMarketCoinsInteractionService marketCoinsInteractionService, ICoinsStorage coinsStorage)
+    public UpdateCoinsHangfireJob(IMarketCoinsInteractionService marketCoinsInteractionService)
     {
         _marketCoinsInteractionService = marketCoinsInteractionService;
-        _coinsStorage = coinsStorage;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public async Task UpdateCoinInformation()
-    {
-        var coinsIds = await _coinsStorage.GetAllIdsAsync();
-
-        if (!coinsIds.Any())
-        {
-            throw new UnexpectedException("No coins found to update information");
-        }
-
-        await _marketCoinsInteractionService.UpdateCoinInformation(coinsIds);
-    }
+    public async Task UpdateCoinInformation() => await _marketCoinsInteractionService.UpdateCoinInformation();
 }

@@ -5,13 +5,13 @@ namespace MuHub.Application.Mapping;
 
 public static class ToMarketCoinMapper
 {
-    public static MarketCoin ToMarketCoin(this MarketCoinDto dto)
+    public static MarketCoin ToMarketCoin(this MarketCoinDto dto, Coin projection)
     {
         return new MarketCoin
         {
-            SymbolId = dto.Id,
-            Name = dto.Id,//a
-            Symbol = dto.Id,//a
+            SymbolId = projection.SymbolId,
+            Name = projection.Name,
+            Symbol = projection.Symbol,
             ImageUrl = dto.ImageUrl,
             CurrentPrice = dto.CurrentPrice,
             MarketCapRank = dto.MarketCapRank,
@@ -22,8 +22,7 @@ public static class ToMarketCoinMapper
         };
     }
 
-    public static List<MarketCoin> ToMarketCoins(this IEnumerable<MarketCoinDto> dtos)
-    {
-        return dtos.Select(ToMarketCoin).ToList();
-    }
+    public static List<MarketCoin> ToMarketCoins(this IEnumerable<MarketCoinDto> dtos,
+        IDictionary<string, Coin> projections) 
+        => dtos.Select(x => x.ToMarketCoin(projections[x.Id])).ToList();
 }

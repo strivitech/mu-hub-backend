@@ -1,4 +1,5 @@
-﻿using MuHub.Market.Proxy.Features.Coins;
+﻿using MuHub.Api.Responses;
+using MuHub.Market.Proxy.Features.Coins;
 
 namespace MuHub.Api.Hubs.Clients;
 
@@ -11,6 +12,5 @@ public interface ICoinsClient
     /// Gets coins.
     /// </summary>
     /// <returns></returns>
-    // TODO: Think about paginating while sending new coins info.
-    Task UpdateCoinsInformation(IEnumerable<MarketCoinDto> coins);
+    Task UpdateCoinsInformation(IEnumerable<MarketCoinResponse> coins);
 }
