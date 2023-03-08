@@ -3,7 +3,7 @@ using MuHub.Domain.Common.Entities;
 
 namespace MuHub.Domain.Entities;
 
-public class Coin : BaseEntity<int>, IAggregateRoot
+public class Coin : BaseEntity<int>
 {
     /// <summary>
     /// Symbol id.

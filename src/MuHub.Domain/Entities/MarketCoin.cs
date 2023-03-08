@@ -3,7 +3,7 @@ using MuHub.Domain.Common.Entities;
 
 namespace MuHub.Domain.Entities;
 
-public class MarketCoin : BaseEntity<int>, IAggregateRoot
+public class MarketCoin : BaseEntity<int>
 {
     public string SymbolId { get; set; } = null!;
 
