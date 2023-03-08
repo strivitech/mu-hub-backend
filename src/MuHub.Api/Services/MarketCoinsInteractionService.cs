@@ -1,19 +1,12 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
-
-using EFCore.BulkExtensions;
-
-using FluentResults;
+﻿using System.Text.Json;
 
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 
 using MuHub.Api.Common.Constants;
 using MuHub.Api.Hubs;
 using MuHub.Api.Hubs.Clients;
 using MuHub.Application.Contracts.Persistence;
 using MuHub.Application.Mapping;
-using MuHub.Domain.Entities;
 using MuHub.Market.Proxy.Features.Coins;
 
 namespace MuHub.Api.Services;
@@ -50,6 +43,7 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     // TODO: Add logging
+    // TODO: Add Redis cache for first connected users
     public async Task UpdateCoinInformation(IList<string> ids)
     {
         if (!ids.Any())
@@ -70,9 +64,8 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
         var marketCoinDtos = await RetrieveMarketCoinsByIds(ids);
         
         await _marketCoinsStorage.ReplaceAllMarketCoinsAsync(marketCoinDtos.ToMarketCoins());
-
-        // TODO: Update code
-        // await _hub.Clients.All.UpdateCoinsInformation(marketCoins);
+        
+        await _hub.Clients.All.UpdateCoinsInformation(marketCoinDtos);
     }
 
     private async Task<List<MarketCoinDto>> RetrieveMarketCoinsByIds(IEnumerable<string> ids)

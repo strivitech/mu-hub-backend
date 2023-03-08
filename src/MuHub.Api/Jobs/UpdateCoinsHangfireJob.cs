@@ -1,12 +1,7 @@
 ﻿using System.Collections.Immutable;
-
-using Microsoft.AspNetCore.SignalR;
-
-using MuHub.Api.Hubs;
 using MuHub.Api.Services;
 using MuHub.Application.Contracts.Persistence;
 using MuHub.Application.Exceptions;
-using MuHub.Market.Proxy.Features.Coins;
 
 namespace MuHub.Api.Jobs;
 
@@ -15,7 +10,6 @@ namespace MuHub.Api.Jobs;
 /// </summary>
 public class UpdateCoinsHangfireJob
 {
-    private readonly ICoinsDataService _coinsDataService;
     private readonly ICoinsStorage _coinsStorage;
     private readonly IMarketCoinsInteractionService _marketCoinsInteractionService;
 
@@ -24,11 +18,9 @@ public class UpdateCoinsHangfireJob
     /// </summary>
     /// <param name="marketCoinsInteractionService"></param>
     /// <param name="coinsStorage"></param>
-    public UpdateCoinsHangfireJob(IMarketCoinsInteractionService marketCoinsInteractionService,
-        ICoinsDataService coinsDataService, ICoinsStorage coinsStorage)
+    public UpdateCoinsHangfireJob(IMarketCoinsInteractionService marketCoinsInteractionService, ICoinsStorage coinsStorage)
     {
         _marketCoinsInteractionService = marketCoinsInteractionService;
-        _coinsDataService = coinsDataService;
         _coinsStorage = coinsStorage;
     }
 
@@ -37,13 +29,13 @@ public class UpdateCoinsHangfireJob
     /// </summary>
     public async Task UpdateCoinInformation()
     {
-        var coins = await _coinsStorage.GetAllAsync();
+        var coinsIds = await _coinsStorage.GetAllIdsAsync();
 
-        if (!coins.Any())
+        if (!coinsIds.Any())
         {
             throw new UnexpectedException("No coins found to update information");
         }
 
-        await _marketCoinsInteractionService.UpdateCoinInformation(coins.Select(x => x.SymbolId).ToImmutableArray());
+        await _marketCoinsInteractionService.UpdateCoinInformation(coinsIds);
     }
 }
