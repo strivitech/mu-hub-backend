@@ -18,15 +18,6 @@ public class CoinsDataService : ICoinsDataService
         _coinsDataProvider = coinsDataProvider;
     }
 
-    public async Task<Result<List<CoinDto>>> GetCoinListAsync()
-    {
-        var result = await _coinsDataProvider.GetCoinListAsync();
-
-        return result.IsFailed
-            ? Result.Fail<List<CoinDto>>(result.Errors)
-            : Result.Ok(result.Value.ToCoinDtoList());
-    }
-
     public async Task<Result<List<MarketCoinDto>>> GetMarketCoinListAsync(GetMarketCoinRequest request)
     {
         var requestToApi = request.MapFromGetMarketCoinRequest();

@@ -5,40 +5,20 @@
 /// </summary>
 internal static class CoinDtoToGeckoCoinMapper
 {
-    /// <summary>
-    /// Maps from CoinGecko coin to MuHub coin.
-    /// </summary>
-    /// <param name="coin">Coin.</param>
-    /// <returns><see cref="CoinDto"/>.</returns>
-    public static CoinDto ToCoinDto(this CoinGecko.Api.Features.Coins.Coin coin)
-    {
-        return coin.ValidateCoin()
-            ? coin.CreateCoinDto()
-            : throw new ArgumentException($"Coin is not valid. CoinId: {coin.Id}");
-    }
-
-    public static MarketCoinDto ToMarketCoinDto(this CoinGecko.Api.Features.Coins.MarketCoin coin)
-    {
-        return coin.ValidateCoin()
-            ? coin.CreateMarketCoinDto()
-            : throw new ArgumentException($"MarketCoin is not valid. MarketCoinId: {coin.Id}");
-    }
-
-    /// <summary>
-    /// Maps from CoinGecko coins list to MuHub coins list.
-    /// </summary>
-    /// <param name="coins">Coins.</param>
-    /// <returns><see cref="List{T}"/> of <see cref="CoinDto"/>.</returns>
-    public static List<CoinDto> ToCoinDtoList(this IEnumerable<CoinGecko.Api.Features.Coins.Coin> coins) =>
-        coins.Where(x => x.ValidateCoin()).Select(ToCoinDto).ToList();
-
-    public static List<MarketCoinDto> ToMarketCoinDtoList(this IEnumerable<CoinGecko.Api.Features.Coins.MarketCoin> coins) =>
-        coins.Select(ToMarketCoinDto).ToList();
+    public static MarketCoinDto ToMarketCoinDto(this CoinGecko.Api.Features.Coins.MarketCoin coin) =>
+        coin.CreateMarketCoinDto(coin.ValidateCoin());
     
-    private static CoinDto CreateCoinDto(this CoinGecko.Api.Features.Coins.Coin coin) =>
-        new(coin.Id!, coin.Symbol!, coin.Name!);
+    public static List<MarketCoinDto> ToMarketCoinDtoList(
+        this IEnumerable<CoinGecko.Api.Features.Coins.MarketCoin> coins) =>
+        coins.Select(ToMarketCoinDto).ToList();
 
-    private static MarketCoinDto CreateMarketCoinDto(this CoinGecko.Api.Features.Coins.MarketCoin coin) =>
-        new(coin.Id!, coin.Symbol!, coin.Name!, coin.CurrentPrice!.Value, coin.MarketCapRank!.Value, coin.LastUpdated!.Value, coin.Image,
-            coin.High24H, coin.Low24H);
+    private static MarketCoinDto CreateMarketCoinDto(this CoinGecko.Api.Features.Coins.MarketCoin coin, bool isValid) =>
+        new(Id: coin.Id!,
+            CurrentPrice: coin.CurrentPrice,
+            MarketCapRank: coin.MarketCapRank,
+            LastUpdated: coin.LastUpdated,
+            ImageUrl: coin.Image,
+            High24H: coin.High24H,
+            Low24H: coin.Low24H,
+            IsValid: isValid);
 }
