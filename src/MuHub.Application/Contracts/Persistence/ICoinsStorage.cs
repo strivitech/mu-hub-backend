@@ -7,6 +7,8 @@ public interface ICoinsStorage
 {
     Task<List<Coin>> GetAllAsync();
 
+    Task<List<string>> GetAllIdsAsync();
+
     Task<List<Coin>?> GetBySymbolAsync(string symbol);
 
     Task<PagedList<Coin>?> GetPagedAsync(int page, int pageSize);
