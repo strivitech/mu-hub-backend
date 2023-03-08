@@ -5,6 +5,8 @@ namespace MuHub.Domain.Entities;
 
 public class Coin : BaseEntity<int>
 {
+    public string ExternalSymbolId { get; set; } = null!;
+    
     /// <summary>
     /// Symbol id.
     /// </summary>
