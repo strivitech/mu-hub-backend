@@ -17,8 +17,9 @@ public class CoinsStorage : ICoinsStorage
     }
 
     public async Task<List<Coin>> GetAllAsync() => await _dbContext.Coins.ToListAsync();
-    
-    public async Task<List<string>> GetAllIdsAsync() => await _dbContext.Coins.Select(x => x.SymbolId).ToListAsync();
+
+    public async Task<Dictionary<string, Coin>> GetAllDictionaryByExternalSymbolIdAsync() =>
+        await _dbContext.Coins.ToDictionaryAsync(x => x.ExternalSymbolId);
 
     public async Task<List<Coin>?> GetBySymbolAsync(string symbol)
     {

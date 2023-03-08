@@ -7,7 +7,7 @@ public interface ICoinsStorage
 {
     Task<List<Coin>> GetAllAsync();
 
-    Task<List<string>> GetAllIdsAsync();
+    Task<Dictionary<string, Coin>> GetAllDictionaryByExternalSymbolIdAsync();
 
     Task<List<Coin>?> GetBySymbolAsync(string symbol);
 
