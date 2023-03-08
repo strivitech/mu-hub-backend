@@ -11,6 +11,7 @@ public class CoinConfiguration : IEntityTypeConfiguration<Coin>
     {
         builder.ToTable(TableNames.Coins);
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.ExternalSymbolId).IsRequired();
         builder.Property(x => x.SymbolId).IsRequired();
         builder.Property(x => x.Symbol).IsRequired();
         builder.Property(x => x.Name).IsRequired();
