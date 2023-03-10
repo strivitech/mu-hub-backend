@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Text.Json;
 
 using MuHub.Api;
-using MuHub.Api.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +17,7 @@ try
 {
     // Add logs
 #if DEBUG
-    app.AddFakeCoins();
+    MuHub.Api.Seeders.CoinsFakeSeeder.AddFakeCoins(app);
 #endif
     
     app.Run();
