@@ -3,7 +3,7 @@
 /// <summary>
 /// Mapping from CoinGecko coin to coin DTO.
 /// </summary>
-internal static class CoinDtoToGeckoCoinMapper
+internal static class ToGeckoMarketCoinMapper
 {
     public static MarketCoinDto ToMarketCoinDto(this CoinGecko.Api.Features.Coins.MarketCoin coin) =>
         coin.CreateMarketCoinDto(coin.ValidateCoin());

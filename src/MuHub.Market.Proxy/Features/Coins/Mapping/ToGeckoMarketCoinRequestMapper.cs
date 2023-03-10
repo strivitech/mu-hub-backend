@@ -2,7 +2,7 @@
 
 namespace MuHub.Market.Proxy.Features.Coins.Mapping;
 
-internal static class CoinRequestMapper
+internal static class ToGeckoMarketCoinRequestMapper
 {
     public static CoinGecko.Api.Features.Coins.GetMarketCoinRequest MapFromGetMarketCoinRequest(this GetMarketCoinRequest request)
     {
