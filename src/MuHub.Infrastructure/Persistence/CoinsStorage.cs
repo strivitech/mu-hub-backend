@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using MuHub.Application.Contracts.Persistence;
-using MuHub.Application.Exceptions;
 using MuHub.Application.Structures;
 using MuHub.Domain.Entities;
 
@@ -44,13 +43,13 @@ public class CoinsStorage : ICoinsStorage
 
     public async Task AddAsync(Coin coin)
     {
-        await _dbContext.Coins.AddAsync(coin);
+        _dbContext.Coins.Add(coin);
         await _dbContext.SaveChangesAsync();
     }
 
     public async Task AddAsync(IEnumerable<Coin> coins)
     {
-        await _dbContext.Coins.AddRangeAsync(coins);
+        _dbContext.Coins.AddRange(coins);
         await _dbContext.SaveChangesAsync();
     }
 
