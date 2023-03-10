@@ -18,4 +18,8 @@
       <Folder Include="Mapping" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="MuHub.Market.Proxy.Tests" />
+    </ItemGroup>
+
 </Project>
