@@ -33,13 +33,6 @@ public static class CoinsFakeSeeder
             applicationDbContext.Instance.SaveChanges();
         }
     }
-    
-    private static string GetSeedersDirectoryAbsolutePath()
-    {
-        var parentDirectory = Path.GetDirectoryName(Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.FullName)
-                              ?? throw new DirectoryNotFoundException("Unreal to find directory");
-        return Path.Combine(parentDirectory, nameof(Seeders));
-    }
 }
 
 #endif
