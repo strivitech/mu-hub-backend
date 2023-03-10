@@ -56,32 +56,35 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
     // TODO: Add Redis cache for first connected users
     public async Task UpdateCoinInformation()
     {
-        var coinsDictionary = await _coinsStorage.GetAllDictionaryByExternalSymbolIdAsync();
-        ThrowIfNoCoinsFound(coinsDictionary);
-        
-        var ids = coinsDictionary.Keys.ToImmutableList();
-        
-        if (!ids.Any())
+        try
         {
-            return;
-        }
-
-        CheckIfIdsCountIsDesired(ids);
-
-        var lastUpdate = await _updateMarketCoinTimeStampStorage.GetLastUpdateTimeAsync();
-
-        if (lastUpdate?.LastUpdated >
-            DateTime.UtcNow.AddSeconds(-MarketCoinsInteractionConstants.ValidDataPeriodSeconds))
-        {
-            return;
-        }
-
-        var marketCoinDtos = await RetrieveMarketCoinsByIds(ids);
-        var marketCoins = marketCoinDtos.ToMarketCoins(coinsDictionary);
-
-        await _marketCoinsStorage.ReplaceAllMarketCoinsAsync(marketCoins);
+            var coinsDictionary = await _coinsStorage.GetAllDictionaryByExternalSymbolIdAsync();
+            ThrowIfNoCoinsFound(coinsDictionary);
         
-        await _hub.Clients.All.UpdateCoinsInformation(marketCoins.ToMarketCoinResponseEnumerable());
+            var ids = coinsDictionary.Keys.ToImmutableList();
+
+            CheckIfIdsCountIsDesired(ids);
+
+            var lastUpdate = await _updateMarketCoinTimeStampStorage.GetLastUpdateTimeAsync();
+
+            if (lastUpdate?.LastUpdated >
+                DateTimeOffset.UtcNow.AddSeconds(-MarketCoinsInteractionConstants.ValidDataPeriodSeconds))
+            {
+                return;
+            }
+
+            var marketCoinDtos = await RetrieveMarketCoinsByIds(ids);
+            var marketCoins = marketCoinDtos.ToMarketCoins(coinsDictionary);
+
+            await _marketCoinsStorage.ReplaceAllMarketCoinsAsync(marketCoins);
+        
+            await _hub.Clients.All.UpdateCoinsInformation(marketCoins.ToMarketCoinResponseEnumerable());
+        }
+        catch (Exception e)
+        {
+            // Log error
+            throw;
+        }
     }
 
     private async Task<List<MarketCoinDto>> RetrieveMarketCoinsByIds(IEnumerable<string> ids)
