@@ -49,7 +49,7 @@ public class MarketCoinsInteractionServiceTests
 
         // Act & Assert
         await FluentActions.Invoking(() =>
-            _marketCoinsInteractionService.UpdateCoinInformation()).Should().ThrowAsync<UnexpectedException>();
+            _marketCoinsInteractionService.UpdateCoinInformationAsync()).Should().ThrowAsync<UnexpectedException>();
         _updateMarketCoinTimeStampStorageMock.Verify(x => x.GetLastUpdateTimeAsync(), Times.Never);
         _coinsDataServiceMock.Verify(x => x.GetMarketCoinListAsync(It.IsAny<GetMarketCoinRequest>()), Times.Never);
         _marketCoinsStorageMock.Verify(x => x.ReplaceAllMarketCoinsAsync(It.IsAny<IList<MarketCoin>>()), Times.Never);
@@ -71,7 +71,7 @@ public class MarketCoinsInteractionServiceTests
         _hubMock.Setup(x => x.Clients.All.UpdateCoinsInformation(It.IsAny<IEnumerable<MarketCoinResponse>>()));
 
         // Act
-        await _marketCoinsInteractionService.UpdateCoinInformation();
+        await _marketCoinsInteractionService.UpdateCoinInformationAsync();
         
         // Assert
         _coinsStorageMock.Verify(x => x.GetAllDictionaryByExternalSymbolIdAsync(), Times.Once);
@@ -94,7 +94,7 @@ public class MarketCoinsInteractionServiceTests
             });
 
         // Act
-        await _marketCoinsInteractionService.UpdateCoinInformation();
+        await _marketCoinsInteractionService.UpdateCoinInformationAsync();
         
         // Assert
         _coinsStorageMock.Verify(x => x.GetAllDictionaryByExternalSymbolIdAsync(), Times.Once);
@@ -117,7 +117,7 @@ public class MarketCoinsInteractionServiceTests
 
         // Act & Assert
         await FluentActions.Invoking(() =>
-            _marketCoinsInteractionService.UpdateCoinInformation()).Should().ThrowAsync<InvalidOperationException>();
+            _marketCoinsInteractionService.UpdateCoinInformationAsync()).Should().ThrowAsync<InvalidOperationException>();
         _marketCoinsStorageMock.Verify(x => x.ReplaceAllMarketCoinsAsync(It.IsAny<IList<MarketCoin>>()), Times.Never);
         _hubMock.Verify(x => x.Clients.All.UpdateCoinsInformation(It.IsAny<IEnumerable<MarketCoinResponse>>()), Times.Never);
     }
@@ -137,7 +137,7 @@ public class MarketCoinsInteractionServiceTests
 
 
         // Act & Assert
-        FluentActions.Invoking(() => _marketCoinsInteractionService.UpdateCoinInformation()).Should().Throw();
+        FluentActions.Invoking(() => _marketCoinsInteractionService.UpdateCoinInformationAsync()).Should().Throw();
         _hubMock.Verify(x => x.Clients.All.UpdateCoinsInformation(It.IsAny<IEnumerable<MarketCoinResponse>>()), Times.Never);
     }
     
@@ -158,7 +158,7 @@ public class MarketCoinsInteractionServiceTests
 
 
         // Act & Assert
-        FluentActions.Invoking(() => _marketCoinsInteractionService.UpdateCoinInformation()).Should().Throw();
+        FluentActions.Invoking(() => _marketCoinsInteractionService.UpdateCoinInformationAsync()).Should().Throw();
     }
     
     private static List<Coin> GetCoinList()

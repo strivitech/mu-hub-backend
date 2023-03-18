@@ -9,5 +9,5 @@ public interface IMarketCoinsInteractionService
     /// Updates coin information.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    Task UpdateCoinInformation();
+    Task UpdateCoinInformationAsync();
 }

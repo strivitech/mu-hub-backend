@@ -55,7 +55,7 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     // TODO: Add logging
     // TODO: Add Redis cache for first connected users
-    public async Task UpdateCoinInformation()
+    public async Task UpdateCoinInformationAsync()
     {
         try
         {

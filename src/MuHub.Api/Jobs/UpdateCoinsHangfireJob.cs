@@ -24,5 +24,5 @@ public class UpdateCoinsHangfireJob
     /// <summary>
     /// Updates Coin Information.
     /// </summary>
-    public async Task UpdateCoinInformation() => await _marketCoinsInteractionService.UpdateCoinInformation();
+    public async Task UpdateCoinInformation() => await _marketCoinsInteractionService.UpdateCoinInformationAsync();
 }
