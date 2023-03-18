@@ -5,6 +5,9 @@ using MuHub.Domain.Entities;
 
 namespace MuHub.Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// Coin entity configuration.
+/// </summary>
 public class CoinConfiguration : IEntityTypeConfiguration<Coin>
 {
     public void Configure(EntityTypeBuilder<Coin> builder)

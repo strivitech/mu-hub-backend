@@ -1,5 +1,8 @@
 ﻿namespace CoinGecko.Api.Features.Coins;
 
+/// <summary>
+/// Currency to use for market data conversion.
+/// </summary>
 public sealed class VsCurrency
 {
     public static readonly VsCurrency Usd = new ("usd");

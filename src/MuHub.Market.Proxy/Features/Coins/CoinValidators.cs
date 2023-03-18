@@ -2,8 +2,17 @@
 
 namespace MuHub.Market.Proxy.Features.Coins;
 
+/// <summary>
+/// Contains coin validators.
+/// </summary>
 public static class CoinValidators
 {
+    /// <summary>
+    /// Validates market coin.
+    /// </summary>
+    /// <param name="coin">Market coin.</param>
+    /// <returns>True if coin is valid, otherwise false.</returns>
+    /// <exception cref="InvalidOperationException">When coin id is invalid.</exception>
     public static bool ValidateCoin(this MarketCoin coin)
     {
         if (!ValidateCoinId(coin.Id))
@@ -14,14 +23,9 @@ public static class CoinValidators
         return ValidateMarketCapRank(coin.MarketCapRank) && ValidateCurrentPrice(coin.CurrentPrice) &&
                ValidateLastUpdated(coin.LastUpdated);
     }
-
+    
     private static bool ValidateMarketCapRank(this int? capRank) => capRank is > 0;
 
-    /// <summary>
-    /// Validates coin id.
-    /// </summary>
-    /// <param name="id">Coin id.</param>
-    /// <returns><see cref="bool"/>.</returns>
     private static bool ValidateCoinId(this string? id) => !string.IsNullOrWhiteSpace(id);
 
     private static bool ValidateCurrentPrice(this decimal? currentPrice) => currentPrice is >= 0;

@@ -1,10 +1,13 @@
 ﻿namespace CoinGecko.Api.Endpoints;
 
 /// <summary>
-/// Contains coin endpoints.
+/// Contains endpoints.
 /// </summary>
 public static class EndpointsMap
 {
+    /// <summary>
+    /// Contains coin endpoints.
+    /// </summary>
     public static class Coin
     {   
         public const string Coins = "coins";

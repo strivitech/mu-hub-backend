@@ -1,5 +1,8 @@
 ﻿namespace CoinGecko.Api.Features.Coins;
 
+/// <summary>
+/// Order.
+/// </summary>
 public sealed class Order
 {
     public static readonly Order MarketCapAsc = new ("market_cap_asc");

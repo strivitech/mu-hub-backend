@@ -7,8 +7,15 @@ using MuHub.Domain.Entities;
 
 namespace MuHub.Api.Seeders;
 
+/// <summary>
+/// Coin fake seeder.
+/// </summary>
 public static class CoinsFakeSeeder
 {
+    /// <summary>
+    /// Add fake coins.
+    /// </summary>
+    /// <param name="webApplication">Web application.</param>
     public static void AddFakeCoins(this WebApplication webApplication)
     {
         if (!webApplication.Environment.IsDevelopment())

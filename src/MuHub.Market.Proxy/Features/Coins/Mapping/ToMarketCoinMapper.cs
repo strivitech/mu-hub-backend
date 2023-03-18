@@ -1,13 +1,23 @@
 ﻿namespace MuHub.Market.Proxy.Features.Coins.Mapping;
 
 /// <summary>
-/// Mapping from CoinGecko coin to coin DTO.
+/// To market coin dto mapper.
 /// </summary>
-internal static class ToGeckoMarketCoinMapper
+internal static class ToMarketCoinMapper
 {
+    /// <summary>
+    /// Maps from <see cref="CoinGecko.Api.Features.Coins.MarketCoin"/> to <see cref="MarketCoinDto"/>.
+    /// </summary>
+    /// <param name="coin">Gecko market coin.</param>
+    /// <returns>An instance of <see cref="MarketCoinDto"/>.</returns>
     public static MarketCoinDto ToMarketCoinDto(this CoinGecko.Api.Features.Coins.MarketCoin coin) =>
         coin.CreateMarketCoinDto(coin.ValidateCoin());
     
+    /// <summary>
+    /// Maps from a enumerable of <see cref="CoinGecko.Api.Features.Coins.MarketCoin"/> to a list of <see cref="MarketCoinDto"/>.
+    /// </summary>
+    /// <param name="coins">Gecko market coins.</param>
+    /// <returns>A list of <see cref="MarketCoinDto"/>.</returns>
     public static List<MarketCoinDto> ToMarketCoinDtoList(
         this IEnumerable<CoinGecko.Api.Features.Coins.MarketCoin> coins) =>
         coins.Select(ToMarketCoinDto).ToList();

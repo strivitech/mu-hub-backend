@@ -3,8 +3,14 @@ using MuHub.Domain.Common.Entities;
 
 namespace MuHub.Domain.Entities;
 
+/// <summary>
+/// Represents a coin.
+/// </summary>
 public class Coin : BaseEntity<int>
 {
+    /// <summary>
+    /// External symbol id.
+    /// </summary>
     public string ExternalSymbolId { get; set; } = null!;
     
     /// <summary>

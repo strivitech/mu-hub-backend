@@ -17,7 +17,7 @@ using MuHub.Market.Proxy.Features.Coins;
 namespace MuHub.Api.Services;
 
 /// <summary>
-/// 
+/// Market coins interaction service.
 /// </summary>
 public class MarketCoinsInteractionService : IMarketCoinsInteractionService
 {
@@ -28,14 +28,16 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
     private readonly IHubContext<CoinsHub, ICoinsClient> _hub;
 
     /// <summary>
-    /// 
+    /// Initializes a new instance of the <see cref="MarketCoinsInteractionService"/> class.
     /// </summary>
-    /// <param name="coinsDataService"></param>
-    /// <param name="marketCoinsStorage"></param>
-    /// <param name="updateMarketCoinTimeStampStorage"></param>
-    /// <param name="coinsStorage"></param>
-    /// <param name="hub"></param>
-    public MarketCoinsInteractionService(ICoinsDataService coinsDataService, IMarketCoinsStorage marketCoinsStorage,
+    /// <param name="coinsDataService">Coins data service.</param>
+    /// <param name="marketCoinsStorage">Market coins storage.</param>
+    /// <param name="updateMarketCoinTimeStampStorage">Update market coin time stamp storage.</param>
+    /// <param name="coinsStorage">Coins storage.</param>
+    /// <param name="hub">Hub.</param>
+    public MarketCoinsInteractionService(
+        ICoinsDataService coinsDataService, 
+        IMarketCoinsStorage marketCoinsStorage,
         IUpdateMarketCoinTimeStampStorage updateMarketCoinTimeStampStorage, 
         ICoinsStorage coinsStorage,
         IHubContext<CoinsHub, ICoinsClient> hub)
@@ -48,10 +50,9 @@ public class MarketCoinsInteractionService : IMarketCoinsInteractionService
     }
 
     /// <summary>
-    /// 
+    /// Updates coin information.
     /// </summary>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     // TODO: Add logging
     // TODO: Add Redis cache for first connected users
     public async Task UpdateCoinInformation()

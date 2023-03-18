@@ -1,5 +1,8 @@
 ﻿namespace MuHub.Market.Proxy.Features.Coins;
 
+/// <summary>
+/// Represents a currency.
+/// </summary>
 public sealed class Currency
 {
     public static readonly Currency Usd = new(CoinGecko.Api.Features.Coins.VsCurrency.Usd);

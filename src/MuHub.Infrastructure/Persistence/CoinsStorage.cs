@@ -6,6 +6,9 @@ using MuHub.Domain.Entities;
 
 namespace MuHub.Infrastructure.Persistence;
 
+/// <summary>
+/// Coins storage.
+/// </summary>
 public class CoinsStorage : ICoinsStorage
 {
     private readonly IApplicationDbContext _dbContext;

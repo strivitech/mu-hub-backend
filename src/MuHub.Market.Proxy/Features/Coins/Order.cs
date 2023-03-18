@@ -1,5 +1,8 @@
 ﻿namespace MuHub.Market.Proxy.Features.Coins;
 
+/// <summary>
+/// Represents the order of the coins.
+/// </summary>
 public sealed class Order
 {
     public static readonly Order MarketCapDesc = new(CoinGecko.Api.Features.Coins.Order.MarketCapDesc);

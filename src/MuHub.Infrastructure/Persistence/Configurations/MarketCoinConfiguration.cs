@@ -5,6 +5,9 @@ using MuHub.Domain.Entities;
 
 namespace MuHub.Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// MarketCoin entity configuration.
+/// </summary>
 public class MarketCoinConfiguration : IEntityTypeConfiguration<MarketCoin>
 {
     public void Configure(EntityTypeBuilder<MarketCoin> builder)

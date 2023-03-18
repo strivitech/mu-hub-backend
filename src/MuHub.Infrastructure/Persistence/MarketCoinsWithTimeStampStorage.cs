@@ -5,6 +5,9 @@ using MuHub.Domain.Entities;
 
 namespace MuHub.Infrastructure.Persistence;
 
+/// <summary>
+/// Market coins storage with timestamp interaction.
+/// </summary>
 public class MarketCoinsWithTimeStampStorage : IMarketCoinsStorage
 {
     private readonly IApplicationDbContext _applicationDbContext;
