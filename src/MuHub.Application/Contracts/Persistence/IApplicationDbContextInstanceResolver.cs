@@ -2,7 +2,13 @@
 
 namespace MuHub.Application.Contracts.Persistence;
 
+/// <summary>
+/// Resolves the instance of the internal application's <see cref="DbContext"/>.
+/// </summary>
 public interface IApplicationDbContextInstanceResolver
 {
-    public DbContext Instance { get; } // maybe remove this and create particular things like TransactionProcessor etc.
+    /// <summary>
+    /// Gets the instance of the internal application's <see cref="DbContext"/>.
+    /// </summary>
+    public DbContext Instance { get; }
 }

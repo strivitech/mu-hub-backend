@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Market.Proxy", "src\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Market.Proxy.Tests", "tests\UnitTests\MuHub.Market.Proxy.Tests\MuHub.Market.Proxy.Tests.csproj", "{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuHub.Tests", "tests\MuHub.Tests\MuHub.Tests.csproj", "{B2294ED8-F6FC-4272-AD8D-BC4AB50D6A52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,7 @@ Global
 		{8FDFF040-5B3B-4A2F-B559-C0C89B7AA8EF} = {7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633}
 		{F6A12D9B-2C1B-4024-98E0-547C6EB65D2C} = {AAF5773A-9525-4189-81C6-4FE4828BCB2C}
 		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF} = {7D8A0F76-5C46-4EA8-9DA8-F66CFC5FA633}
+		{B2294ED8-F6FC-4272-AD8D-BC4AB50D6A52} = {836C800D-ECC6-4A59-86B7-CA5243BBA151}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2477236D-A69D-4DD1-8E3A-961831074713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -126,5 +129,9 @@ Global
 		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15E2EA4C-26C0-4267-B1F2-2FD29FD546DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2294ED8-F6FC-4272-AD8D-BC4AB50D6A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2294ED8-F6FC-4272-AD8D-BC4AB50D6A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2294ED8-F6FC-4272-AD8D-BC4AB50D6A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2294ED8-F6FC-4272-AD8D-BC4AB50D6A52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

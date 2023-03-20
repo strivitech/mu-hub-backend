@@ -14,4 +14,12 @@
       <PackageReference Include="FluentResults" Version="3.15.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Mapping" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="MuHub.Market.Proxy.Tests" />
+    </ItemGroup>
+
 </Project>

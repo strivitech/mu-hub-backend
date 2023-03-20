@@ -8,8 +8,9 @@ namespace MuHub.Market.Proxy.Features.Coins;
 public interface ICoinsDataService
 {
     /// <summary>
-    /// Asynchronously gets the coin list.
+    /// Asynchronously get market coin list.
     /// </summary>
-    /// <returns>A <see cref="Result"/> of <see cref="List{T}"/> of <see cref="Coin"/>.</returns>
-    Task<Result<List<Coin>>> GetCoinListAsync();
+    /// <param name="request">Get market coin request.</param>
+    /// <returns>A <see cref="Result"/> of market coin list.</returns>
+    Task<Result<List<MarketCoinDto>>> GetMarketCoinListAsync(GetMarketCoinRequest request);
 }

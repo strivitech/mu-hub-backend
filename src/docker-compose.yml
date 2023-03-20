@@ -23,3 +23,14 @@ services:
       - POSTGRES_PASSWORD=admin
     ports:
       - 5433:5432
+
+  scheduler:
+    image: postgres:14.5
+    container_name: scheduler
+    restart: always
+    environment:
+      - POSTGRES_DB=scheduler
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - 5434:5432

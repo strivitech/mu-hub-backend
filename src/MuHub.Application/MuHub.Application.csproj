@@ -8,10 +8,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MuHub.Domain\MuHub.Domain.csproj" />
+      <ProjectReference Include="..\MuHub.Market.Proxy\MuHub.Market.Proxy.csproj" />
       <ProjectReference Include="..\MuHub.SharedData\MuHub.SharedData.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="EFCore.BulkExtensions" Version="6.5.6" />
       <PackageReference Include="ErrorOr" Version="1.2.1" />
       <PackageReference Include="FluentValidation" Version="11.2.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />

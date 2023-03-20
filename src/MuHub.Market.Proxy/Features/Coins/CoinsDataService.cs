@@ -2,7 +2,7 @@
 
 using FluentResults;
 
-using MuHub.Market.Proxy.Mapping;
+using MuHub.Market.Proxy.Features.Coins.Mapping;
 
 namespace MuHub.Market.Proxy.Features.Coins;
 
@@ -18,12 +18,14 @@ public class CoinsDataService : ICoinsDataService
         _coinsDataProvider = coinsDataProvider;
     }
 
-    public async Task<Result<List<Coin>>> GetCoinListAsync()
+    public async Task<Result<List<MarketCoinDto>>> GetMarketCoinListAsync(GetMarketCoinRequest request)
     {
-        var result = await _coinsDataProvider.GetCoinListAsync();
+        var requestToApi = request.MapFromGetMarketCoinRequest();
+        
+        var result = await _coinsDataProvider.GetMarketCoinListAsync(requestToApi);
 
         return result.IsFailed
-            ? Result.Fail<List<Coin>>(result.Errors)
-            : Result.Ok(result.Value.ToCoins());
+            ? Result.Fail<List<MarketCoinDto>>(result.Errors)
+            : Result.Ok(result.Value.ToMarketCoinDtoList());
     }
 }

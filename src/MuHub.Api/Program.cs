@@ -16,6 +16,10 @@ app.Configure();
 try
 {
     // Add logs
+#if DEBUG
+    MuHub.Api.Seeders.CoinsFakeSeeder.AddFakeCoins(app);
+#endif
+    
     app.Run();
 }
 catch (Exception ex)
