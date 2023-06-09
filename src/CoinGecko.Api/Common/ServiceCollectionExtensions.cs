@@ -37,6 +37,7 @@ public static class ServiceCollectionExtensions
         services.AddHttpClient<IRequestCoordinator, RequestCoordinator>(client =>
         {
             client.BaseAddress = GeneralEndpointsInfo.ApiUri;
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("CoinGecko .NET API Client");
         }).AddTransientHttpErrorPolicy(
         policyBuilder => policyBuilder.WaitAndRetryAsync(
                 Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(RequestPolly.MedianFirstRetryDelaySeconds),
