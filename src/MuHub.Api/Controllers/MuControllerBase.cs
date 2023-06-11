@@ -14,6 +14,11 @@ namespace MuHub.Api.Controllers;
 /// </summary>
 public abstract class MuControllerBase : ControllerBase
 {
+    protected IActionResult BadRequest(string error)
+    {
+        return Problem(statusCode: StatusCodes.Status400BadRequest, detail: error);
+    }
+
     /// <summary>
     /// Returns an intuitive error message for the given <see cref="Exception"/>.
     /// </summary>
