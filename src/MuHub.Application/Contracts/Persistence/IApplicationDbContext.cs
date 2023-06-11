@@ -19,11 +19,13 @@ public interface IApplicationDbContext : IApplicationDbContextInstanceResolver
     /// Market coins.
     /// </summary>
     DbSet<MarketCoin> MarketCoins { get; }
-    
+
     /// <summary>
     /// Market coins update timestamps.
     /// </summary>
     DbSet<MarketCoinsUpdateTimestamp> MarketCoinsUpdateTimestamps { get; }
+    
+    DbSet<WatchList> WatchList { get; }
 
     /// <summary>
     /// Asynchronously saves changes to the database.

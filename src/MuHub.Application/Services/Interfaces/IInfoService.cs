@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 
 using MuHub.Application.Models.Data;
-using MuHub.Application.Models.Requests.Info;
+using MuHub.Application.Models.Data.Info;
 
 namespace MuHub.Application.Services.Interfaces;
 

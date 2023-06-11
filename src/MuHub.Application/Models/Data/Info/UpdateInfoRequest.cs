@@ -1,6 +1,6 @@
-﻿namespace MuHub.Application.Models.Data;
+﻿namespace MuHub.Application.Models.Data.Info;
 
-public class InfoDto
+public class UpdateInfoRequest
 {
     public int Id { get; set; }
     

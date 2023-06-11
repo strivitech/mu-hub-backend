@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Coin> Coins => Set<Coin>();
     public DbSet<MarketCoin> MarketCoins => Set<MarketCoin>();
     public DbSet<MarketCoinsUpdateTimestamp> MarketCoinsUpdateTimestamps => Set<MarketCoinsUpdateTimestamp>();
+    public DbSet<WatchList> WatchList => Set<WatchList>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

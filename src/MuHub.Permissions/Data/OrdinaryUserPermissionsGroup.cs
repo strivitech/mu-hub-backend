@@ -7,7 +7,7 @@ public class OrdinaryUserPermissionsGroup : IRolePermissionsGroup
 {
     private static readonly IReadOnlyCollection<Permission> PermissionsCollection = new List<Permission>
     {
-        Permission.InfoRead,
+        Permission.WatchListRead,
     }.AsReadOnly();
 
     public Role Role => Role.OrdinaryUser;

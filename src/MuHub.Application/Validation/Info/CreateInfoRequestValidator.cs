@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-using MuHub.Application.Models.Requests.Info;
+using MuHub.Application.Models.Data.Info;
 
 namespace MuHub.Application.Validation.Info;
 

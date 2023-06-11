@@ -12,6 +12,8 @@ services:
       - POSTGRES_PASSWORD=admin
     ports:
       - 5432:5432
+    volumes:
+      - mu_hub_main_data:/var/lib/postgresql/data
 
   mu_hub_identity_provider:
     image: postgres:14.5
@@ -23,6 +25,8 @@ services:
       - POSTGRES_PASSWORD=admin
     ports:
       - 5433:5432
+    volumes:
+      - mu_hub_identity_provider_data:/var/lib/postgresql/data
 
   scheduler:
     image: postgres:14.5
@@ -34,3 +38,10 @@ services:
       - POSTGRES_PASSWORD=admin
     ports:
       - 5434:5432
+    volumes:
+      - scheduler_data:/var/lib/postgresql/data
+
+volumes:
+  mu_hub_main_data:
+  mu_hub_identity_provider_data:
+  scheduler_data:

@@ -7,7 +7,7 @@ public class ModeratorPermissionsGroup : IRolePermissionsGroup
 {
     private static readonly IReadOnlyCollection<Permission> PermissionsCollection = new List<Permission>
     {
-        Permission.InfoRead, Permission.InfoCreate, Permission.InfoUpdate, Permission.InfoDelete,
+        Permission.WatchListRead, Permission.WatchListCreate, Permission.WatchListUpdate, Permission.WatchListDelete,
     }.AsReadOnly();
 
     public Role Role => Role.Moderator;
