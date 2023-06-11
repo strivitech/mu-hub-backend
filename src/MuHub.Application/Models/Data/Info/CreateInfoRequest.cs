@@ -1,4 +1,4 @@
-﻿namespace MuHub.Application.Models.Requests.Info;
+﻿namespace MuHub.Application.Models.Data.Info;
 
 public class CreateInfoRequest
 {

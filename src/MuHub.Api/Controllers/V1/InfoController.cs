@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using MuHub.Application.Models.Requests.Info;
+using MuHub.Application.Models.Data.Info;
 using MuHub.Application.Services.Interfaces;
 
 namespace MuHub.Api.Controllers.V1;
