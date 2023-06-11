@@ -46,13 +46,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"strivitech_mu-hub-backend" /o:"strivitech" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="tests/UnitTests/MuHub.Api.Tests/TestResults/*.trx, tests/UnitTests/MuHub.IdentityProvider.Tests/TestResults/*.trx, tests/UnitTests/CoinGecko.Api.Tests/TestResults/*.trx, tests/UnitTests/MuHub.Market.Proxy.Tests/TestResults/*.trx, tests/IntegrationTests/MuHub.Tests/TestResults/*.trx" /d:"sonar.verbose=true" /d:"sonar.cs.opencover.reportsPaths"="tests/UnitTests/MuHub.Api.Tests/coverage.opencover.xml, tests/UnitTests/MuHub.IdentityProvider.Tests/coverage.opencover.xml, tests/UnitTests/CoinGecko.Api.Tests/coverage.opencover.xml, tests/UnitTests/MuHub.Market.Proxy.Tests/coverage.opencover.xml, tests/IntegrationTests/MuHub.Tests/coverage.opencover.xml"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"strivitech_mu-hub-backend" /o:"strivitech" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="tests/UnitTests/MuHub.Api.Tests/TestResults/*.trx, tests/UnitTests/MuHub.IdentityProvider.Tests/TestResults/*.trx, tests/UnitTests/CoinGecko.Api.Tests/TestResults/*.trx, tests/UnitTests/MuHub.Market.Proxy.Tests/TestResults/*.trx, tests/UnitTests/MuHub.Application.Tests/TestResults/*.trx, tests/IntegrationTests/MuHub.Tests/TestResults/*.trx" /d:"sonar.verbose=true" /d:"sonar.cs.opencover.reportsPaths"="tests/UnitTests/MuHub.Api.Tests/coverage.opencover.xml, tests/UnitTests/MuHub.IdentityProvider.Tests/coverage.opencover.xml, tests/UnitTests/CoinGecko.Api.Tests/coverage.opencover.xml, tests/UnitTests/MuHub.Market.Proxy.Tests/coverage.opencover.xml, tests/UnitTests/MuHub.Application.Tests/coverage.opencover.xml, tests/IntegrationTests/MuHub.Tests/coverage.opencover.xml"
           dotnet restore
           dotnet build --no-restore
           dotnet add tests\UnitTests\MuHub.Api.Tests\MuHub.Api.Tests.csproj package coverlet.msbuild
           dotnet add tests\UnitTests\MuHub.IdentityProvider.Tests\MuHub.IdentityProvider.Tests.csproj package coverlet.msbuild
           dotnet add tests\UnitTests\CoinGecko.Api.Tests\CoinGecko.Api.Tests.csproj package coverlet.msbuild
           dotnet add tests\UnitTests\MuHub.Market.Proxy.Tests\MuHub.Market.Proxy.Tests.csproj package coverlet.msbuild
+          dotnet add tests\UnitTests\MuHub.Application.Tests\MuHub.Application.Tests.csproj package coverlet.msbuild
           dotnet add tests\IntegrationTests\MuHub.Tests\MuHub.Tests.csproj package coverlet.msbuild
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l:trx
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
