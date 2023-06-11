@@ -17,6 +17,7 @@ public static class ServicesConfigurator
 
         services.AddScoped<IModelValidationService, ModelValidationService>();
         services.AddScoped<IInfoService, InfoService>();
+        services.AddScoped<IWatchListService, WatchListService>();
 
         return services;
     }
